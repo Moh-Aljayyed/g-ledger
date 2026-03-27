@@ -4,6 +4,7 @@ import { router, publicProcedure } from "../trpc";
 import { db } from "@/server/db";
 import { provisionChartOfAccounts } from "@/server/services/chart-of-accounts.service";
 import { COUNTRIES, getVatRate } from "@/config/tax/countries";
+import { sendEmailOTP, sendWhatsAppOTP, verifyOTP } from "@/server/services/otp.service";
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -90,4 +91,30 @@ export const authRouter = router({
       userId: result.user.id,
     };
   }),
+
+  // Send OTP via email
+  sendEmailOTP: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      return sendEmailOTP(input.email);
+    }),
+
+  // Send OTP via WhatsApp
+  sendWhatsAppOTP: publicProcedure
+    .input(z.object({ phone: z.string().min(8) }))
+    .mutation(async ({ input }) => {
+      return sendWhatsAppOTP(input.phone);
+    }),
+
+  // Verify OTP code
+  verifyOTP: publicProcedure
+    .input(z.object({
+      method: z.enum(["email", "whatsapp"]),
+      target: z.string().min(1), // email or phone
+      code: z.string().length(6),
+    }))
+    .mutation(async ({ input }) => {
+      const key = input.method === "email" ? `email:${input.target}` : `whatsapp:${input.target}`;
+      return verifyOTP(key, input.code);
+    }),
 });

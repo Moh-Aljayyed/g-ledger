@@ -22,7 +22,7 @@ export default function RegisterPage() {
 
   const { country: detectedCountry } = useGeoLocation();
 
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,10 +33,41 @@ export default function RegisterPage() {
     country: "SA" as "SA" | "EG",
     registrationNumber: "",
     taxId: "",
+    phone: "",
   });
   const [error, setError] = useState("");
   const [lookupResult, setLookupResult] = useState<any>(null);
   const [lookupQuery, setLookupQuery] = useState("");
+
+  // OTP
+  const [otpMethod, setOtpMethod] = useState<"email" | "whatsapp">("email");
+  const [otpCode, setOtpCode] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpCountdown, setOtpCountdown] = useState(0);
+
+  const sendEmailOTP = trpc.auth.sendEmailOTP.useMutation({
+    onSuccess: () => { setOtpSent(true); setOtpCountdown(60); },
+    onError: (err) => setError(err.message),
+  });
+  const sendWhatsAppOTP = trpc.auth.sendWhatsAppOTP.useMutation({
+    onSuccess: () => { setOtpSent(true); setOtpCountdown(60); },
+    onError: (err) => setError(err.message),
+  });
+  const verifyOTP = trpc.auth.verifyOTP.useMutation({
+    onSuccess: (data) => {
+      if (data.valid) { setOtpVerified(true); setStep(3); }
+      else setError(data.error || "رمز غير صحيح");
+    },
+  });
+
+  // Countdown timer
+  useEffect(() => {
+    if (otpCountdown > 0) {
+      const timer = setTimeout(() => setOtpCountdown(otpCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [otpCountdown]);
 
   useEffect(() => { if (detectedCountry) setFormData(prev => ({ ...prev, country: detectedCountry as any })); }, [detectedCountry]);
 
@@ -120,9 +151,9 @@ export default function RegisterPage() {
         {/* Steps indicator */}
         <div className="flex items-center justify-center gap-3 mb-8">
           {[
-            { num: 1, label: "بيانات المنشأة" },
-            { num: 2, label: "بيانات الحساب" },
-            { num: 3, label: "اختيار القطاع" },
+            { num: 1, label: "المنشأة" },
+            { num: 2, label: "الحساب والتحقق" },
+            { num: 3, label: "القطاع" },
           ].map((s, idx) => (
             <div key={s.num} className="flex items-center gap-2">
               {idx > 0 && <div className="w-8 h-0.5 bg-border" />}
@@ -334,23 +365,93 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              {/* OTP Verification */}
+              {!otpVerified && formData.email && formData.name && formData.password && (
+                <div className="border border-border rounded-xl p-4 bg-muted/30">
+                  <h3 className="text-sm font-bold mb-3 text-[#021544]">التحقق من الهوية</h3>
+
+                  {/* Method toggle */}
+                  <div className="flex gap-2 mb-3">
+                    <button type="button" onClick={() => setOtpMethod("email")}
+                      className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "email" ? "bg-[#0070F2] text-white" : "bg-white border border-border"}`}>
+                      📧 إيميل
+                    </button>
+                    <button type="button" onClick={() => setOtpMethod("whatsapp")}
+                      className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "whatsapp" ? "bg-[#25D366] text-white" : "bg-white border border-border"}`}>
+                      💬 واتساب
+                    </button>
+                  </div>
+
+                  {otpMethod === "whatsapp" && !otpSent && (
+                    <div className="mb-3">
+                      <input type="tel" value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+966501234567"
+                        className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none" dir="ltr" />
+                    </div>
+                  )}
+
+                  {!otpSent ? (
+                    <button type="button" onClick={() => {
+                      setError("");
+                      if (otpMethod === "email") sendEmailOTP.mutate({ email: formData.email });
+                      else if (formData.phone) sendWhatsAppOTP.mutate({ phone: formData.phone });
+                      else setError("أدخل رقم الواتساب");
+                    }}
+                      disabled={sendEmailOTP.isPending || sendWhatsAppOTP.isPending}
+                      className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005ed4] disabled:opacity-50">
+                      {sendEmailOTP.isPending || sendWhatsAppOTP.isPending ? "جاري الإرسال..." :
+                        `إرسال رمز التحقق ${otpMethod === "email" ? "للإيميل" : "للواتساب"}`}
+                    </button>
+                  ) : (
+                    <div className="space-y-3">
+                      <p className="text-xs text-muted-foreground text-center">
+                        تم إرسال رمز مكون من 6 أرقام {otpMethod === "email" ? `إلى ${formData.email}` : `إلى ${formData.phone}`}
+                      </p>
+                      <input type="text" value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                        placeholder="000000" maxLength={6}
+                        className="w-full px-4 py-3 rounded-lg border border-input bg-background text-2xl font-mono tracking-[12px] text-center outline-none focus:ring-2 focus:ring-[#0070F2]" dir="ltr" />
+                      <button type="button" onClick={() => {
+                        setError("");
+                        verifyOTP.mutate({
+                          method: otpMethod,
+                          target: otpMethod === "email" ? formData.email : formData.phone,
+                          code: otpCode,
+                        });
+                      }}
+                        disabled={otpCode.length !== 6 || verifyOTP.isPending}
+                        className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium disabled:opacity-50">
+                        {verifyOTP.isPending ? "جاري التحقق..." : "تحقق"}
+                      </button>
+                      {otpCountdown > 0 ? (
+                        <p className="text-xs text-muted-foreground text-center">إعادة الإرسال بعد {otpCountdown} ثانية</p>
+                      ) : (
+                        <button type="button" onClick={() => {
+                          setOtpSent(false); setOtpCode("");
+                        }} className="w-full text-xs text-[#0070F2] hover:underline text-center">
+                          إعادة إرسال الرمز
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {otpVerified && (
+                <div className="p-3 rounded-lg bg-green-50 text-green-700 text-sm text-center font-medium">
+                  ✓ تم التحقق بنجاح
+                </div>
+              )}
+
               <div className="flex gap-3 mt-4">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="flex-1 py-3 px-4 border border-border rounded-lg font-medium hover:bg-muted transition-all"
-                >
+                <button type="button" onClick={() => setStep(1)}
+                  className="flex-1 py-3 px-4 border border-border rounded-lg font-medium hover:bg-muted transition-all">
                   رجوع
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (formData.name && formData.email && formData.password) {
-                      setStep(3);
-                    }
-                  }}
-                  className="flex-1 py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] transition-all"
-                >
+                <button type="button"
+                  onClick={() => { if (otpVerified) setStep(3); }}
+                  disabled={!otpVerified}
+                  className="flex-1 py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all">
                   التالي — اختر القطاع
                 </button>
               </div>
