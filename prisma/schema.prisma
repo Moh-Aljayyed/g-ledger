@@ -32,6 +32,7 @@ enum UserRole {
   ADMIN
   ACCOUNTANT
   VIEWER
+  SUPER_ADMIN
 }
 
 enum AccountType {
@@ -71,6 +72,14 @@ model Tenant {
   fiscalPeriods  FiscalPeriod[]
   invoices       Invoice[]
   taxConfig      TaxConfig?
+  customers      Customer[]
+  vendors        Vendor[]
+  bills          Bill[]
+  payments       Payment[]
+  employees      Employee[]
+  payrolls       Payroll[]
+  bankAccounts   BankAccount[]
+  bankTransactions BankTransaction[]
 }
 
 model User {
@@ -305,8 +314,12 @@ model Invoice {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
+  customerId        String?
+  customer          Customer?     @relation(fields: [customerId], references: [id])
+
   items             InvoiceItem[]
   submissions       InvoiceSubmission[]
+  payments          Payment[]
 
   @@unique([tenantId, invoiceNumber])
   @@index([tenantId, status])
@@ -382,4 +395,318 @@ model InvoiceSubmission {
 
   @@index([invoiceId])
   @@index([status])
+}
+
+// ============ SUPER ADMIN ============
+
+model SuperAdmin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ============ CUSTOMERS (AR MODULE) ============
+
+model Customer {
+  id            String   @id @default(cuid())
+  code          String
+  nameAr        String
+  nameEn        String?
+  taxId         String?
+  email         String?
+  phone         String?
+  address       String?
+  city          String?
+  country       String?  @default("SA")
+  creditLimit   Decimal  @default(0) @db.Decimal(18, 4)
+  paymentTerms  Int      @default(30) // days
+  isActive      Boolean  @default(true)
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  accountId     String?  // linked AR account
+  invoices      Invoice[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([tenantId, code])
+  @@index([tenantId])
+}
+
+// ============ VENDORS (AP MODULE) ============
+
+model Vendor {
+  id            String   @id @default(cuid())
+  code          String
+  nameAr        String
+  nameEn        String?
+  taxId         String?
+  email         String?
+  phone         String?
+  address       String?
+  city          String?
+  country       String?  @default("SA")
+  paymentTerms  Int      @default(30)
+  isActive      Boolean  @default(true)
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  accountId     String?  // linked AP account
+  bills         Bill[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([tenantId, code])
+  @@index([tenantId])
+}
+
+// ============ BILLS (AP MODULE) ============
+
+enum BillStatus {
+  DRAFT
+  APPROVED
+  PARTIALLY_PAID
+  PAID
+  CANCELLED
+}
+
+model Bill {
+  id            String     @id @default(cuid())
+  billNumber    String
+  vendorId      String
+  vendor        Vendor     @relation(fields: [vendorId], references: [id])
+  issueDate     DateTime
+  dueDate       DateTime
+  status        BillStatus @default(DRAFT)
+  subtotal      Decimal    @db.Decimal(18, 4)
+  totalVat      Decimal    @default(0) @db.Decimal(18, 4)
+  totalDiscount Decimal    @default(0) @db.Decimal(18, 4)
+  grandTotal    Decimal    @db.Decimal(18, 4)
+  amountPaid    Decimal    @default(0) @db.Decimal(18, 4)
+  currency      String     @default("SAR")
+  notes         String?
+  tenantId      String
+  tenant        Tenant     @relation(fields: [tenantId], references: [id])
+  journalEntryId String?
+  createdById   String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  items         BillItem[]
+  payments      Payment[]
+
+  @@unique([tenantId, billNumber])
+  @@index([tenantId, status])
+  @@index([tenantId, vendorId])
+}
+
+model BillItem {
+  id          String  @id @default(cuid())
+  billId      String
+  bill        Bill    @relation(fields: [billId], references: [id], onDelete: Cascade)
+  lineNumber  Int
+  description String
+  quantity    Decimal @db.Decimal(18, 4)
+  unitPrice   Decimal @db.Decimal(18, 4)
+  discount    Decimal @default(0) @db.Decimal(18, 4)
+  vatRate     Decimal @default(0) @db.Decimal(5, 2)
+  vatAmount   Decimal @default(0) @db.Decimal(18, 4)
+  netAmount   Decimal @db.Decimal(18, 4)
+  totalAmount Decimal @db.Decimal(18, 4)
+  accountId   String?
+
+  @@index([billId])
+}
+
+// ============ PAYMENTS (SHARED AR/AP) ============
+
+enum PaymentType {
+  RECEIVED    // from customer (AR)
+  MADE        // to vendor (AP)
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  CHECK
+  CREDIT_CARD
+  OTHER
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  paymentNumber  String
+  type           PaymentType
+  method         PaymentMethod @default(BANK_TRANSFER)
+  date           DateTime
+  amount         Decimal       @db.Decimal(18, 4)
+  currency       String        @default("SAR")
+  reference      String?
+  notes          String?
+  // Links
+  invoiceId      String?
+  invoice        Invoice?      @relation(fields: [invoiceId], references: [id])
+  billId         String?
+  bill           Bill?         @relation(fields: [billId], references: [id])
+  bankAccountId  String?
+  bankAccount    BankAccount?  @relation(fields: [bankAccountId], references: [id])
+  journalEntryId String?
+  tenantId       String
+  tenant         Tenant        @relation(fields: [tenantId], references: [id])
+  createdById    String
+  createdAt      DateTime      @default(now())
+
+  @@unique([tenantId, paymentNumber])
+  @@index([tenantId, type])
+  @@index([tenantId, date])
+}
+
+// ============ EMPLOYEES & PAYROLL (HR MODULE) ============
+
+enum EmployeeStatus {
+  ACTIVE
+  ON_LEAVE
+  TERMINATED
+}
+
+model Employee {
+  id             String         @id @default(cuid())
+  employeeNumber String
+  nameAr         String
+  nameEn         String?
+  email          String?
+  phone          String?
+  nationalId     String?
+  department     String?
+  position       String?
+  hireDate       DateTime
+  terminationDate DateTime?
+  status         EmployeeStatus @default(ACTIVE)
+  // Salary
+  basicSalary    Decimal        @db.Decimal(18, 4)
+  housingAllowance Decimal      @default(0) @db.Decimal(18, 4)
+  transportAllowance Decimal    @default(0) @db.Decimal(18, 4)
+  otherAllowances Decimal       @default(0) @db.Decimal(18, 4)
+  // Bank
+  bankName       String?
+  bankAccountNo  String?
+  iban           String?
+
+  tenantId       String
+  tenant         Tenant         @relation(fields: [tenantId], references: [id])
+  payrollItems   PayrollItem[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@unique([tenantId, employeeNumber])
+  @@index([tenantId, status])
+}
+
+model Payroll {
+  id             String   @id @default(cuid())
+  period         String   // e.g. "2026-03"
+  month          Int
+  year           Int
+  status         String   @default("DRAFT") // DRAFT, APPROVED, PAID
+  totalBasic     Decimal  @default(0) @db.Decimal(18, 4)
+  totalAllowances Decimal @default(0) @db.Decimal(18, 4)
+  totalDeductions Decimal @default(0) @db.Decimal(18, 4)
+  totalNet       Decimal  @default(0) @db.Decimal(18, 4)
+  totalGosi      Decimal  @default(0) @db.Decimal(18, 4) // social insurance
+  journalEntryId String?
+  tenantId       String
+  tenant         Tenant   @relation(fields: [tenantId], references: [id])
+  createdById    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  items          PayrollItem[]
+
+  @@unique([tenantId, period])
+  @@index([tenantId])
+}
+
+model PayrollItem {
+  id             String   @id @default(cuid())
+  payrollId      String
+  payroll        Payroll  @relation(fields: [payrollId], references: [id], onDelete: Cascade)
+  employeeId     String
+  employee       Employee @relation(fields: [employeeId], references: [id])
+  basicSalary    Decimal  @db.Decimal(18, 4)
+  housingAllowance Decimal @default(0) @db.Decimal(18, 4)
+  transportAllowance Decimal @default(0) @db.Decimal(18, 4)
+  otherAllowances Decimal @default(0) @db.Decimal(18, 4)
+  totalEarnings  Decimal  @db.Decimal(18, 4)
+  gosiEmployee   Decimal  @default(0) @db.Decimal(18, 4) // 9.75%
+  gosiEmployer   Decimal  @default(0) @db.Decimal(18, 4) // 11.75%
+  otherDeductions Decimal @default(0) @db.Decimal(18, 4)
+  totalDeductions Decimal @db.Decimal(18, 4)
+  netSalary      Decimal  @db.Decimal(18, 4)
+
+  @@index([payrollId])
+  @@index([employeeId])
+}
+
+// ============ BANK & CASH MODULE ============
+
+enum BankAccountType {
+  CHECKING
+  SAVINGS
+  CASH
+  CREDIT_CARD_ACCOUNT
+}
+
+model BankAccount {
+  id            String          @id @default(cuid())
+  name          String
+  bankName      String?
+  accountNumber String?
+  iban          String?
+  type          BankAccountType @default(CHECKING)
+  currency      String          @default("SAR")
+  openingBalance Decimal        @default(0) @db.Decimal(18, 4)
+  currentBalance Decimal        @default(0) @db.Decimal(18, 4)
+  isActive      Boolean         @default(true)
+  accountId     String?         // linked GL account
+  tenantId      String
+  tenant        Tenant          @relation(fields: [tenantId], references: [id])
+
+  transactions  BankTransaction[]
+  payments      Payment[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@unique([tenantId, accountNumber])
+  @@index([tenantId])
+}
+
+enum BankTransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER_IN
+  TRANSFER_OUT
+  FEE
+  INTEREST
+}
+
+model BankTransaction {
+  id             String              @id @default(cuid())
+  bankAccountId  String
+  bankAccount    BankAccount         @relation(fields: [bankAccountId], references: [id])
+  type           BankTransactionType
+  date           DateTime
+  amount         Decimal             @db.Decimal(18, 4)
+  balance        Decimal             @db.Decimal(18, 4) // running balance
+  reference      String?
+  description    String
+  isReconciled   Boolean             @default(false)
+  journalEntryId String?
+  tenantId       String
+  tenant         Tenant              @relation(fields: [tenantId], references: [id])
+  createdAt      DateTime            @default(now())
+
+  @@index([bankAccountId, date])
+  @@index([tenantId])
 }

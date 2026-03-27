@@ -4,6 +4,14 @@ import { accountsRouter } from "./routers/accounts";
 import { journalEntriesRouter } from "./routers/journal-entries";
 import { reportsRouter } from "./routers/reports";
 import { invoicesRouter } from "./routers/invoices";
+import { adminRouter } from "./routers/admin";
+import { customersRouter } from "./routers/customers";
+import { vendorsRouter } from "./routers/vendors";
+import { billsRouter } from "./routers/bills";
+import { paymentsRouter } from "./routers/payments";
+import { employeesRouter } from "./routers/employees";
+import { payrollRouter } from "./routers/payroll";
+import { bankRouter } from "./routers/bank";
 
 export const appRouter = router({
   auth: authRouter,
@@ -11,6 +19,14 @@ export const appRouter = router({
   journalEntries: journalEntriesRouter,
   reports: reportsRouter,
   invoices: invoicesRouter,
+  admin: adminRouter,
+  customers: customersRouter,
+  vendors: vendorsRouter,
+  bills: billsRouter,
+  payments: paymentsRouter,
+  employees: employeesRouter,
+  payroll: payrollRouter,
+  bank: bankRouter,
 });
 
 export type AppRouter = typeof appRouter;
