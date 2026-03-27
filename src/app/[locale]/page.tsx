@@ -38,7 +38,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/ar/register"
-              className="px-6 py-2.5 text-sm font-semibold bg-[#e76500] text-white rounded-lg hover:bg-[#d45d00] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="px-6 py-2.5 text-sm font-semibold bg-white text-[#162560] rounded-lg hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 border border-border/30"
             >
               ابدأ تجربتك المجانية
             </Link>
@@ -47,7 +47,7 @@ export default function HomePage() {
       </header>
 
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden" style={{ background: "linear-gradient(160deg, #021544 0%, #0052CC 60%, #0070F2 100%)" }}>
+      <section className="relative overflow-hidden" style={{ background: "linear-gradient(to bottom, rgba(9,24,61,1), rgba(0,112,242,1))" }}>
         {/* Decorative elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -77,7 +77,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link
                 href="/ar/register"
-                className="px-10 py-4 text-base font-bold bg-[#e76500] text-white rounded-xl hover:bg-[#d45d00] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="px-10 py-4 text-base font-bold bg-white text-[#162560] rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
               >
                 ابدأ مجانًا — بدون بطاقة ائتمان
               </Link>
@@ -209,7 +209,7 @@ export default function HomePage() {
       </section>
 
       {/* ============ E-INVOICE SECTION ============ */}
-      <section id="einvoice" className="py-20" style={{ background: "linear-gradient(160deg, #021544 0%, #0052CC 100%)" }}>
+      <section id="einvoice" className="py-20" style={{ background: "linear-gradient(to bottom, rgba(9,24,61,1), rgba(0,112,242,1))" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-sm font-semibold text-[#00C9A7] mb-2 block">الفوترة الإلكترونية</span>
@@ -330,7 +330,7 @@ export default function HomePage() {
           <div className="inline-flex flex-col sm:flex-row gap-4">
             <Link
               href="/ar/register"
-              className="px-12 py-4 text-base font-bold bg-[#e76500] text-white rounded-xl hover:bg-[#d45d00] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+              className="px-12 py-4 text-base font-bold bg-[#0070F2] text-white rounded-xl hover:bg-[#005ed4] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
               ابدأ تجربتك المجانية
             </Link>

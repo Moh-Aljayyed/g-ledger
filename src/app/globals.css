@@ -3,7 +3,7 @@
 @theme {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
-  --color-primary: #0052CC;
+  --color-primary: #0070F2;
   --color-primary-foreground: #ffffff;
   --color-primary-light: #E6F0FF;
   --color-secondary: #f1f5f9;
@@ -16,7 +16,7 @@
   --color-destructive-foreground: #ffffff;
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
-  --color-ring: #0052CC;
+  --color-ring: #0070F2;
   --color-card: #ffffff;
   --color-card-foreground: #0a0a0a;
   --color-sidebar: #f8fafc;
