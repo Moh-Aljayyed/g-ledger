@@ -10,10 +10,12 @@ const navItems = [
   { key: "dashboard", href: "", icon: "📊" },
   { key: "chartOfAccounts", href: "/chart-of-accounts", icon: "🌳" },
   { key: "journalEntries", href: "/journal-entries", icon: "📝" },
+  { key: "invoices", href: "/invoices", icon: "🧾" },
   { key: "ledger", href: "/ledger", icon: "📖" },
   { key: "trialBalance", href: "/trial-balance", icon: "⚖️" },
   { key: "incomeStatement", href: "/financial-statements/income-statement", icon: "💰" },
   { key: "balanceSheet", href: "/financial-statements/balance-sheet", icon: "📋" },
+  { key: "taxSettings", href: "/tax-settings", icon: "🏛️" },
   { key: "settings", href: "/settings", icon: "⚙️" },
 ];
 

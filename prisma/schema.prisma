@@ -69,6 +69,8 @@ model Tenant {
   accounts       Account[]
   journalEntries JournalEntry[]
   fiscalPeriods  FiscalPeriod[]
+  invoices       Invoice[]
+  taxConfig      TaxConfig?
 }
 
 model User {
@@ -170,4 +172,214 @@ model JournalLine {
 
   @@index([journalEntryId])
   @@index([accountId])
+}
+
+// ============ E-INVOICE & TAX ============
+
+enum TaxCountry {
+  EG  // Egypt - ETA
+  SA  // Saudi Arabia - ZATCA
+}
+
+enum InvoiceType {
+  SALES        // فاتورة مبيعات
+  SALES_RETURN // مردودات مبيعات
+  PURCHASE     // فاتورة مشتريات
+  DEBIT_NOTE   // إشعار مدين
+  CREDIT_NOTE  // إشعار دائن
+}
+
+enum InvoiceStatus {
+  DRAFT        // مسودة
+  READY        // جاهز للإرسال
+  SUBMITTED    // تم الإرسال
+  ACCEPTED     // مقبولة
+  REJECTED     // مرفوضة
+  CANCELLED    // ملغاة
+}
+
+enum SubmissionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  RETRY
+}
+
+// Tax configuration per tenant
+model TaxConfig {
+  id                String     @id @default(cuid())
+  tenantId          String     @unique
+  tenant            Tenant     @relation(fields: [tenantId], references: [id])
+  country           TaxCountry
+
+  // Common fields
+  taxRegistrationNumber String    // الرقم الضريبي
+  companyNameAr      String       // اسم الشركة بالعربي
+  companyNameEn      String?      // اسم الشركة بالإنجليزي
+  branchId           String?      // رمز الفرع
+  activityCode       String?      // كود النشاط
+
+  // Address
+  addressStreet      String?
+  addressCity        String?
+  addressState       String?
+  addressCountry     String?
+  addressPostalCode  String?
+  addressBuildingNo  String?
+  addressAdditionalNo String?     // SA: Additional number
+  addressDistrict    String?      // SA: District
+
+  // Egypt ETA specific
+  etaClientId        String?      // ETA Client ID
+  etaClientSecret    String?      // ETA Client Secret
+  etaSignerSerialNo  String?      // رقم شهادة التوقيع الإلكتروني
+  etaSignerPin       String?      // PIN التوقيع
+  etaEnvironment     String?      @default("preproduction") // preproduction | production
+  etaTokenEndpoint   String?
+  etaApiEndpoint     String?
+
+  // Saudi ZATCA specific
+  zatcaCsid          String?      // Cryptographic Stamp Identifier
+  zatcaPrivateKey    String?      // المفتاح الخاص
+  zatcaCertificate   String?      // الشهادة
+  zatcaSecretKey     String?      // Secret key
+  zatcaEnvironment   String?      @default("sandbox") // sandbox | simulation | production
+  zatcaOtp           String?      // OTP for onboarding
+
+  // VAT config
+  vatRate            Decimal      @default(0) @db.Decimal(5, 2)  // نسبة الضريبة الأساسية
+
+  isActive           Boolean      @default(true)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+// E-Invoice
+model Invoice {
+  id                String        @id @default(cuid())
+  invoiceNumber     String        // رقم الفاتورة
+  internalId        String?       // Internal reference
+  uuid              String?       // UUID for ZATCA / Document UUID for ETA
+  type              InvoiceType
+  status            InvoiceStatus @default(DRAFT)
+
+  // Dates
+  issueDate         DateTime
+  supplyDate        DateTime?     // تاريخ التوريد
+
+  // Buyer info
+  buyerName         String
+  buyerNameEn       String?
+  buyerTaxId        String?       // الرقم الضريبي للمشتري
+  buyerAddress      String?
+  buyerCity         String?
+  buyerCountry      String?      @default("EG")
+  buyerType         String?      @default("B") // B=Business, P=Person, F=Foreign
+
+  // Totals
+  subtotal          Decimal       @db.Decimal(18, 4)  // المجموع قبل الضريبة
+  totalVat          Decimal       @db.Decimal(18, 4)  // إجمالي الضريبة
+  totalWithholding  Decimal       @default(0) @db.Decimal(18, 4) // ضريبة الخصم من المنبع (EG)
+  totalTableTax     Decimal       @default(0) @db.Decimal(18, 4) // ضريبة الجدول (EG)
+  totalDiscount     Decimal       @default(0) @db.Decimal(18, 4) // إجمالي الخصم
+  grandTotal        Decimal       @db.Decimal(18, 4)  // الإجمالي النهائي
+  currency          String        @default("EGP")
+  exchangeRate      Decimal       @default(1) @db.Decimal(10, 4)
+
+  // E-Invoice submission
+  submissionUuid    String?       // ETA submission UUID / ZATCA clearance ID
+  longId            String?       // ETA long ID
+  hashKey           String?       // ZATCA invoice hash
+  qrCode            String?       // QR code data
+  signedXml         String?       // Signed XML content @db.Text
+  pdfUrl            String?       // PDF/A-3 URL
+
+  // Metadata
+  notes             String?
+
+  // Relations
+  tenantId          String
+  tenant            Tenant        @relation(fields: [tenantId], references: [id])
+  journalEntryId    String?
+  createdById       String
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  items             InvoiceItem[]
+  submissions       InvoiceSubmission[]
+
+  @@unique([tenantId, invoiceNumber])
+  @@index([tenantId, status])
+  @@index([tenantId, issueDate])
+  @@index([tenantId, buyerTaxId])
+}
+
+// Invoice line items
+model InvoiceItem {
+  id                String    @id @default(cuid())
+  invoiceId         String
+  invoice           Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  lineNumber        Int
+  description       String
+  descriptionEn     String?
+
+  // Coding
+  itemCode          String?   // ETA: EGS/GS1 code | ZATCA: item code
+  itemCodeType      String?   // EGS, GS1, ZATCA
+  internalCode      String?   // الكود الداخلي
+  unitType          String?   @default("EA") // EA, KG, M, HR, etc.
+
+  // Amounts
+  quantity          Decimal   @db.Decimal(18, 4)
+  unitPrice         Decimal   @db.Decimal(18, 4)
+  discount          Decimal   @default(0) @db.Decimal(18, 4)
+  discountRate      Decimal   @default(0) @db.Decimal(5, 2)
+
+  // Tax
+  vatRate           Decimal   @db.Decimal(5, 2)   // نسبة ض.ق.م
+  vatAmount         Decimal   @db.Decimal(18, 4)  // مبلغ ض.ق.م
+  vatCategory       String?   @default("S")       // S=Standard, Z=Zero, E=Exempt, O=Out of scope
+
+  // Egypt specific taxes
+  withholdingRate   Decimal   @default(0) @db.Decimal(5, 2)  // نسبة ضريبة الخصم من المنبع
+  withholdingAmount Decimal   @default(0) @db.Decimal(18, 4)
+  tableTaxRate      Decimal   @default(0) @db.Decimal(5, 2)  // نسبة ضريبة الجدول
+  tableTaxAmount    Decimal   @default(0) @db.Decimal(18, 4)
+
+  // Totals
+  netAmount         Decimal   @db.Decimal(18, 4)  // الصافي بعد الخصم
+  totalAmount       Decimal   @db.Decimal(18, 4)  // الإجمالي مع الضريبة
+
+  // Linked account
+  accountId         String?
+
+  @@index([invoiceId])
+}
+
+// Submission log - tracks each attempt to submit to tax authority
+model InvoiceSubmission {
+  id                String           @id @default(cuid())
+  invoiceId         String
+  invoice           Invoice          @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  country           TaxCountry
+  status            SubmissionStatus @default(PENDING)
+
+  // Request/Response
+  requestPayload    String?          // JSON/XML sent
+  responsePayload   String?          // Response from authority
+  responseCode      String?          // HTTP status or error code
+  errorMessage      String?          // Error details
+
+  // Authority references
+  submissionUuid    String?          // Authority submission ID
+  documentUuid     String?          // Document UUID from authority
+  longId            String?          // ETA long ID
+
+  attemptNumber     Int              @default(1)
+  submittedAt       DateTime         @default(now())
+
+  @@index([invoiceId])
+  @@index([status])
 }
