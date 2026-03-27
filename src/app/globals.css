@@ -3,19 +3,20 @@
 @theme {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
-  --color-primary: #1e40af;
+  --color-primary: #0052CC;
   --color-primary-foreground: #ffffff;
+  --color-primary-light: #E6F0FF;
   --color-secondary: #f1f5f9;
   --color-secondary-foreground: #0f172a;
   --color-muted: #f1f5f9;
   --color-muted-foreground: #64748b;
-  --color-accent: #f1f5f9;
-  --color-accent-foreground: #0f172a;
+  --color-accent: #00C9A7;
+  --color-accent-foreground: #ffffff;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
-  --color-ring: #1e40af;
+  --color-ring: #0052CC;
   --color-card: #ffffff;
   --color-card-foreground: #0a0a0a;
   --color-sidebar: #f8fafc;
@@ -23,7 +24,10 @@
   --color-sidebar-border: #e2e8f0;
   --color-success: #22c55e;
   --color-warning: #f59e0b;
-  --font-sans: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+  --color-hero-start: #021544;
+  --color-hero-end: #0052CC;
+  --color-orange: #e76500;
+  --font-sans: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
