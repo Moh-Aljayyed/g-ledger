@@ -1,0 +1,145 @@
+import type { SectorConfig } from "./types";
+
+export const technologyConfig: SectorConfig = {
+  sector: "TECHNOLOGY",
+  nameAr: "تقنية",
+  nameEn: "Technology / SaaS",
+  chartOfAccounts: [
+    {
+      code: "1",
+      nameAr: "الأصول",
+      nameEn: "Assets",
+      type: "ASSET",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "11",
+          nameAr: "الأصول المتداولة",
+          nameEn: "Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1101", nameAr: "الصندوق", nameEn: "Cash on Hand", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "cash" },
+            { code: "1102", nameAr: "البنك", nameEn: "Bank", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "bank" },
+            { code: "1103", nameAr: "العملاء (المدينون)", nameEn: "Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "ar" },
+            { code: "1104", nameAr: "مصروفات مدفوعة مقدمًا", nameEn: "Prepaid Expenses", type: "ASSET", nature: "DEBIT", sectorTag: "prepaid" },
+          ],
+        },
+        {
+          code: "12",
+          nameAr: "الأصول غير المتداولة",
+          nameEn: "Non-Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1201", nameAr: "تكاليف تطوير رأسمالية", nameEn: "Capitalized Development Costs", type: "ASSET", nature: "DEBIT", sectorTag: "capitalized_dev" },
+            { code: "1202", nameAr: "المعدات", nameEn: "Equipment", type: "ASSET", nature: "DEBIT", sectorTag: "ppe" },
+            { code: "1203", nameAr: "مجمع الإهلاك والإطفاء", nameEn: "Accumulated Depreciation & Amortization", type: "ASSET", nature: "CREDIT", sectorTag: "acc_dep" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "2",
+      nameAr: "الخصوم (الالتزامات)",
+      nameEn: "Liabilities",
+      type: "LIABILITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        {
+          code: "21",
+          nameAr: "الخصوم المتداولة",
+          nameEn: "Current Liabilities",
+          type: "LIABILITY",
+          nature: "CREDIT",
+          isSystem: true,
+          children: [
+            { code: "2101", nameAr: "الموردون (الدائنون)", nameEn: "Accounts Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "ap" },
+            { code: "2102", nameAr: "إيرادات اشتراكات مؤجلة", nameEn: "Deferred Subscription Revenue", type: "LIABILITY", nature: "CREDIT", sectorTag: "deferred_subscription" },
+            { code: "2103", nameAr: "مصروفات مستحقة", nameEn: "Accrued Expenses", type: "LIABILITY", nature: "CREDIT", sectorTag: "accrued" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "3",
+      nameAr: "حقوق الملكية",
+      nameEn: "Equity",
+      type: "EQUITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "3101", nameAr: "رأس المال", nameEn: "Capital", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "capital" },
+        { code: "3102", nameAr: "أرباح مبقاة", nameEn: "Retained Earnings", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "retained_earnings" },
+      ],
+    },
+    {
+      code: "4",
+      nameAr: "الإيرادات",
+      nameEn: "Revenue",
+      type: "REVENUE",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "4101", nameAr: "إيرادات الاشتراكات", nameEn: "Subscription Revenue", type: "REVENUE", nature: "CREDIT", isSystem: true, sectorTag: "subscription_revenue" },
+        { code: "4102", nameAr: "رسوم الإعداد", nameEn: "Setup Fees", type: "REVENUE", nature: "CREDIT", sectorTag: "setup_fees" },
+        { code: "4103", nameAr: "إيرادات الخدمات المهنية", nameEn: "Professional Services Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "professional_services" },
+        { code: "4104", nameAr: "إيرادات التراخيص", nameEn: "License Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "license_revenue" },
+      ],
+    },
+    {
+      code: "5",
+      nameAr: "المصروفات",
+      nameEn: "Expenses",
+      type: "EXPENSE",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "51",
+          nameAr: "تكاليف تقديم الخدمة",
+          nameEn: "Cost of Service Delivery",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "5101", nameAr: "تكاليف الاستضافة والبنية التحتية", nameEn: "Hosting & Infrastructure", type: "EXPENSE", nature: "DEBIT", sectorTag: "hosting" },
+            { code: "5102", nameAr: "رواتب التطوير", nameEn: "Development Salaries", type: "EXPENSE", nature: "DEBIT", sectorTag: "dev_salaries" },
+          ],
+        },
+        {
+          code: "52",
+          nameAr: "المصروفات التشغيلية",
+          nameEn: "Operating Expenses",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          children: [
+            { code: "5201", nameAr: "مصاريف التسويق", nameEn: "Marketing Expenses", type: "EXPENSE", nature: "DEBIT", sectorTag: "marketing" },
+            { code: "5202", nameAr: "عمولات المبيعات", nameEn: "Sales Commissions", type: "EXPENSE", nature: "DEBIT", sectorTag: "sales_commissions" },
+            { code: "5203", nameAr: "الرواتب والأجور - إدارية", nameEn: "Administrative Salaries", type: "EXPENSE", nature: "DEBIT", sectorTag: "salaries" },
+            { code: "5204", nameAr: "الإيجار", nameEn: "Rent", type: "EXPENSE", nature: "DEBIT", sectorTag: "rent" },
+            { code: "5205", nameAr: "مصاريف الإهلاك والإطفاء", nameEn: "Depreciation & Amortization", type: "EXPENSE", nature: "DEBIT", sectorTag: "depreciation" },
+            { code: "5206", nameAr: "مصاريف متنوعة", nameEn: "Miscellaneous Expenses", type: "EXPENSE", nature: "DEBIT" },
+          ],
+        },
+      ],
+    },
+  ],
+  financialStatementMapping: {
+    incomeStatement: [
+      { key: "revenue", nameAr: "الإيرادات", nameEn: "Revenue", sectorTags: ["subscription_revenue", "setup_fees", "professional_services", "license_revenue"] },
+      { key: "cost_of_service", nameAr: "تكاليف تقديم الخدمة", nameEn: "Cost of Service Delivery", accountCodes: ["51"] },
+      { key: "operating_expenses", nameAr: "المصروفات التشغيلية", nameEn: "Operating Expenses", accountCodes: ["52"] },
+    ],
+    balanceSheet: [
+      { key: "current_assets", nameAr: "الأصول المتداولة", nameEn: "Current Assets", accountCodes: ["11"] },
+      { key: "non_current_assets", nameAr: "الأصول غير المتداولة", nameEn: "Non-Current Assets", accountCodes: ["12"] },
+      { key: "current_liabilities", nameAr: "الخصوم المتداولة", nameEn: "Current Liabilities", accountCodes: ["21"] },
+      { key: "equity", nameAr: "حقوق الملكية", nameEn: "Equity", accountCodes: ["3"] },
+    ],
+  },
+};

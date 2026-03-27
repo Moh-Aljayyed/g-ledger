@@ -1,0 +1,135 @@
+import type { SectorConfig } from "./types";
+
+export const servicesConfig: SectorConfig = {
+  sector: "SERVICES",
+  nameAr: "خدمي",
+  nameEn: "Services",
+  chartOfAccounts: [
+    {
+      code: "1",
+      nameAr: "الأصول",
+      nameEn: "Assets",
+      type: "ASSET",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "11",
+          nameAr: "الأصول المتداولة",
+          nameEn: "Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1101", nameAr: "الصندوق", nameEn: "Cash on Hand", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "cash" },
+            { code: "1102", nameAr: "البنك", nameEn: "Bank", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "bank" },
+            { code: "1103", nameAr: "العملاء (المدينون)", nameEn: "Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "ar" },
+            { code: "1104", nameAr: "مصروفات مدفوعة مقدمًا", nameEn: "Prepaid Expenses", type: "ASSET", nature: "DEBIT", sectorTag: "prepaid" },
+          ],
+        },
+        {
+          code: "12",
+          nameAr: "الأصول غير المتداولة",
+          nameEn: "Non-Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1201", nameAr: "المعدات", nameEn: "Equipment", type: "ASSET", nature: "DEBIT", sectorTag: "ppe" },
+            { code: "1202", nameAr: "مجمع الإهلاك", nameEn: "Accumulated Depreciation", type: "ASSET", nature: "CREDIT", sectorTag: "acc_dep" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "2",
+      nameAr: "الخصوم (الالتزامات)",
+      nameEn: "Liabilities",
+      type: "LIABILITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        {
+          code: "21",
+          nameAr: "الخصوم المتداولة",
+          nameEn: "Current Liabilities",
+          type: "LIABILITY",
+          nature: "CREDIT",
+          isSystem: true,
+          children: [
+            { code: "2101", nameAr: "الموردون (الدائنون)", nameEn: "Accounts Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "ap" },
+            { code: "2102", nameAr: "مصروفات مستحقة", nameEn: "Accrued Expenses", type: "LIABILITY", nature: "CREDIT", sectorTag: "accrued" },
+            { code: "2103", nameAr: "ضريبة القيمة المضافة - دائنة", nameEn: "VAT Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "vat_output" },
+            { code: "2104", nameAr: "إيرادات مؤجلة", nameEn: "Deferred Revenue", type: "LIABILITY", nature: "CREDIT", sectorTag: "deferred_revenue" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "3",
+      nameAr: "حقوق الملكية",
+      nameEn: "Equity",
+      type: "EQUITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "3101", nameAr: "رأس المال", nameEn: "Capital", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "capital" },
+        { code: "3102", nameAr: "أرباح مبقاة", nameEn: "Retained Earnings", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "retained_earnings" },
+      ],
+    },
+    {
+      code: "4",
+      nameAr: "الإيرادات",
+      nameEn: "Revenue",
+      type: "REVENUE",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "4101", nameAr: "إيرادات الاستشارات", nameEn: "Consulting Revenue", type: "REVENUE", nature: "CREDIT", isSystem: true, sectorTag: "service_revenue" },
+        { code: "4102", nameAr: "إيرادات الخدمات المهنية", nameEn: "Professional Fees Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "professional_fees" },
+        { code: "4201", nameAr: "إيرادات أخرى", nameEn: "Other Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "other_revenue" },
+      ],
+    },
+    {
+      code: "5",
+      nameAr: "المصروفات",
+      nameEn: "Expenses",
+      type: "EXPENSE",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "52",
+          nameAr: "المصروفات التشغيلية",
+          nameEn: "Operating Expenses",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          children: [
+            { code: "5201", nameAr: "الرواتب والأجور", nameEn: "Salaries & Wages", type: "EXPENSE", nature: "DEBIT", sectorTag: "salaries" },
+            { code: "5202", nameAr: "الإيجار", nameEn: "Rent", type: "EXPENSE", nature: "DEBIT", sectorTag: "rent" },
+            { code: "5203", nameAr: "الكهرباء والمياه", nameEn: "Utilities", type: "EXPENSE", nature: "DEBIT", sectorTag: "utilities" },
+            { code: "5204", nameAr: "التطوير المهني والتدريب", nameEn: "Professional Development", type: "EXPENSE", nature: "DEBIT" },
+            { code: "5205", nameAr: "مصاريف السفر والتنقل", nameEn: "Travel Expenses", type: "EXPENSE", nature: "DEBIT" },
+            { code: "5206", nameAr: "مصاريف التسويق والإعلان", nameEn: "Marketing & Advertising", type: "EXPENSE", nature: "DEBIT" },
+            { code: "5207", nameAr: "مصاريف الإهلاك", nameEn: "Depreciation Expense", type: "EXPENSE", nature: "DEBIT", sectorTag: "depreciation" },
+            { code: "5208", nameAr: "مصاريف بنكية", nameEn: "Bank Charges", type: "EXPENSE", nature: "DEBIT" },
+            { code: "5209", nameAr: "مصاريف متنوعة", nameEn: "Miscellaneous Expenses", type: "EXPENSE", nature: "DEBIT" },
+          ],
+        },
+      ],
+    },
+  ],
+  financialStatementMapping: {
+    incomeStatement: [
+      { key: "service_revenue", nameAr: "إيرادات الخدمات", nameEn: "Service Revenue", sectorTags: ["service_revenue", "professional_fees"] },
+      { key: "operating_expenses", nameAr: "المصروفات التشغيلية", nameEn: "Operating Expenses", accountCodes: ["52"] },
+      { key: "other_revenue", nameAr: "إيرادات أخرى", nameEn: "Other Revenue", sectorTags: ["other_revenue"] },
+    ],
+    balanceSheet: [
+      { key: "current_assets", nameAr: "الأصول المتداولة", nameEn: "Current Assets", accountCodes: ["11"] },
+      { key: "non_current_assets", nameAr: "الأصول غير المتداولة", nameEn: "Non-Current Assets", accountCodes: ["12"] },
+      { key: "current_liabilities", nameAr: "الخصوم المتداولة", nameEn: "Current Liabilities", accountCodes: ["21"] },
+      { key: "equity", nameAr: "حقوق الملكية", nameEn: "Equity", accountCodes: ["3"] },
+    ],
+  },
+};

@@ -1,0 +1,148 @@
+import type { SectorConfig } from "./types";
+
+export const medicalPharmacyConfig: SectorConfig = {
+  sector: "MEDICAL_PHARMACY",
+  nameAr: "صيدليات",
+  nameEn: "Medical (Pharmacies)",
+  chartOfAccounts: [
+    {
+      code: "1",
+      nameAr: "الأصول",
+      nameEn: "Assets",
+      type: "ASSET",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "11",
+          nameAr: "الأصول المتداولة",
+          nameEn: "Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1101", nameAr: "الصندوق", nameEn: "Cash on Hand", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "cash" },
+            { code: "1102", nameAr: "البنك", nameEn: "Bank", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "bank" },
+            { code: "1103", nameAr: "العملاء (المدينون)", nameEn: "Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "ar" },
+            { code: "1104", nameAr: "مخزون الأدوية - بدون وصفة", nameEn: "Drug Inventory - OTC", type: "ASSET", nature: "DEBIT", sectorTag: "otc_inventory" },
+            { code: "1105", nameAr: "مخزون الأدوية - بوصفة طبية", nameEn: "Drug Inventory - Prescription", type: "ASSET", nature: "DEBIT", sectorTag: "prescription_inventory" },
+            { code: "1106", nameAr: "مخزون المكملات الغذائية", nameEn: "Drug Inventory - Supplements", type: "ASSET", nature: "DEBIT", sectorTag: "supplements_inventory" },
+            { code: "1107", nameAr: "مستحقات شركات التأمين", nameEn: "Insurance Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "insurance_receivable" },
+          ],
+        },
+        {
+          code: "12",
+          nameAr: "الأصول غير المتداولة",
+          nameEn: "Non-Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1201", nameAr: "المعدات والتجهيزات", nameEn: "Equipment & Fixtures", type: "ASSET", nature: "DEBIT", sectorTag: "ppe" },
+            { code: "1202", nameAr: "مجمع الإهلاك", nameEn: "Accumulated Depreciation", type: "ASSET", nature: "CREDIT", sectorTag: "acc_dep" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "2",
+      nameAr: "الخصوم (الالتزامات)",
+      nameEn: "Liabilities",
+      type: "LIABILITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        {
+          code: "21",
+          nameAr: "الخصوم المتداولة",
+          nameEn: "Current Liabilities",
+          type: "LIABILITY",
+          nature: "CREDIT",
+          isSystem: true,
+          children: [
+            { code: "2101", nameAr: "الموردون (الدائنون)", nameEn: "Accounts Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "ap" },
+            { code: "2102", nameAr: "ضريبة القيمة المضافة - دائنة", nameEn: "VAT Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "vat_output" },
+            { code: "2103", nameAr: "رواتب الموظفين المستحقة", nameEn: "Staff Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "staff_payable" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "3",
+      nameAr: "حقوق الملكية",
+      nameEn: "Equity",
+      type: "EQUITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "3101", nameAr: "رأس المال", nameEn: "Capital", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "capital" },
+        { code: "3102", nameAr: "أرباح مبقاة", nameEn: "Retained Earnings", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "retained_earnings" },
+      ],
+    },
+    {
+      code: "4",
+      nameAr: "الإيرادات",
+      nameEn: "Revenue",
+      type: "REVENUE",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "4101", nameAr: "مبيعات الأدوية بوصفة طبية", nameEn: "Prescription Drug Sales", type: "REVENUE", nature: "CREDIT", isSystem: true, sectorTag: "prescription_sales" },
+        { code: "4102", nameAr: "مبيعات الأدوية بدون وصفة", nameEn: "OTC Drug Sales", type: "REVENUE", nature: "CREDIT", sectorTag: "otc_sales" },
+        { code: "4103", nameAr: "مبيعات المكملات الغذائية", nameEn: "Supplement Sales", type: "REVENUE", nature: "CREDIT", sectorTag: "supplement_sales" },
+        { code: "4104", nameAr: "إيرادات التأمين", nameEn: "Insurance Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "insurance_revenue" },
+      ],
+    },
+    {
+      code: "5",
+      nameAr: "المصروفات",
+      nameEn: "Expenses",
+      type: "EXPENSE",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "51",
+          nameAr: "تكلفة البضاعة المباعة",
+          nameEn: "Cost of Goods Sold",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "5101", nameAr: "مشتريات الأدوية", nameEn: "Drug Purchases", type: "EXPENSE", nature: "DEBIT", sectorTag: "drug_purchases" },
+            { code: "5102", nameAr: "خسائر الأدوية المنتهية الصلاحية", nameEn: "Expired Drug Losses", type: "EXPENSE", nature: "DEBIT", sectorTag: "expired_drug_losses" },
+          ],
+        },
+        {
+          code: "52",
+          nameAr: "المصروفات التشغيلية",
+          nameEn: "Operating Expenses",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          children: [
+            { code: "5201", nameAr: "رواتب الموظفين", nameEn: "Staff Salaries", type: "EXPENSE", nature: "DEBIT", sectorTag: "salaries" },
+            { code: "5202", nameAr: "الإيجار", nameEn: "Rent", type: "EXPENSE", nature: "DEBIT", sectorTag: "rent" },
+            { code: "5203", nameAr: "الكهرباء والمياه", nameEn: "Utilities", type: "EXPENSE", nature: "DEBIT", sectorTag: "utilities" },
+            { code: "5204", nameAr: "مصاريف الامتثال التنظيمي", nameEn: "Regulatory Compliance", type: "EXPENSE", nature: "DEBIT", sectorTag: "regulatory_compliance" },
+            { code: "5205", nameAr: "مصاريف الإهلاك", nameEn: "Depreciation Expense", type: "EXPENSE", nature: "DEBIT", sectorTag: "depreciation" },
+            { code: "5206", nameAr: "مصاريف متنوعة", nameEn: "Miscellaneous Expenses", type: "EXPENSE", nature: "DEBIT" },
+          ],
+        },
+      ],
+    },
+  ],
+  financialStatementMapping: {
+    incomeStatement: [
+      { key: "drug_sales", nameAr: "مبيعات الأدوية", nameEn: "Drug Sales", sectorTags: ["prescription_sales", "otc_sales", "supplement_sales"] },
+      { key: "insurance_revenue", nameAr: "إيرادات التأمين", nameEn: "Insurance Revenue", sectorTags: ["insurance_revenue"] },
+      { key: "cogs", nameAr: "تكلفة البضاعة المباعة", nameEn: "Cost of Goods Sold", accountCodes: ["51"] },
+      { key: "operating_expenses", nameAr: "المصروفات التشغيلية", nameEn: "Operating Expenses", accountCodes: ["52"] },
+    ],
+    balanceSheet: [
+      { key: "current_assets", nameAr: "الأصول المتداولة", nameEn: "Current Assets", accountCodes: ["11"] },
+      { key: "non_current_assets", nameAr: "الأصول غير المتداولة", nameEn: "Non-Current Assets", accountCodes: ["12"] },
+      { key: "current_liabilities", nameAr: "الخصوم المتداولة", nameEn: "Current Liabilities", accountCodes: ["21"] },
+      { key: "equity", nameAr: "حقوق الملكية", nameEn: "Equity", accountCodes: ["3"] },
+    ],
+  },
+};

@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============ ENUMS ============
+
+enum Sector {
+  INDUSTRIAL
+  COMMERCIAL
+  SERVICES
+  BANKING
+  INSURANCE
+  REAL_ESTATE
+  CONTRACTING
+  AGRICULTURAL
+  TECHNOLOGY
+  NON_PROFIT
+  CROWDFUNDING
+  MEDICAL_HOSPITAL
+  MEDICAL_PHARMACY
+  MEDICAL_CLINIC
+  MEDICAL_LAB
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  ACCOUNTANT
+  VIEWER
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+}
+
+enum AccountNature {
+  DEBIT
+  CREDIT
+}
+
+enum JournalEntryStatus {
+  DRAFT
+  POSTED
+  REVERSED
+}
+
+// ============ MULTI-TENANCY ============
+
+model Tenant {
+  id              String   @id @default(cuid())
+  name            String
+  sector          Sector
+  locale          String   @default("ar")
+  currency        String   @default("SAR")
+  fiscalYearStart Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  users          User[]
+  accounts       Account[]
+  journalEntries JournalEntry[]
+  fiscalPeriods  FiscalPeriod[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         UserRole @default(ACCOUNTANT)
+  tenantId     String
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([tenantId])
+}
+
+// ============ CHART OF ACCOUNTS ============
+
+model Account {
+  id        String        @id @default(cuid())
+  code      String
+  nameAr    String
+  nameEn    String
+  type      AccountType
+  nature    AccountNature
+  parentId  String?
+  parent    Account?      @relation("AccountTree", fields: [parentId], references: [id])
+  children  Account[]     @relation("AccountTree")
+  level     Int
+  isLeaf    Boolean       @default(true)
+  isSystem  Boolean       @default(false)
+  isActive  Boolean       @default(true)
+  sectorTag String?
+  metadata  Json?
+  tenantId  String
+  tenant    Tenant        @relation(fields: [tenantId], references: [id])
+
+  journalLines JournalLine[]
+
+  @@unique([tenantId, code])
+  @@index([tenantId, type])
+  @@index([tenantId, parentId])
+}
+
+// ============ FISCAL PERIODS ============
+
+model FiscalPeriod {
+  id        String   @id @default(cuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  isClosed  Boolean  @default(false)
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+
+  journalEntries JournalEntry[]
+
+  @@unique([tenantId, startDate, endDate])
+  @@index([tenantId])
+}
+
+// ============ JOURNAL ENTRIES ============
+
+model JournalEntry {
+  id             String             @id @default(cuid())
+  entryNumber    Int
+  date           DateTime
+  description    String
+  reference      String?
+  status         JournalEntryStatus @default(DRAFT)
+  fiscalPeriodId String
+  fiscalPeriod   FiscalPeriod       @relation(fields: [fiscalPeriodId], references: [id])
+  reversalOfId   String?            @unique
+  reversalOf     JournalEntry?      @relation("Reversal", fields: [reversalOfId], references: [id])
+  reversedBy     JournalEntry?      @relation("Reversal")
+  tenantId       String
+  tenant         Tenant             @relation(fields: [tenantId], references: [id])
+  createdById    String
+  createdAt      DateTime           @default(now())
+  postedAt       DateTime?
+
+  lines JournalLine[]
+
+  @@index([tenantId, date])
+  @@index([tenantId, entryNumber])
+  @@index([tenantId, status])
+}
+
+model JournalLine {
+  id             String       @id @default(cuid())
+  journalEntryId String
+  journalEntry   JournalEntry @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  accountId      String
+  account        Account      @relation(fields: [accountId], references: [id])
+  debit          Decimal      @default(0) @db.Decimal(18, 4)
+  credit         Decimal      @default(0) @db.Decimal(18, 4)
+  description    String?
+  metadata       Json?
+
+  @@index([journalEntryId])
+  @@index([accountId])
+}

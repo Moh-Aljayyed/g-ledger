@@ -1,0 +1,147 @@
+import type { SectorConfig } from "./types";
+
+export const medicalLabConfig: SectorConfig = {
+  sector: "MEDICAL_LAB",
+  nameAr: "مختبرات طبية",
+  nameEn: "Medical (Labs)",
+  chartOfAccounts: [
+    {
+      code: "1",
+      nameAr: "الأصول",
+      nameEn: "Assets",
+      type: "ASSET",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "11",
+          nameAr: "الأصول المتداولة",
+          nameEn: "Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1101", nameAr: "الصندوق", nameEn: "Cash on Hand", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "cash" },
+            { code: "1102", nameAr: "البنك", nameEn: "Bank", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "bank" },
+            { code: "1103", nameAr: "العملاء (المدينون)", nameEn: "Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "ar" },
+            { code: "1104", nameAr: "ذمم شركات التأمين", nameEn: "Insurance Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "insurance_ar" },
+            { code: "1105", nameAr: "مخزون الكواشف والمواد الكيميائية", nameEn: "Reagents & Chemicals Inventory", type: "ASSET", nature: "DEBIT", sectorTag: "reagents_inventory" },
+          ],
+        },
+        {
+          code: "12",
+          nameAr: "الأصول غير المتداولة",
+          nameEn: "Non-Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1201", nameAr: "أجهزة المختبر", nameEn: "Lab Equipment", type: "ASSET", nature: "DEBIT", sectorTag: "lab_equipment" },
+            { code: "1202", nameAr: "مجمع الإهلاك", nameEn: "Accumulated Depreciation", type: "ASSET", nature: "CREDIT", sectorTag: "acc_dep" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "2",
+      nameAr: "الخصوم (الالتزامات)",
+      nameEn: "Liabilities",
+      type: "LIABILITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        {
+          code: "21",
+          nameAr: "الخصوم المتداولة",
+          nameEn: "Current Liabilities",
+          type: "LIABILITY",
+          nature: "CREDIT",
+          isSystem: true,
+          children: [
+            { code: "2101", nameAr: "الموردون (الدائنون)", nameEn: "Accounts Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "ap" },
+            { code: "2102", nameAr: "ضريبة القيمة المضافة - دائنة", nameEn: "VAT Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "vat_output" },
+            { code: "2103", nameAr: "مصروفات مستحقة", nameEn: "Accrued Expenses", type: "LIABILITY", nature: "CREDIT", sectorTag: "accrued" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "3",
+      nameAr: "حقوق الملكية",
+      nameEn: "Equity",
+      type: "EQUITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "3101", nameAr: "رأس المال", nameEn: "Capital", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "capital" },
+        { code: "3102", nameAr: "أرباح مبقاة", nameEn: "Retained Earnings", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "retained_earnings" },
+      ],
+    },
+    {
+      code: "4",
+      nameAr: "الإيرادات",
+      nameEn: "Revenue",
+      type: "REVENUE",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "4101", nameAr: "إيرادات تحاليل الدم", nameEn: "Hematology Test Revenue", type: "REVENUE", nature: "CREDIT", isSystem: true, sectorTag: "hematology_revenue" },
+        { code: "4102", nameAr: "إيرادات التحاليل الكيميائية", nameEn: "Chemistry Test Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "chemistry_revenue" },
+        { code: "4103", nameAr: "إيرادات تحاليل الأحياء الدقيقة", nameEn: "Microbiology Test Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "microbiology_revenue" },
+        { code: "4104", nameAr: "إيرادات تحاليل المناعة", nameEn: "Immunology Test Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "immunology_revenue" },
+        { code: "4105", nameAr: "إيرادات التأمين", nameEn: "Insurance Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "insurance_revenue" },
+      ],
+    },
+    {
+      code: "5",
+      nameAr: "المصروفات",
+      nameEn: "Expenses",
+      type: "EXPENSE",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "51",
+          nameAr: "التكاليف المباشرة",
+          nameEn: "Direct Costs",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "5101", nameAr: "تكلفة الكواشف والمواد", nameEn: "Reagent Costs", type: "EXPENSE", nature: "DEBIT", sectorTag: "reagent_costs" },
+            { code: "5102", nameAr: "صيانة أجهزة المختبر", nameEn: "Lab Equipment Maintenance", type: "EXPENSE", nature: "DEBIT", sectorTag: "lab_maintenance" },
+          ],
+        },
+        {
+          code: "52",
+          nameAr: "المصروفات التشغيلية",
+          nameEn: "Operating Expenses",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          children: [
+            { code: "5201", nameAr: "رواتب الموظفين", nameEn: "Staff Salaries", type: "EXPENSE", nature: "DEBIT", sectorTag: "salaries" },
+            { code: "5202", nameAr: "مصاريف ضبط الجودة", nameEn: "Quality Control Expenses", type: "EXPENSE", nature: "DEBIT", sectorTag: "quality_control" },
+            { code: "5203", nameAr: "الكهرباء والمياه", nameEn: "Utilities", type: "EXPENSE", nature: "DEBIT", sectorTag: "utilities" },
+            { code: "5204", nameAr: "الإيجار", nameEn: "Rent", type: "EXPENSE", nature: "DEBIT", sectorTag: "rent" },
+            { code: "5205", nameAr: "مصاريف الإهلاك", nameEn: "Depreciation Expense", type: "EXPENSE", nature: "DEBIT", sectorTag: "depreciation" },
+            { code: "5206", nameAr: "مصاريف متنوعة", nameEn: "Miscellaneous Expenses", type: "EXPENSE", nature: "DEBIT" },
+          ],
+        },
+      ],
+    },
+  ],
+  financialStatementMapping: {
+    incomeStatement: [
+      { key: "test_revenue", nameAr: "إيرادات التحاليل", nameEn: "Test Revenue", sectorTags: ["hematology_revenue", "chemistry_revenue", "microbiology_revenue", "immunology_revenue"] },
+      { key: "insurance_revenue", nameAr: "إيرادات التأمين", nameEn: "Insurance Revenue", sectorTags: ["insurance_revenue"] },
+      { key: "direct_costs", nameAr: "التكاليف المباشرة", nameEn: "Direct Costs", accountCodes: ["51"] },
+      { key: "operating_expenses", nameAr: "المصروفات التشغيلية", nameEn: "Operating Expenses", accountCodes: ["52"] },
+    ],
+    balanceSheet: [
+      { key: "current_assets", nameAr: "الأصول المتداولة", nameEn: "Current Assets", accountCodes: ["11"] },
+      { key: "non_current_assets", nameAr: "الأصول غير المتداولة", nameEn: "Non-Current Assets", accountCodes: ["12"] },
+      { key: "current_liabilities", nameAr: "الخصوم المتداولة", nameEn: "Current Liabilities", accountCodes: ["21"] },
+      { key: "equity", nameAr: "حقوق الملكية", nameEn: "Equity", accountCodes: ["3"] },
+    ],
+  },
+};

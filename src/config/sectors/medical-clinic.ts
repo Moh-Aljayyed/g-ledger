@@ -1,0 +1,146 @@
+import type { SectorConfig } from "./types";
+
+export const medicalClinicConfig: SectorConfig = {
+  sector: "MEDICAL_CLINIC",
+  nameAr: "عيادات",
+  nameEn: "Medical (Clinics)",
+  chartOfAccounts: [
+    {
+      code: "1",
+      nameAr: "الأصول",
+      nameEn: "Assets",
+      type: "ASSET",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "11",
+          nameAr: "الأصول المتداولة",
+          nameEn: "Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1101", nameAr: "الصندوق", nameEn: "Cash on Hand", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "cash" },
+            { code: "1102", nameAr: "البنك", nameEn: "Bank", type: "ASSET", nature: "DEBIT", isSystem: true, sectorTag: "bank" },
+            { code: "1103", nameAr: "ذمم المرضى المدينة", nameEn: "Patient Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "patient_ar" },
+            { code: "1104", nameAr: "ذمم شركات التأمين", nameEn: "Insurance Accounts Receivable", type: "ASSET", nature: "DEBIT", sectorTag: "insurance_ar" },
+            { code: "1105", nameAr: "مستلزمات طبية", nameEn: "Medical Supplies", type: "ASSET", nature: "DEBIT", sectorTag: "medical_supplies" },
+          ],
+        },
+        {
+          code: "12",
+          nameAr: "الأصول غير المتداولة",
+          nameEn: "Non-Current Assets",
+          type: "ASSET",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "1201", nameAr: "أجهزة ومعدات طبية", nameEn: "Medical Equipment", type: "ASSET", nature: "DEBIT", sectorTag: "medical_equipment" },
+            { code: "1202", nameAr: "مجمع الإهلاك", nameEn: "Accumulated Depreciation", type: "ASSET", nature: "CREDIT", sectorTag: "acc_dep" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "2",
+      nameAr: "الخصوم (الالتزامات)",
+      nameEn: "Liabilities",
+      type: "LIABILITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        {
+          code: "21",
+          nameAr: "الخصوم المتداولة",
+          nameEn: "Current Liabilities",
+          type: "LIABILITY",
+          nature: "CREDIT",
+          isSystem: true,
+          children: [
+            { code: "2101", nameAr: "الموردون (الدائنون)", nameEn: "Accounts Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "ap" },
+            { code: "2102", nameAr: "حصة الأطباء المستحقة", nameEn: "Doctor Share Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "doctor_share_payable" },
+            { code: "2103", nameAr: "مستحقات التأمين", nameEn: "Insurance Payable", type: "LIABILITY", nature: "CREDIT", sectorTag: "insurance_payable" },
+          ],
+        },
+      ],
+    },
+    {
+      code: "3",
+      nameAr: "حقوق الملكية",
+      nameEn: "Equity",
+      type: "EQUITY",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "3101", nameAr: "رأس المال", nameEn: "Capital", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "capital" },
+        { code: "3102", nameAr: "أرباح مبقاة", nameEn: "Retained Earnings", type: "EQUITY", nature: "CREDIT", isSystem: true, sectorTag: "retained_earnings" },
+      ],
+    },
+    {
+      code: "4",
+      nameAr: "الإيرادات",
+      nameEn: "Revenue",
+      type: "REVENUE",
+      nature: "CREDIT",
+      isSystem: true,
+      children: [
+        { code: "4101", nameAr: "إيرادات الاستشارات", nameEn: "Consultation Revenue", type: "REVENUE", nature: "CREDIT", isSystem: true, sectorTag: "consultation_revenue" },
+        { code: "4102", nameAr: "إيرادات الإجراءات الطبية", nameEn: "Procedure Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "procedure_revenue" },
+        { code: "4103", nameAr: "إيرادات المختبر", nameEn: "Lab Revenue", type: "REVENUE", nature: "CREDIT", sectorTag: "lab_revenue" },
+        { code: "4104", nameAr: "حصة إيرادات الأطباء", nameEn: "Doctor Revenue Share", type: "REVENUE", nature: "DEBIT", sectorTag: "doctor_revenue_share" },
+      ],
+    },
+    {
+      code: "5",
+      nameAr: "المصروفات",
+      nameEn: "Expenses",
+      type: "EXPENSE",
+      nature: "DEBIT",
+      isSystem: true,
+      children: [
+        {
+          code: "51",
+          nameAr: "التكاليف الطبية المباشرة",
+          nameEn: "Direct Medical Costs",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          isSystem: true,
+          children: [
+            { code: "5101", nameAr: "أتعاب الأطباء", nameEn: "Doctor Compensation", type: "EXPENSE", nature: "DEBIT", sectorTag: "doctor_compensation" },
+            { code: "5102", nameAr: "تكلفة المستلزمات الطبية", nameEn: "Medical Supplies Cost", type: "EXPENSE", nature: "DEBIT", sectorTag: "medical_supplies_cost" },
+          ],
+        },
+        {
+          code: "52",
+          nameAr: "المصروفات التشغيلية",
+          nameEn: "Operating Expenses",
+          type: "EXPENSE",
+          nature: "DEBIT",
+          children: [
+            { code: "5201", nameAr: "رواتب الموظفين", nameEn: "Staff Salaries", type: "EXPENSE", nature: "DEBIT", sectorTag: "salaries" },
+            { code: "5202", nameAr: "الإيجار", nameEn: "Rent", type: "EXPENSE", nature: "DEBIT", sectorTag: "rent" },
+            { code: "5203", nameAr: "الكهرباء والمياه", nameEn: "Utilities", type: "EXPENSE", nature: "DEBIT", sectorTag: "utilities" },
+            { code: "5204", nameAr: "صيانة المعدات الطبية", nameEn: "Medical Equipment Maintenance", type: "EXPENSE", nature: "DEBIT", sectorTag: "equipment_maintenance" },
+            { code: "5205", nameAr: "مصاريف الإهلاك", nameEn: "Depreciation Expense", type: "EXPENSE", nature: "DEBIT", sectorTag: "depreciation" },
+            { code: "5206", nameAr: "مصاريف متنوعة", nameEn: "Miscellaneous Expenses", type: "EXPENSE", nature: "DEBIT" },
+          ],
+        },
+      ],
+    },
+  ],
+  financialStatementMapping: {
+    incomeStatement: [
+      { key: "medical_revenue", nameAr: "الإيرادات الطبية", nameEn: "Medical Revenue", sectorTags: ["consultation_revenue", "procedure_revenue", "lab_revenue"] },
+      { key: "doctor_share", nameAr: "حصة الأطباء", nameEn: "Doctor Revenue Share", sectorTags: ["doctor_revenue_share"] },
+      { key: "direct_medical_costs", nameAr: "التكاليف الطبية المباشرة", nameEn: "Direct Medical Costs", accountCodes: ["51"] },
+      { key: "operating_expenses", nameAr: "المصروفات التشغيلية", nameEn: "Operating Expenses", accountCodes: ["52"] },
+    ],
+    balanceSheet: [
+      { key: "current_assets", nameAr: "الأصول المتداولة", nameEn: "Current Assets", accountCodes: ["11"] },
+      { key: "non_current_assets", nameAr: "الأصول غير المتداولة", nameEn: "Non-Current Assets", accountCodes: ["12"] },
+      { key: "current_liabilities", nameAr: "الخصوم المتداولة", nameEn: "Current Liabilities", accountCodes: ["21"] },
+      { key: "equity", nameAr: "حقوق الملكية", nameEn: "Equity", accountCodes: ["3"] },
+    ],
+  },
+};
