@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc";
 import Link from "next/link";
+import { useGeoLocation } from "./useGeoLocation";
 
 const SECTORS = [
   "INDUSTRIAL", "COMMERCIAL", "SERVICES", "BANKING", "INSURANCE",
@@ -18,6 +19,8 @@ export default function RegisterPage() {
   const ts = useTranslations("sectors");
   const td = useTranslations("sectorDescriptions");
   const router = useRouter();
+
+  const { country: detectedCountry } = useGeoLocation();
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [formData, setFormData] = useState({
@@ -34,6 +37,8 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [lookupResult, setLookupResult] = useState<any>(null);
   const [lookupQuery, setLookupQuery] = useState("");
+
+  useEffect(() => { if (detectedCountry) setFormData(prev => ({ ...prev, country: detectedCountry as any })); }, [detectedCountry]);
 
   // Debounced lookup
   const { data: verificationData, isLoading: lookingUp } = trpc.verification.lookup.useQuery(
