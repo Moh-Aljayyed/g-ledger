@@ -80,6 +80,7 @@ model Tenant {
   payrolls       Payroll[]
   bankAccounts   BankAccount[]
   bankTransactions BankTransaction[]
+  subscription   Subscription?
 }
 
 model User {
@@ -709,4 +710,55 @@ model BankTransaction {
 
   @@index([bankAccountId, date])
   @@index([tenantId])
+}
+
+// ============ SUBSCRIPTION & USAGE ============
+
+enum PlanType {
+  FREE_TRIAL
+  BASIC
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+  CANCELLED
+}
+
+model Subscription {
+  id              String             @id @default(cuid())
+  tenantId        String             @unique
+  tenant          Tenant             @relation(fields: [tenantId], references: [id])
+  plan            PlanType           @default(FREE_TRIAL)
+  status          SubscriptionStatus @default(ACTIVE)
+
+  // Trial
+  trialStartDate  DateTime           @default(now())
+  trialEndDate    DateTime           // trial end = start + 365 days (1 year)
+
+  // Storage limits (in bytes)
+  storageLimit    BigInt             @default(536870912) // 512 MB = 524,288 KB
+  storageUsed     BigInt             @default(0)
+
+  // Feature limits
+  maxUsers        Int                @default(3)
+  maxInvoices     Int                @default(100) // per month
+  invoicesThisMonth Int              @default(0)
+
+  // Billing
+  pricePerGbUsd   Decimal            @default(8) @db.Decimal(10, 2) // $8 per GB
+  monthlyPriceUsd Decimal            @default(0) @db.Decimal(10, 2)
+  lastBillingDate DateTime?
+  nextBillingDate DateTime?
+
+  // Warnings sent
+  warning50Sent   Boolean            @default(false)
+  warning80Sent   Boolean            @default(false)
+  warning95Sent   Boolean            @default(false)
+
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 }
