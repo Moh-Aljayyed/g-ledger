@@ -12,6 +12,8 @@ import { paymentsRouter } from "./routers/payments";
 import { employeesRouter } from "./routers/employees";
 import { payrollRouter } from "./routers/payroll";
 import { bankRouter } from "./routers/bank";
+import { inventoryRouter } from "./routers/inventory";
+import { fixedAssetsRouter } from "./routers/fixed-assets";
 import { subscriptionRouter } from "./routers/subscription";
 import { verificationRouter } from "./routers/verification";
 
@@ -29,6 +31,8 @@ export const appRouter = router({
   employees: employeesRouter,
   payroll: payrollRouter,
   bank: bankRouter,
+  inventory: inventoryRouter,
+  fixedAssets: fixedAssetsRouter,
   subscription: subscriptionRouter,
   verification: verificationRouter,
 });

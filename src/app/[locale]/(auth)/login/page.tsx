@@ -30,7 +30,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError(t("loginError"));
     } else {
-      router.push("/ar");
+      router.push("/ar/dashboard");
       router.refresh();
     }
   };

@@ -17,7 +17,7 @@ const navGroups: NavGroup[] = [
   {
     label: "",
     items: [
-      { key: "dashboard", href: "", icon: "📊" },
+      { key: "dashboard", href: "/dashboard", icon: "📊" },
     ],
   },
   {
@@ -37,8 +37,10 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "المنتجات والتكاليف",
+    label: "المنتجات والمخزون",
     items: [
+      { key: "inventory", href: "/inventory", icon: "📦" },
+      { key: "fixedAssets", href: "/fixed-assets", icon: "🏗️" },
       { key: "chartOfAccounts", href: "/chart-of-accounts", icon: "🌳" },
     ],
   },
@@ -139,10 +141,7 @@ export function Sidebar() {
             {!collapsed[group.label] &&
               group.items.map((item) => {
                 const href = `${basePath}${item.href}`;
-                const isActive =
-                  item.href === ""
-                    ? pathname === basePath || pathname === `${basePath}/`
-                    : pathname.startsWith(href.split("?")[0]);
+                const isActive = pathname.startsWith(href.split("?")[0]);
 
                 return (
                   <Link

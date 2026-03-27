@@ -91,6 +91,8 @@
     "paymentsMade": "المدفوعات",
     "employees": "الموظفون",
     "payroll": "مسير الرواتب",
+    "inventory": "المخزون",
+    "fixedAssets": "الأصول الثابتة",
     "bankAccounts": "البنوك والنقدية",
     "taxSettings": "إعدادات الضرائب",
     "settings": "الإعدادات",

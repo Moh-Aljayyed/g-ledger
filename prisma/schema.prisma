@@ -84,6 +84,10 @@ model Tenant {
   bankAccounts   BankAccount[]
   bankTransactions BankTransaction[]
   subscription   Subscription?
+  products      Product[]
+  stockMovements StockMovement[]
+  fixedAssets   FixedAsset[]
+  depreciationEntries DepreciationEntry[]
 }
 
 model User {
@@ -764,4 +768,179 @@ model Subscription {
 
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
+}
+
+// ============ INVENTORY MODULE ============
+
+model Product {
+  id              String   @id @default(cuid())
+  code            String
+  nameAr          String
+  nameEn          String?
+  description     String?
+  barcode         String?
+  category        String?
+  unitType        String   @default("EA") // EA, KG, MTR, LTR, etc.
+
+  // Pricing
+  costPrice       Decimal  @default(0) @db.Decimal(18, 4)
+  sellingPrice    Decimal  @default(0) @db.Decimal(18, 4)
+
+  // Stock
+  currentStock    Decimal  @default(0) @db.Decimal(18, 4)
+  minimumStock    Decimal  @default(0) @db.Decimal(18, 4)
+  maximumStock    Decimal  @default(0) @db.Decimal(18, 4)
+  reorderLevel    Decimal  @default(0) @db.Decimal(18, 4)
+
+  // Tracking
+  trackExpiry     Boolean  @default(false)
+  trackBatch      Boolean  @default(false)
+
+  // VAT
+  vatRate         Decimal  @default(0) @db.Decimal(5, 2)
+  vatCategory     String?  @default("S") // S=Standard, Z=Zero, E=Exempt
+
+  // Linked GL account
+  inventoryAccountId  String?  // حساب المخزون
+  cogsAccountId       String?  // حساب تكلفة البضاعة المباعة
+  revenueAccountId    String?  // حساب الإيراد
+
+  isActive        Boolean  @default(true)
+  tenantId        String
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+
+  stockMovements  StockMovement[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([tenantId, code])
+  @@index([tenantId])
+  @@index([tenantId, category])
+}
+
+enum StockMovementType {
+  IN           // وارد
+  OUT          // صادر
+  ADJUSTMENT   // تسوية
+  TRANSFER     // تحويل
+  RETURN_IN    // مرتجع وارد
+  RETURN_OUT   // مرتجع صادر
+  OPENING      // رصيد افتتاحي
+}
+
+model StockMovement {
+  id              String            @id @default(cuid())
+  movementNumber  String
+  type            StockMovementType
+  date            DateTime
+
+  productId       String
+  product         Product           @relation(fields: [productId], references: [id])
+
+  quantity        Decimal           @db.Decimal(18, 4)
+  unitCost        Decimal           @default(0) @db.Decimal(18, 4)
+  totalCost       Decimal           @default(0) @db.Decimal(18, 4)
+
+  // Batch / Expiry tracking
+  batchNumber     String?
+  expiryDate      DateTime?
+
+  // Warehouse
+  warehouseFrom   String?
+  warehouseTo     String?
+
+  reference       String?  // invoice number, bill number, etc.
+  notes           String?
+
+  journalEntryId  String?
+  tenantId        String
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  createdById     String
+  createdAt       DateTime @default(now())
+
+  @@unique([tenantId, movementNumber])
+  @@index([tenantId, productId])
+  @@index([tenantId, date])
+  @@index([tenantId, type])
+}
+
+// ============ FIXED ASSETS MODULE ============
+
+enum AssetStatus {
+  ACTIVE
+  FULLY_DEPRECIATED
+  DISPOSED
+  UNDER_MAINTENANCE
+}
+
+enum DepreciationMethod {
+  STRAIGHT_LINE     // القسط الثابت
+  DECLINING_BALANCE // القسط المتناقص
+  UNITS_OF_PRODUCTION // وحدات الإنتاج
+}
+
+model FixedAsset {
+  id                  String              @id @default(cuid())
+  assetNumber         String
+  nameAr              String
+  nameEn              String?
+  description         String?
+  category            String?             // أثاث، معدات، سيارات، مباني
+  location            String?
+  serialNumber        String?
+
+  // Acquisition
+  acquisitionDate     DateTime
+  acquisitionCost     Decimal             @db.Decimal(18, 4)
+  residualValue       Decimal             @default(0) @db.Decimal(18, 4)
+  usefulLifeMonths    Int                 // العمر الإنتاجي بالأشهر
+
+  // Depreciation
+  depreciationMethod  DepreciationMethod  @default(STRAIGHT_LINE)
+  monthlyDepreciation Decimal             @default(0) @db.Decimal(18, 4)
+  accumulatedDepreciation Decimal         @default(0) @db.Decimal(18, 4)
+  netBookValue        Decimal             @default(0) @db.Decimal(18, 4)
+  lastDepreciationDate DateTime?
+
+  // Status
+  status              AssetStatus         @default(ACTIVE)
+  disposalDate        DateTime?
+  disposalPrice       Decimal?            @db.Decimal(18, 4)
+  disposalGainLoss    Decimal?            @db.Decimal(18, 4)
+
+  // GL Accounts
+  assetAccountId      String?             // حساب الأصل
+  depreciationAccountId String?           // حساب مصروف الإهلاك
+  accDepreciationAccountId String?        // حساب مجمع الإهلاك
+
+  tenantId            String
+  tenant              Tenant              @relation(fields: [tenantId], references: [id])
+
+  depreciationEntries DepreciationEntry[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@unique([tenantId, assetNumber])
+  @@index([tenantId, status])
+  @@index([tenantId, category])
+}
+
+model DepreciationEntry {
+  id              String     @id @default(cuid())
+  assetId         String
+  asset           FixedAsset @relation(fields: [assetId], references: [id])
+
+  period          String     // "2026-03"
+  date            DateTime
+  amount          Decimal    @db.Decimal(18, 4)
+  accumulatedTotal Decimal   @db.Decimal(18, 4)
+  netBookValue    Decimal    @db.Decimal(18, 4)
+
+  journalEntryId  String?
+  tenantId        String
+  tenant          Tenant     @relation(fields: [tenantId], references: [id])
+  createdAt       DateTime   @default(now())
+
+  @@index([assetId])
+  @@index([tenantId, period])
 }
