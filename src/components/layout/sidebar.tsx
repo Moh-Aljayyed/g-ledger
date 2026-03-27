@@ -93,10 +93,12 @@ export function Sidebar() {
     refetchInterval: 60000, // refresh every minute
   });
   const usagePercent = usage?.storagePercent ?? 0;
-  const usedMB = usage?.storageUsedMB ?? 0;
-  const totalMB = usage?.storageLimitMB ?? 512;
-  const daysRemaining = usage?.daysRemaining ?? 365;
+  const usedKB = usage?.storageUsedKB ?? 0;
+  const totalKB = usage?.storageLimitKB ?? 100000;
+  const daysRemaining = usage?.daysRemaining ?? 180;
   const planName = usage?.planNameAr ?? "تجربة مجانية";
+  const isBlocked = usage?.isBlocked ?? false;
+  const warningMessage = usage?.warningMessage ?? "";
 
   return (
     <aside className="w-60 min-h-screen flex flex-col" style={{ background: "linear-gradient(180deg, #0a1628 0%, #121e38 100%)" }}>
@@ -164,45 +166,60 @@ export function Sidebar() {
       </nav>
 
       {/* Usage Meter */}
-      <div className="mx-3 mb-3 p-3 rounded-xl bg-white/5 border border-white/10">
+      <div className={cn(
+        "mx-3 mb-3 p-3 rounded-xl border",
+        isBlocked ? "bg-red-500/10 border-red-500/30" : "bg-white/5 border-white/10"
+      )}>
+        {/* Blocked Banner */}
+        {isBlocked && (
+          <div className="text-[9px] font-bold px-2 py-1.5 rounded mb-2 text-center bg-red-500/20 text-red-300 animate-pulse">
+            🚫 تم إيقاف الخدمة — اشترك الآن
+          </div>
+        )}
+
         {/* Warning Banner */}
-        {usagePercent >= 50 && (
+        {!isBlocked && usagePercent >= 50 && (
           <div className={cn(
             "text-[9px] font-bold px-2 py-1 rounded mb-2 text-center",
-            usagePercent >= 95 ? "bg-red-500/20 text-red-300" :
-            usagePercent >= 80 ? "bg-yellow-500/20 text-yellow-300" :
+            usagePercent >= 90 ? "bg-red-500/20 text-red-300" :
+            usagePercent >= 70 ? "bg-yellow-500/20 text-yellow-300" :
             "bg-orange-500/20 text-orange-300"
           )}>
-            {usagePercent >= 95 ? "⚠️ استهلكت 95% — اشحن الآن!" :
-             usagePercent >= 80 ? "⚠️ استهلكت 80% من الباقة" :
-             "استهلكت 50% من الباقة"}
+            ⚠️ استهلكت {Math.round(usagePercent)}% من المساحة
           </div>
         )}
 
         <div className="flex items-center justify-between mb-2">
           <span className="text-[10px] text-white/50 font-medium">الاستهلاك</span>
-          <span className="text-[10px] text-white/70 font-bold">{usagePercent}%</span>
+          <span className="text-[10px] text-white/70 font-bold">{Math.round(usagePercent)}%</span>
         </div>
-        <div className="w-full h-1.5 rounded-full bg-white/10 mb-2">
+        <div className="w-full h-2 rounded-full bg-white/10 mb-2">
           <div
             className={cn(
               "h-full rounded-full transition-all",
               usagePercent < 50 ? "bg-[#00C9A7]" :
-              usagePercent < 80 ? "bg-yellow-400" : "bg-red-400"
+              usagePercent < 70 ? "bg-yellow-400" :
+              usagePercent < 90 ? "bg-orange-400" : "bg-red-400"
             )}
             style={{ width: `${Math.min(100, usagePercent)}%` }}
           />
         </div>
         <div className="flex items-center justify-between mb-1">
-          <span className="text-[9px] text-white/40">{usedMB.toFixed(1)} MB / {totalMB} MB</span>
+          <span className="text-[9px] text-white/40">
+            {usedKB >= 1024 ? `${(usedKB/1024).toFixed(1)} MB` : `${usedKB} KB`}
+            {" / "}
+            {totalKB >= 1048576 ? `${(totalKB/1048576).toFixed(1)} GB` : totalKB >= 1024 ? `${(totalKB/1024).toFixed(1)} MB` : `${totalKB} KB`}
+          </span>
           <span className="text-[9px] text-[#00C9A7] font-medium">{planName}</span>
         </div>
-        {usage?.plan === "FREE_TRIAL" && (
-          <div className="flex items-center justify-between">
-            <span className="text-[9px] text-white/30">متبقي {daysRemaining} يوم</span>
-            <Link href="/ar/settings" className="text-[9px] text-[#00C9A7] hover:underline">ترقية</Link>
-          </div>
-        )}
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] text-white/30">
+            {usage?.plan === "FREE_TRIAL" ? `متبقي ${daysRemaining} يوم` : `$${usage?.monthlyPriceUsd}/شهر`}
+          </span>
+          <Link href="/ar/settings" className="text-[9px] text-[#00C9A7] hover:underline font-medium">
+            {isBlocked ? "اشترك الآن" : "ترقية"}
+          </Link>
+        </div>
       </div>
 
       {/* User */}

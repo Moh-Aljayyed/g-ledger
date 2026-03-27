@@ -58,22 +58,55 @@ export const adminRouter = router({
           select: {
             users: true,
             invoices: true,
+            journalEntries: true,
+            accounts: true,
+            customers: true,
+            vendors: true,
+            employees: true,
+            products: true,
           },
         },
+        subscription: true,
       },
       orderBy: { createdAt: "desc" },
     });
 
-    return tenants.map((t) => ({
-      id: t.id,
-      name: t.name,
-      sector: t.sector,
-      currency: t.currency,
-      locale: t.locale,
-      createdAt: t.createdAt,
-      userCount: t._count.users,
-      invoiceCount: t._count.invoices,
-    }));
+    return tenants.map((t) => {
+      const sub = t.subscription;
+      const storageLimitKB = sub ? Number(sub.storageLimit) / 1024 : 100000;
+      const storageUsedKB = sub ? Number(sub.storageUsed) / 1024 : 0;
+      const usagePercent = storageLimitKB > 0 ? Math.min(100, (storageUsedKB / storageLimitKB) * 100) : 0;
+      const daysRemaining = sub ? Math.max(0, Math.ceil(
+        (sub.trialEndDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+      )) : 0;
+
+      return {
+        id: t.id,
+        name: t.name,
+        sector: t.sector,
+        country: t.country,
+        currency: t.currency,
+        createdAt: t.createdAt,
+        userCount: t._count.users,
+        invoiceCount: t._count.invoices,
+        entriesCount: t._count.journalEntries,
+        accountsCount: t._count.accounts,
+        customersCount: t._count.customers,
+        vendorsCount: t._count.vendors,
+        employeesCount: t._count.employees,
+        productsCount: t._count.products,
+        totalRecords: Object.values(t._count).reduce((a, b) => a + b, 0),
+        // Subscription info
+        plan: sub?.plan ?? "FREE_TRIAL",
+        subscriptionStatus: sub?.status ?? "ACTIVE",
+        storageLimitKB: Math.round(storageLimitKB),
+        storageUsedKB: Math.round(storageUsedKB),
+        usagePercent: Math.round(usagePercent * 10) / 10,
+        daysRemaining,
+        monthlyPriceUsd: sub ? Number(sub.monthlyPriceUsd) : 0,
+        isBlocked: (sub?.plan === "FREE_TRIAL" && daysRemaining <= 0) || usagePercent >= 100,
+      };
+    });
   }),
 
   getTenantDetails: protectedProcedure

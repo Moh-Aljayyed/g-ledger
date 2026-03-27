@@ -1,49 +1,69 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../trpc";
 
-// Plans configuration
-const PLANS = {
-  FREE_TRIAL: {
-    nameAr: "تجربة مجانية",
-    nameEn: "Free Trial",
-    storageMB: 512,
-    maxUsers: 3,
-    maxInvoicesPerMonth: 100,
-    pricePerGbUsd: 8,
-    monthlyPriceUsd: 0,
-    durationDays: 365,
-  },
-  BASIC: {
-    nameAr: "أساسي",
-    nameEn: "Basic",
-    storageMB: 5120, // 5 GB
-    maxUsers: 5,
-    maxInvoicesPerMonth: 500,
-    pricePerGbUsd: 6,
-    monthlyPriceUsd: 29,
-    durationDays: 0, // unlimited
-  },
-  PROFESSIONAL: {
-    nameAr: "احترافي",
-    nameEn: "Professional",
-    storageMB: 20480, // 20 GB
-    maxUsers: 15,
-    maxInvoicesPerMonth: 2000,
-    pricePerGbUsd: 4,
-    monthlyPriceUsd: 79,
-    durationDays: 0,
-  },
-  ENTERPRISE: {
-    nameAr: "مؤسسي",
-    nameEn: "Enterprise",
-    storageMB: 102400, // 100 GB
-    maxUsers: 999,
-    maxInvoicesPerMonth: 999999,
-    pricePerGbUsd: 2,
-    monthlyPriceUsd: 199,
-    durationDays: 0,
-  },
-};
+/**
+ * Subscription & Usage System
+ *
+ * Free Trial: 100,000 KB (~97.6 MB) for 6 months
+ * After trial: must subscribe at $10/GB/month
+ *
+ * Discount tiers:
+ * - 1 GB: $10/month (base)
+ * - 2-10 GB: 2% discount per additional GB
+ * - 11-20 GB: 1% discount per additional GB
+ * - 21-50 GB: no additional discount (stays at accumulated rate)
+ * - 50+ GB: no further discount
+ *
+ * Warnings: at 50%, then every 10% (60%, 70%, 80%, 90%, 100%)
+ * Block: at 100% usage - cannot perform operations until subscription/upgrade
+ */
+
+const FREE_TRIAL_KB = 100000; // 100,000 KB
+const FREE_TRIAL_DAYS = 180; // 6 months
+const BASE_PRICE_PER_GB = 10; // $10/GB/month
+const MAX_USERS_FREE = 3;
+const MAX_USERS_PAID = 999;
+
+// Calculate price per GB with tiered discounts
+function calculateGBPrice(gbNumber: number): number {
+  if (gbNumber <= 1) return BASE_PRICE_PER_GB;
+
+  let totalDiscount = 0;
+
+  if (gbNumber <= 10) {
+    // 2% discount per additional GB (GB 2-10)
+    totalDiscount = (gbNumber - 1) * 2;
+  } else if (gbNumber <= 20) {
+    // First 9 extra GBs at 2% each = 18%
+    // Then 1% per additional GB (GB 11-20)
+    totalDiscount = 9 * 2 + (gbNumber - 10) * 1;
+  } else {
+    // Max discount: 9*2 + 10*1 = 28%
+    totalDiscount = 9 * 2 + 10 * 1;
+  }
+
+  // Cap discount at 28%
+  totalDiscount = Math.min(totalDiscount, 28);
+
+  return Math.round(BASE_PRICE_PER_GB * (1 - totalDiscount / 100) * 100) / 100;
+}
+
+// Calculate total monthly cost for given GB
+function calculateMonthlyCost(totalGB: number): { totalCost: number; perGBPrice: number; discount: number } {
+  if (totalGB <= 0) return { totalCost: 0, perGBPrice: BASE_PRICE_PER_GB, discount: 0 };
+
+  let totalCost = 0;
+  for (let gb = 1; gb <= totalGB; gb++) {
+    totalCost += calculateGBPrice(gb);
+  }
+
+  const perGBPrice = Math.round((totalCost / totalGB) * 100) / 100;
+  const fullPrice = totalGB * BASE_PRICE_PER_GB;
+  const discount = Math.round(((fullPrice - totalCost) / fullPrice) * 100 * 10) / 10;
+
+  return { totalCost: Math.round(totalCost * 100) / 100, perGBPrice, discount };
+}
 
 export const subscriptionRouter = router({
   // Get current subscription & usage
@@ -52,11 +72,11 @@ export const subscriptionRouter = router({
       where: { tenantId: ctx.tenantId },
     });
 
-    // Auto-create if not exists
+    // Auto-create free trial if not exists
     if (!subscription) {
       const now = new Date();
       const trialEnd = new Date(now);
-      trialEnd.setDate(trialEnd.getDate() + 365);
+      trialEnd.setDate(trialEnd.getDate() + FREE_TRIAL_DAYS);
 
       subscription = await ctx.db.subscription.create({
         data: {
@@ -65,25 +85,43 @@ export const subscriptionRouter = router({
           status: "ACTIVE",
           trialStartDate: now,
           trialEndDate: trialEnd,
-          storageLimit: BigInt(536870912), // 512 MB
+          storageLimit: BigInt(FREE_TRIAL_KB * 1024), // Convert KB to bytes
           storageUsed: BigInt(0),
-          maxUsers: 3,
-          maxInvoices: 100,
+          maxUsers: MAX_USERS_FREE,
+          maxInvoices: 50,
+          pricePerGbUsd: BASE_PRICE_PER_GB,
+          monthlyPriceUsd: 0,
         },
       });
     }
 
-    // Calculate actual storage usage
-    const [usersCount, accountsCount, entriesCount, invoicesCount, linesCount] = await Promise.all([
-      ctx.db.user.count({ where: { tenantId: ctx.tenantId } }),
-      ctx.db.account.count({ where: { tenantId: ctx.tenantId } }),
-      ctx.db.journalEntry.count({ where: { tenantId: ctx.tenantId } }),
-      ctx.db.invoice.count({ where: { tenantId: ctx.tenantId } }),
-      ctx.db.journalLine.count({ where: { journalEntry: { tenantId: ctx.tenantId } } }),
-    ]);
+    // Calculate actual storage usage from records
+    const [usersCount, accountsCount, entriesCount, invoicesCount, linesCount,
+           customersCount, vendorsCount, billsCount, employeesCount, productsCount] =
+      await Promise.all([
+        ctx.db.user.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.account.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.journalEntry.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.invoice.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.journalLine.count({ where: { journalEntry: { tenantId: ctx.tenantId } } }),
+        ctx.db.customer.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.vendor.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.bill.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.employee.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.product.count({ where: { tenantId: ctx.tenantId } }),
+      ]);
 
-    // Estimate storage (rough calculation: ~500 bytes per record)
-    const estimatedBytes = (accountsCount * 300 + entriesCount * 500 + invoicesCount * 800 + linesCount * 200) || 0;
+    // Estimate storage in bytes (~average bytes per record type)
+    const estimatedBytes =
+      accountsCount * 400 +
+      entriesCount * 600 +
+      invoicesCount * 1000 +
+      linesCount * 250 +
+      customersCount * 500 +
+      vendorsCount * 500 +
+      billsCount * 800 +
+      employeesCount * 600 +
+      productsCount * 500;
 
     // Update storage used
     await ctx.db.subscription.update({
@@ -91,103 +129,177 @@ export const subscriptionRouter = router({
       data: { storageUsed: BigInt(estimatedBytes) },
     });
 
-    const storageLimitMB = Number(subscription.storageLimit) / (1024 * 1024);
-    const storageUsedMB = estimatedBytes / (1024 * 1024);
-    const usagePercent = storageLimitMB > 0 ? Math.min(100, (storageUsedMB / storageLimitMB) * 100) : 0;
+    const storageLimitKB = Number(subscription.storageLimit) / 1024;
+    const storageUsedKB = estimatedBytes / 1024;
+    const storageLimitMB = storageLimitKB / 1024;
+    const storageUsedMB = storageUsedKB / 1024;
+    const usagePercent = storageLimitKB > 0 ? Math.min(100, (storageUsedKB / storageLimitKB) * 100) : 0;
 
     // Check trial expiry
     const now = new Date();
-    const daysRemaining = Math.max(0, Math.ceil((subscription.trialEndDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
-    const isExpired = subscription.plan === "FREE_TRIAL" && daysRemaining <= 0;
+    const daysRemaining = Math.max(0, Math.ceil(
+      (subscription.trialEndDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+    ));
+    const isTrialExpired = subscription.plan === "FREE_TRIAL" && daysRemaining <= 0;
+    const isStorageFull = usagePercent >= 100;
+    const isBlocked = isTrialExpired || isStorageFull;
 
-    // Plan info
-    const planConfig = PLANS[subscription.plan];
+    // Warning level (50%, 60%, 70%, 80%, 90%, 100%)
+    let warningLevel = 0;
+    if (usagePercent >= 100) warningLevel = 100;
+    else if (usagePercent >= 90) warningLevel = 90;
+    else if (usagePercent >= 80) warningLevel = 80;
+    else if (usagePercent >= 70) warningLevel = 70;
+    else if (usagePercent >= 60) warningLevel = 60;
+    else if (usagePercent >= 50) warningLevel = 50;
+
+    // Warning message
+    let warningMessage = "";
+    if (isBlocked && isStorageFull) {
+      warningMessage = "تم استهلاك كامل المساحة المتاحة. يرجى الاشتراك أو ترقية الباقة لمتابعة العمل.";
+    } else if (isBlocked && isTrialExpired) {
+      warningMessage = "انتهت الفترة التجريبية. يرجى الاشتراك لمتابعة العمل.";
+    } else if (warningLevel >= 50) {
+      warningMessage = `تنبيه: استهلكت ${Math.round(usagePercent)}% من المساحة المتاحة. يمكنك الترقية لمساحة أكبر.`;
+    }
 
     return {
       plan: subscription.plan,
-      planNameAr: planConfig.nameAr,
-      planNameEn: planConfig.nameEn,
-      status: isExpired ? "EXPIRED" : subscription.status,
+      planNameAr: subscription.plan === "FREE_TRIAL" ? "تجربة مجانية" : "مشترك",
+      planNameEn: subscription.plan === "FREE_TRIAL" ? "Free Trial" : "Subscribed",
+      status: isBlocked ? "BLOCKED" : subscription.status,
 
-      // Storage
-      storageLimitMB,
+      // Storage in KB (as requested)
+      storageLimitKB: Math.round(storageLimitKB),
+      storageUsedKB: Math.round(storageUsedKB),
+      storageLimitMB: Math.round(storageLimitMB * 100) / 100,
       storageUsedMB: Math.round(storageUsedMB * 100) / 100,
       storagePercent: Math.round(usagePercent * 10) / 10,
 
       // Limits
       maxUsers: subscription.maxUsers,
       currentUsers: usersCount,
-      maxInvoicesPerMonth: subscription.maxInvoices,
-      invoicesThisMonth: subscription.invoicesThisMonth,
 
       // Trial
       daysRemaining,
       trialEndDate: subscription.trialEndDate,
-      isExpired,
-
-      // Pricing
-      pricePerGbUsd: Number(subscription.pricePerGbUsd),
-      monthlyPriceUsd: Number(subscription.monthlyPriceUsd),
+      isTrialExpired,
+      isStorageFull,
+      isBlocked,
 
       // Warnings
-      showWarning50: usagePercent >= 50 && usagePercent < 80,
-      showWarning80: usagePercent >= 80 && usagePercent < 95,
-      showWarning95: usagePercent >= 95,
+      warningLevel,
+      warningMessage,
 
-      // Records
-      totalRecords: accountsCount + entriesCount + invoicesCount + linesCount,
+      // Pricing
+      pricePerGbUsd: BASE_PRICE_PER_GB,
+      monthlyPriceUsd: Number(subscription.monthlyPriceUsd),
+
+      // Records breakdown
+      totalRecords: accountsCount + entriesCount + invoicesCount + linesCount +
+                    customersCount + vendorsCount + billsCount + employeesCount + productsCount,
+      records: {
+        accounts: accountsCount,
+        entries: entriesCount,
+        invoices: invoicesCount,
+        lines: linesCount,
+        customers: customersCount,
+        vendors: vendorsCount,
+        bills: billsCount,
+        employees: employeesCount,
+        products: productsCount,
+      },
     };
   }),
 
-  // Get plans for upgrade
-  getPlans: protectedProcedure.query(() => {
-    return Object.entries(PLANS).map(([key, plan]) => ({
-      id: key,
-      ...plan,
-    }));
+  // Check if operation is allowed (call before any create/update)
+  checkAllowed: protectedProcedure.query(async ({ ctx }) => {
+    const subscription = await ctx.db.subscription.findUnique({
+      where: { tenantId: ctx.tenantId },
+    });
+
+    if (!subscription) return { allowed: true };
+
+    const now = new Date();
+    const daysRemaining = Math.ceil(
+      (subscription.trialEndDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    const isTrialExpired = subscription.plan === "FREE_TRIAL" && daysRemaining <= 0;
+    const storageUsed = Number(subscription.storageUsed);
+    const storageLimit = Number(subscription.storageLimit);
+    const isStorageFull = storageUsed >= storageLimit;
+
+    if (isTrialExpired) {
+      return {
+        allowed: false,
+        reason: "TRIAL_EXPIRED",
+        message: "انتهت الفترة التجريبية. يرجى الاشتراك لمتابعة العمل.",
+      };
+    }
+
+    if (isStorageFull) {
+      return {
+        allowed: false,
+        reason: "STORAGE_FULL",
+        message: "تم استهلاك كامل المساحة. يرجى الترقية لمتابعة العمل.",
+      };
+    }
+
+    return { allowed: true };
   }),
 
-  // Upgrade plan (placeholder - would integrate with payment gateway)
-  upgradePlan: protectedProcedure
-    .input(z.object({
-      plan: z.enum(["BASIC", "PROFESSIONAL", "ENTERPRISE"]),
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const planConfig = PLANS[input.plan];
+  // Get pricing calculator
+  getPricing: protectedProcedure
+    .input(z.object({ gbAmount: z.number().min(1).max(100) }).optional())
+    .query(({ input }) => {
+      const tiers = [];
+      for (let gb = 1; gb <= 50; gb++) {
+        const pricing = calculateMonthlyCost(gb);
+        tiers.push({
+          gb,
+          pricePerGB: calculateGBPrice(gb),
+          totalMonthly: pricing.totalCost,
+          averagePerGB: pricing.perGBPrice,
+          discount: pricing.discount,
+        });
+      }
 
-      await ctx.db.subscription.update({
-        where: { tenantId: ctx.tenantId },
-        data: {
-          plan: input.plan,
-          status: "ACTIVE",
-          storageLimit: BigInt(planConfig.storageMB * 1024 * 1024),
-          maxUsers: planConfig.maxUsers,
-          maxInvoices: planConfig.maxInvoicesPerMonth,
-          monthlyPriceUsd: planConfig.monthlyPriceUsd,
-          pricePerGbUsd: planConfig.pricePerGbUsd,
-        },
-      });
+      const requested = input?.gbAmount
+        ? calculateMonthlyCost(input.gbAmount)
+        : null;
 
-      return { success: true, plan: input.plan };
+      return { tiers, requested };
     }),
 
-  // Buy extra storage
-  buyStorage: protectedProcedure
-    .input(z.object({ gbAmount: z.number().min(1).max(100) }))
+  // Subscribe / Buy storage
+  subscribe: protectedProcedure
+    .input(z.object({
+      gbAmount: z.number().min(1).max(100),
+    }))
     .mutation(async ({ ctx, input }) => {
       const subscription = await ctx.db.subscription.findUnique({
         where: { tenantId: ctx.tenantId },
       });
 
-      if (!subscription) throw new Error("لا يوجد اشتراك");
+      if (!subscription) throw new TRPCError({ code: "NOT_FOUND", message: "لا يوجد اشتراك" });
 
-      const additionalBytes = BigInt(input.gbAmount * 1024 * 1024 * 1024);
-      const cost = input.gbAmount * Number(subscription.pricePerGbUsd);
+      const pricing = calculateMonthlyCost(input.gbAmount);
+      const newLimitBytes = BigInt(input.gbAmount * 1024 * 1024 * 1024);
 
       await ctx.db.subscription.update({
         where: { tenantId: ctx.tenantId },
         data: {
-          storageLimit: subscription.storageLimit + additionalBytes,
+          plan: "BASIC", // Upgrade from FREE_TRIAL
+          status: "ACTIVE",
+          storageLimit: newLimitBytes,
+          maxUsers: MAX_USERS_PAID,
+          maxInvoices: 999999,
+          monthlyPriceUsd: pricing.totalCost,
+          pricePerGbUsd: pricing.perGBPrice,
+          // Reset trial end far into the future
+          trialEndDate: new Date(2099, 11, 31),
+          // Reset warnings
           warning50Sent: false,
           warning80Sent: false,
           warning95Sent: false,
@@ -196,9 +308,49 @@ export const subscriptionRouter = router({
 
       return {
         success: true,
-        addedGB: input.gbAmount,
-        costUsd: cost,
-        newLimitMB: Number(subscription.storageLimit + additionalBytes) / (1024 * 1024),
+        gbAmount: input.gbAmount,
+        monthlyCost: pricing.totalCost,
+        perGBPrice: pricing.perGBPrice,
+        discount: pricing.discount,
+        newLimitKB: input.gbAmount * 1024 * 1024,
+      };
+    }),
+
+  // Add extra storage to existing subscription
+  addStorage: protectedProcedure
+    .input(z.object({ extraGB: z.number().min(1).max(50) }))
+    .mutation(async ({ ctx, input }) => {
+      const subscription = await ctx.db.subscription.findUnique({
+        where: { tenantId: ctx.tenantId },
+      });
+
+      if (!subscription) throw new TRPCError({ code: "NOT_FOUND" });
+      if (subscription.plan === "FREE_TRIAL") {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "يرجى الاشتراك أولاً" });
+      }
+
+      const currentGB = Number(subscription.storageLimit) / (1024 * 1024 * 1024);
+      const newTotalGB = Math.round(currentGB + input.extraGB);
+      const pricing = calculateMonthlyCost(newTotalGB);
+
+      await ctx.db.subscription.update({
+        where: { tenantId: ctx.tenantId },
+        data: {
+          storageLimit: BigInt(newTotalGB * 1024 * 1024 * 1024),
+          monthlyPriceUsd: pricing.totalCost,
+          pricePerGbUsd: pricing.perGBPrice,
+          warning50Sent: false,
+          warning80Sent: false,
+          warning95Sent: false,
+        },
+      });
+
+      return {
+        success: true,
+        newTotalGB: newTotalGB,
+        monthlyCost: pricing.totalCost,
+        perGBPrice: pricing.perGBPrice,
+        discount: pricing.discount,
       };
     }),
 });

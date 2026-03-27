@@ -747,7 +747,7 @@ model Subscription {
   trialEndDate    DateTime           // trial end = start + 365 days (1 year)
 
   // Storage limits (in bytes)
-  storageLimit    BigInt             @default(536870912) // 512 MB = 524,288 KB
+  storageLimit    BigInt             @default(102400000) // 100,000 KB free trial
   storageUsed     BigInt             @default(0)
 
   // Feature limits
