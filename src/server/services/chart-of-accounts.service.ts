@@ -14,9 +14,15 @@ export async function provisionChartOfAccounts(
 
   const accounts = flattenTemplateTree(config.chartOfAccounts);
 
-  // Batch insert all accounts
+  // Map code -> actual database ID for parent linking
+  const codeToId = new Map<string, string>();
+
+  // Insert accounts in order (parents first due to flatten order)
   for (const account of accounts) {
-    await db.account.create({
+    // Resolve parentId from code to actual database ID
+    const parentId = account.parentId ? codeToId.get(account.parentId) : undefined;
+
+    const created = await db.account.create({
       data: {
         code: account.code,
         nameAr: account.nameAr,
@@ -27,10 +33,13 @@ export async function provisionChartOfAccounts(
         isLeaf: account.isLeaf,
         isSystem: account.isSystem ?? false,
         sectorTag: account.sectorTag,
-        parentId: account.parentId,
+        parentId: parentId || null,
         tenantId,
       },
     });
+
+    // Store the mapping: code -> actual ID
+    codeToId.set(account.code, created.id);
   }
 }
 
