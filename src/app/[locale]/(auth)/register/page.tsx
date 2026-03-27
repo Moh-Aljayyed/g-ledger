@@ -82,6 +82,8 @@ export default function RegisterPage() {
       password: formData.password,
       businessName: formData.businessName,
       sector: formData.sector as any,
+      country: formData.country,
+      registrationNumber: formData.registrationNumber || undefined,
     });
   };
 
@@ -145,30 +147,38 @@ export default function RegisterPage() {
                 أدخل رقم السجل التجاري أو الرقم الضريبي وسيتم جلب بيانات المنشأة تلقائيًا
               </p>
 
-              {/* Country Toggle */}
-              <div className="flex gap-2 justify-center mb-4">
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, country: "SA" })}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                    formData.country === "SA"
-                      ? "bg-[#0070F2] text-white"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  🇸🇦 السعودية
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, country: "EG" })}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                    formData.country === "EG"
-                      ? "bg-[#0070F2] text-white"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  🇪🇬 مصر
-                </button>
+              {/* Country Selection */}
+              <div>
+                <label className="block text-sm font-medium mb-1.5">الدولة</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
+                  {[
+                    { code: "SA", flag: "🇸🇦", name: "السعودية" },
+                    { code: "EG", flag: "🇪🇬", name: "مصر" },
+                    { code: "AE", flag: "🇦🇪", name: "الإمارات" },
+                    { code: "KW", flag: "🇰🇼", name: "الكويت" },
+                    { code: "BH", flag: "🇧🇭", name: "البحرين" },
+                    { code: "OM", flag: "🇴🇲", name: "عمان" },
+                    { code: "QA", flag: "🇶🇦", name: "قطر" },
+                    { code: "JO", flag: "🇯🇴", name: "الأردن" },
+                    { code: "IQ", flag: "🇮🇶", name: "العراق" },
+                    { code: "MA", flag: "🇲🇦", name: "المغرب" },
+                    { code: "TN", flag: "🇹🇳", name: "تونس" },
+                    { code: "SD", flag: "🇸🇩", name: "السودان" },
+                  ].map((c) => (
+                    <button
+                      key={c.code}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, country: c.code as any })}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        formData.country === c.code
+                          ? "bg-[#0070F2] text-white"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      }`}
+                    >
+                      <span>{c.flag}</span> {c.name}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Registration Number Input */}

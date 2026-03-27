@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { router, publicProcedure } from "../trpc";
 import { db } from "@/server/db";
 import { provisionChartOfAccounts } from "@/server/services/chart-of-accounts.service";
+import { COUNTRIES, getVatRate } from "@/config/tax/countries";
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -15,7 +16,9 @@ const registerSchema = z.object({
     "NON_PROFIT", "CROWDFUNDING", "MEDICAL_HOSPITAL", "MEDICAL_PHARMACY",
     "MEDICAL_CLINIC", "MEDICAL_LAB",
   ]),
-  currency: z.string().default("SAR"),
+  country: z.string().default("SA"),
+  registrationNumber: z.string().optional(),
+  currency: z.string().optional(),
   locale: z.string().default("ar"),
 });
 
@@ -29,6 +32,11 @@ export const authRouter = router({
       throw new Error("البريد الإلكتروني مسجل بالفعل");
     }
 
+    // Get country config
+    const countryConfig = COUNTRIES[input.country];
+    const currency = input.currency || countryConfig?.currency || "SAR";
+    const vatRate = getVatRate(input.country, input.sector);
+
     const passwordHash = await bcrypt.hash(input.password, 12);
 
     const result = await db.$transaction(async (tx) => {
@@ -37,7 +45,10 @@ export const authRouter = router({
         data: {
           name: input.businessName,
           sector: input.sector,
-          currency: input.currency,
+          country: input.country,
+          currency,
+          vatRate,
+          registrationNumber: input.registrationNumber,
           locale: input.locale,
         },
       });
