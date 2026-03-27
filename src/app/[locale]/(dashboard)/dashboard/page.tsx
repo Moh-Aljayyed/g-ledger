@@ -37,6 +37,11 @@ export default function DashboardPage() {
             <p className="text-white/60 text-sm">
               {tenantName} — {ts(sector)}
             </p>
+            {(session?.user as any)?.slug && (
+              <div className="text-xs text-white/50 mt-1">
+                {(session?.user as any).slug}.g-ledger.com
+              </div>
+            )}
           </div>
           <div className="text-end">
             <div className="text-xs text-white/40 mb-1">

@@ -40,6 +40,7 @@ const navGroups: NavGroup[] = [
     label: "المنتجات والمخزون",
     items: [
       { key: "inventory", href: "/inventory", icon: "📦" },
+      { key: "production", href: "/production", icon: "🏭" },
       { key: "fixedAssets", href: "/fixed-assets", icon: "🏗️" },
       { key: "chartOfAccounts", href: "/chart-of-accounts", icon: "🌳" },
     ],

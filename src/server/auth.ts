@@ -38,6 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.name,
           tenantId: user.tenantId,
           tenantName: user.tenant.name,
+          slug: user.tenant.slug,
           sector: user.tenant.sector,
           role: user.role,
           locale: user.tenant.locale,
@@ -52,6 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.tenantId = (user as any).tenantId;
         token.tenantName = (user as any).tenantName;
+        token.slug = (user as any).slug;
         token.sector = (user as any).sector;
         token.role = (user as any).role;
         token.locale = (user as any).locale;
@@ -64,6 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.id as string;
         (session.user as any).tenantId = token.tenantId;
         (session.user as any).tenantName = token.tenantName;
+        (session.user as any).slug = token.slug;
         (session.user as any).sector = token.sector;
         (session.user as any).role = token.role;
         (session.user as any).locale = token.locale;

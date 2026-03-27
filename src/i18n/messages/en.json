@@ -92,6 +92,7 @@
     "employees": "Employees",
     "payroll": "Payroll",
     "inventory": "Inventory",
+    "production": "Production",
     "fixedAssets": "Fixed Assets",
     "bankAccounts": "Bank & Cash",
     "taxSettings": "Tax Settings",

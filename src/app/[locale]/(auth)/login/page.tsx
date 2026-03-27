@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { trpc } from "@/lib/trpc";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
@@ -13,6 +14,24 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+
+  const sendOTP = trpc.auth.sendEmailOTP.useMutation({
+    onSuccess: () => setShowOTP(true),
+  });
+
+  const verifyOTPMutation = trpc.auth.verifyOTP.useMutation({
+    onSuccess: (data) => {
+      if (data.valid) {
+        router.push("/ar/dashboard");
+        router.refresh();
+      } else {
+        setError(data.error || "رمز غير صحيح");
+      }
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +49,9 @@ export default function LoginPage() {
     if (result?.error) {
       setError(t("loginError"));
     } else {
-      router.push("/ar/dashboard");
-      router.refresh();
+      // Send OTP before allowing access
+      setLoginEmail(email);
+      sendOTP.mutate({ email });
     }
   };
 
@@ -52,40 +72,70 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1.5">{t("email")}</label>
+        {!showOTP && (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1.5">{t("email")}</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2.5 rounded-lg border border-input bg-background focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
+                placeholder="name@company.com"
+                dir="ltr"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1.5">{t("password")}</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-2.5 rounded-lg border border-input bg-background focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
+                dir="ltr"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 transition-all"
+            >
+              {loading ? "..." : t("login")}
+            </button>
+          </form>
+        )}
+
+        {showOTP && (
+          <div className="space-y-4 mt-4">
+            <div className="p-3 rounded-lg bg-blue-50 text-blue-700 text-sm text-center">
+              تم إرسال رمز التحقق إلى {loginEmail}
+            </div>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2.5 rounded-lg border border-input bg-background focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
-              placeholder="name@company.com"
+              type="text"
+              value={otpCode}
+              onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+              placeholder="000000"
+              maxLength={6}
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background text-2xl font-mono tracking-[12px] text-center outline-none focus:ring-2 focus:ring-ring"
               dir="ltr"
             />
+            <button
+              onClick={() => verifyOTPMutation.mutate({
+                method: "email",
+                target: loginEmail,
+                code: otpCode,
+              })}
+              disabled={otpCode.length !== 6}
+              className="w-full py-3 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 transition-all"
+            >
+              تحقق ودخول
+            </button>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1.5">{t("password")}</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2.5 rounded-lg border border-input bg-background focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
-              dir="ltr"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 transition-all"
-          >
-            {loading ? "..." : t("login")}
-          </button>
-        </form>
+        )}
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           {t("dontHaveAccount")}{" "}

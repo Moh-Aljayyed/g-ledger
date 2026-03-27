@@ -22,6 +22,12 @@ export default function SettingsPage() {
               <span className="text-sm text-muted-foreground">اسم المنشأة</span>
               <span className="text-sm font-medium">{user?.tenantName}</span>
             </div>
+            {user?.slug && (
+              <div className="flex justify-between py-2 border-b border-border/50">
+                <span className="text-sm text-muted-foreground">النطاق الفرعي</span>
+                <span className="text-sm font-medium" dir="ltr">{user.slug}.g-ledger.com</span>
+              </div>
+            )}
             <div className="flex justify-between py-2 border-b border-border/50">
               <span className="text-sm text-muted-foreground">القطاع</span>
               <span className="text-sm font-medium">{user?.sector ? ts(user.sector) : "—"}</span>
