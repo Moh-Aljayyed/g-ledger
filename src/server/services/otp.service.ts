@@ -76,7 +76,7 @@ export async function sendEmailOTP(email: string): Promise<{ success: boolean; e
 
   try {
     await resend.emails.send({
-      from: "G-Ledger <noreply@g-ledger.com>",
+      from: process.env.RESEND_FROM_EMAIL || "G-Ledger <onboarding@resend.dev>",
       to: email,
       subject: "رمز التحقق — G-Ledger",
       html: `
