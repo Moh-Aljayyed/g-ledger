@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip intl middleware for API routes and static files
-  if (pathname.startsWith("/api/") || pathname.startsWith("/_next/") || pathname.startsWith("/logo") || pathname === "/robots.txt") {
+  if (pathname.startsWith("/api/") || pathname.startsWith("/_next/") || pathname.startsWith("/logo") || pathname === "/robots.txt" || pathname === "/sitemap.xml" || pathname === "/manifest.json") {
     const response = NextResponse.next();
     // Still add security headers
     addSecurityHeaders(response);
