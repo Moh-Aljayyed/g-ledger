@@ -1,0 +1,18 @@
+{
+  "name": "G-Ledger — المحاسب الذكي",
+  "short_name": "G-Ledger",
+  "description": "نظام محاسبي سحابي متكامل لكل القطاعات",
+  "start_url": "/ar",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#021544",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "ar",
+  "dir": "rtl"
+}

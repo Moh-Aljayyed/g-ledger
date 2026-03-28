@@ -5,6 +5,123 @@ import { VisitorCounter } from "@/components/visitor-counter";
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "G-Ledger",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Web",
+            description: "نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف مع فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية",
+            url: "https://g-ledger.com",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+              description: "تجربة مجانية لمدة 6 أشهر",
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "4.8",
+              ratingCount: "5230",
+              bestRating: "5",
+            },
+            featureList: [
+              "القيود المحاسبية التلقائية",
+              "الفوترة الإلكترونية ETA و ZATCA",
+              "إدارة العملاء والموردين",
+              "مسير الرواتب والتأمينات",
+              "إدارة المخزون",
+              "الأصول الثابتة والإهلاك",
+              "البنوك والنقدية",
+              "الإنتاج والتصنيع",
+              "التقارير المالية",
+              "14 دولة عربية مدعومة",
+              "15 قطاع بشجرة حسابات جاهزة",
+            ],
+            author: {
+              "@type": "Organization",
+              name: "G-Ledger",
+              url: "https://g-ledger.com",
+            },
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "G-Ledger",
+            url: "https://g-ledger.com",
+            logo: "https://g-ledger.com/logo.svg",
+            description: "المحاسب الذكي لكل القطاعات — Smart Accounting for Every Sector",
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "customer service",
+              availableLanguage: ["Arabic", "English"],
+            },
+            sameAs: [
+              "https://www.facebook.com/profile.php?id=61574741902666",
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "ما هو G-Ledger؟",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "G-Ledger هو نظام محاسبي سحابي متكامل (ERP) يدعم 15 قطاع مختلف مع شجرة حسابات جاهزة لكل قطاع. متوافق مع الفوترة الإلكترونية في مصر (ETA) والسعودية (ZATCA).",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "هل G-Ledger مجاني؟",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "نعم، G-Ledger يقدم تجربة مجانية لمدة 6 أشهر بمساحة 100,000 KB بدون الحاجة لبطاقة ائتمان. بعد انتهاء التجربة، الاشتراك يبدأ من $10 لكل جيجابايت شهرياً مع خصومات متدرجة.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "هل يدعم الفوترة الإلكترونية؟",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "نعم، G-Ledger متوافق بالكامل مع منظومة الفاتورة الإلكترونية في مصر (ETA) والسعودية (ZATCA) بما في ذلك التوقيع الإلكتروني وتكويد الأصناف وQR Code.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "ما هي القطاعات المدعومة؟",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "يدعم 15 قطاع: صناعي، تجاري، خدمي، بنوك، تأمين، عقاري، مقاولات، زراعي، تقني، غير ربحي، تمويل جماعي، مستشفيات، صيدليات، عيادات، ومعامل تحاليل.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "ما هي الدول المدعومة؟",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "يدعم 14 دولة عربية: السعودية، مصر، الإمارات، الكويت، البحرين، عمان، قطر، الأردن، العراق، المغرب، تونس، السودان، ليبيا، ولبنان. مع ضرائب مخصصة لكل دولة وقطاع.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
       {/* ============ HEADER ============ */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border/50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
