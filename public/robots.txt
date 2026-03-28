@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /ar/admin/
+Disallow: /ar/dashboard/
+Disallow: /ar/chart-of-accounts/
+Disallow: /ar/journal-entries/
+Disallow: /ar/settings/
+Disallow: /ar/tax-settings/
+
+Sitemap: https://g-ledger.com/sitemap.xml

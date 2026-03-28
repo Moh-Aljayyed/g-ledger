@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoFull } from "@/components/logo";
+import { VisitorCounter } from "@/components/visitor-counter";
 
 export default function HomePage() {
   return (
@@ -75,6 +76,9 @@ export default function HomePage() {
                 اكتشف المميزات
               </a>
             </div>
+
+            {/* Visitor Counter */}
+            <VisitorCounter variant="landing" />
 
             {/* Trust badges */}
             <div className="flex flex-wrap justify-center gap-6 text-white/60 text-sm">
@@ -400,6 +404,9 @@ export default function HomePage() {
             </div>
           </div>
 
+          <div className="mb-6">
+            <VisitorCounter variant="footer" />
+          </div>
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-white/40 text-xs">
             <span>© 2026 G-Ledger — المحاسب الذكي. جميع الحقوق محفوظة.</span>
             <span className="mt-2 md:mt-0">نظامك المحاسبي الذكي لكل القطاعات</span>
