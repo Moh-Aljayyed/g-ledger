@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Providers } from "@/components/providers";
+import { ChatWidget } from "@/components/chatbot/chat-widget";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -30,7 +31,10 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen bg-background font-sans">
         <NextIntlClientProvider messages={messages}>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <ChatWidget />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
