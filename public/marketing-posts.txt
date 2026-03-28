@@ -1,0 +1,143 @@
+============================================
+REDDIT - r/accounting, r/smallbusiness, r/SaaS, r/startups, r/arab
+============================================
+
+Title: G-Ledger — Free Cloud Accounting ERP for 15 Industries (Arabic/English)
+
+Hey everyone! I built G-Ledger, a cloud-based accounting system designed specifically for the Arab market.
+
+What makes it different:
+- 15 industry-specific chart of accounts (manufacturing, medical, contracting, banking, etc.)
+- Auto tax rates for 14 Arab countries (Egypt 14% VAT, Saudi 15%, UAE 5%, etc.)
+- Egypt ETA + Saudi ZATCA e-invoice compliance built-in
+- Every module auto-generates journal entries (invoices, payroll, inventory, assets)
+- 5-phase production tracking (for manufacturing)
+- AI chatbot with 45+ FAQ categories
+- 2FA on every login
+
+Free trial: 6 months, no credit card needed.
+
+Try it: https://g-ledger.com
+
+============================================
+HACKER NEWS - Show HN
+============================================
+
+Show HN: G-Ledger – Open-source-inspired cloud ERP for 15 industries
+
+Built a cloud accounting system targeting the Arabic-speaking market. Key differentiators:
+- Pre-configured chart of accounts for 15 sectors (not empty templates)
+- Smart tax engine: knows that Egyptian medical = 0% VAT, contracting = 14% + 3% WHT
+- Full e-invoice compliance (Egypt ETA + Saudi ZATCA)
+- Auto journal entries from every module
+- 5-phase production tracking for manufacturing
+
+Tech stack: Next.js 16, tRPC, Prisma, PostgreSQL (Neon), Vercel
+
+https://g-ledger.com
+
+============================================
+PRODUCT HUNT
+============================================
+
+Name: G-Ledger
+Tagline: Smart Accounting for Every Sector — Choose your industry, your system is ready
+Description: G-Ledger is a cloud ERP accounting system supporting 15 different industries with pre-configured chart of accounts, smart tax calculations for 14 Arab countries, and full e-invoice compliance (Egypt ETA + Saudi ZATCA). Free for 6 months.
+
+============================================
+LINKEDIN POST
+============================================
+
+🚀 Excited to announce G-Ledger — a cloud accounting ERP built for the Arab market!
+
+What makes it unique:
+✅ 15 industry-specific chart of accounts — ready, not empty
+✅ Smart taxes for 14 Arab countries (auto-calculated per sector)
+✅ Egypt ETA + Saudi ZATCA e-invoice compliance
+✅ AI chatbot with 45+ FAQ categories
+✅ 2FA security on every login
+✅ 5-phase production tracking for manufacturing
+
+Free trial: 6 months, no credit card.
+
+Try it → g-ledger.com
+
+#accounting #ERP #SaaS #fintech #startup #ZATCA #einvoice #cloudaccounting
+
+============================================
+TWITTER/X THREAD
+============================================
+
+1/ 🚀 Launched G-Ledger — cloud accounting for the Arab market
+
+What's different? Choose your industry, and the entire system configures itself: chart of accounts, tax rates, everything.
+
+15 sectors × 14 countries = your accounting ready in seconds.
+
+g-ledger.com
+
+2/ 🧮 Smart tax engine:
+- Egypt medical = 0% VAT (exempt)
+- Egypt contracting = 14% + 3% withholding
+- Saudi = 15% standard
+- UAE = 5% + 9% corporate
+
+The system knows ALL of this automatically.
+
+3/ 🧾 Full e-invoice compliance:
+- 🇪🇬 Egypt ETA (electronic invoice + receipt)
+- 🇸🇦 Saudi ZATCA Phase 1 & 2
+- Digital signature, QR Code, item coding
+
+4/ 💰 Free for 6 months. No credit card.
+After that: $10/GB/month with volume discounts.
+
+Try it: g-ledger.com
+
+============================================
+ARABIC FORUMS (حسوب، مستقل، خمسات)
+============================================
+
+🚀 G-Ledger — أول نظام محاسبي عربي بشجرة حسابات جاهزة لكل قطاع
+
+السلام عليكم،
+
+أحب أشارككم نظام محاسبي سحابي جديد صممناه خصيصًا للسوق العربي:
+
+✅ 15 قطاع بشجرة حسابات جاهزة ومخصصة
+✅ 14 دولة عربية مع ضرائب مختلفة لكل قطاع
+✅ فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية
+✅ كل عملية تنشئ قيد محاسبي تلقائي
+✅ موديول إنتاج وتصنيع (5 مراحل)
+✅ مساعد ذكي يجاوب أسئلتك 24/7
+✅ حماية 2FA عند كل دخول
+
+تجربة مجانية 6 أشهر بدون بطاقة ائتمان
+
+جربوه: g-ledger.com
+
+============================================
+FACEBOOK POST (Arabic)
+============================================
+
+🚀 G-Ledger — اختر قطاعك... ونظامك جاهز
+
+نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف:
+🏭 صناعي | 🛒 تجاري | 💼 خدمي | 🏥 طبي
+🏗️ مقاولات | 🏦 بنوك | 🛡️ تأمين | 🌾 زراعي
+💻 تقني | 💊 صيدليات | 🩺 عيادات | 🔬 معامل
+
+ليه G-Ledger مختلف عن أي برنامج ثاني؟
+
+1️⃣ شجرة حسابات جاهزة — مش فاضية
+2️⃣ ضرائب ذكية حسب دولتك وقطاعك
+3️⃣ كل عملية تنشئ قيد محاسبي تلقائي
+4️⃣ فوترة إلكترونية ETA + ZATCA
+5️⃣ مساعد ذكي يجاوبك 24/7
+6️⃣ حماية 2FA عند كل دخول
+
+تجربة مجانية 6 أشهر — بدون بطاقة ائتمان ❤️
+
+ابدأ الآن: g-ledger.com
+
+#محاسبة #برنامج_محاسبة #فوترة_إلكترونية #ERP #ZATCA #مصر #السعودية

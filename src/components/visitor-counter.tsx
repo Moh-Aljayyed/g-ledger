@@ -58,7 +58,25 @@ export function VisitorCounter({ variant = "landing" }: { variant?: "landing" | 
     setCount(newCount);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    // Show initial count before hydration
+    if (variant === "footer") {
+      return (
+        <div className="flex items-center justify-center gap-2 text-sm text-white/50">
+          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          <span>أكثر من <strong className="text-white/80">{formatNumber(BASE_COUNT)}</strong> مستخدم يثقون بنا</span>
+        </div>
+      );
+    }
+    return (
+      <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 border border-white/20">
+        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+        <span className="text-sm text-white/80">
+          أكثر من <strong className="text-white font-bold">{formatNumber(BASE_COUNT)}</strong> مستخدم يثقون بنا
+        </span>
+      </div>
+    );
+  }
 
   if (variant === "sidebar") {
     return (
