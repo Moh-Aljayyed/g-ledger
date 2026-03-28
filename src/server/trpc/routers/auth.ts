@@ -40,14 +40,18 @@ export const authRouter = router({
 
     const passwordHash = await bcrypt.hash(input.password, 12);
 
-    // Generate slug from business name
-    const slug = input.businessName
+    // Generate unique slug from business name
+    const baseSlug = input.businessName
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '') // remove special chars
-      .replace(/\s+/g, '-') // spaces to hyphens
-      .replace(/-+/g, '-') // multiple hyphens to single
-      .substring(0, 30)
-      .replace(/-$/, ''); // remove trailing hyphen
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .substring(0, 25)
+      .replace(/-$/, '') || 'company';
+
+    // Ensure uniqueness by appending random suffix
+    const suffix = Math.random().toString(36).substring(2, 6);
+    const slug = `${baseSlug}-${suffix}`;
 
     const result = await db.$transaction(async (tx) => {
       // Create tenant
