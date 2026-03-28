@@ -133,6 +133,7 @@ export default function HomePage() {
             <a href="#sectors" className="hover:text-[#0070F2] transition-colors">القطاعات</a>
             <a href="#einvoice" className="hover:text-[#0070F2] transition-colors">الفوترة الإلكترونية</a>
             <a href="#pricing" className="hover:text-[#0070F2] transition-colors">الأسعار</a>
+            <Link href="/ar/blog" className="hover:text-[#0070F2] transition-colors">المدونة</Link>
           </nav>
 
           <div className="flex items-center gap-3">
