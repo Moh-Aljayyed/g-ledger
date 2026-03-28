@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Providers } from "@/components/providers";
 import { ChatWidget } from "@/components/chatbot/chat-widget";
+import { MessengerButton } from "@/components/messenger-button";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default async function RootLayout({
           <Providers>
             {children}
             <ChatWidget />
+            <MessengerButton />
           </Providers>
         </NextIntlClientProvider>
       </body>

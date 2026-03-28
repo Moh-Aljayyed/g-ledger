@@ -104,91 +104,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ FEATURES ============ */}
-      <section id="features" className="py-20 md:py-28">
+      {/* ============ FEATURES DETAIL ============ */}
+      <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-sm font-semibold text-primary mb-2 block">لماذا G-Ledger؟</span>
-            <h3 className="text-3xl md:text-4xl font-bold text-[#021544] mb-4">
-              حلول محاسبية متكاملة في منصة واحدة
-            </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              كل ما تحتاجه لإدارة حساباتك باحترافية — من القيد اليومي إلى القوائم المالية
-            </p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">مميزات النظام</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">كل ما تحتاجه لإدارة أعمالك</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">نظام ERP متكامل يغطي جميع العمليات المحاسبية والإدارية — من القيد اليومي إلى التقارير المالية</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              {
-                title: "15 قطاع مدعوم",
-                desc: "شجرة حسابات مُعدّة مسبقًا لكل قطاع — صناعي، تجاري، طبي، مقاولات، بنوك، والمزيد",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-                  </svg>
-                ),
-                color: "from-blue-500 to-blue-600",
-              },
-              {
-                title: "القيد المزدوج",
-                desc: "نظام محاسبي احترافي يضمن توازن كل قيد تلقائيًا مع تتبع كامل لكل حركة مالية",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="3"/>
-                  </svg>
-                ),
-                color: "from-indigo-500 to-indigo-600",
-              },
-              {
-                title: "تقارير مالية فورية",
-                desc: "قائمة الدخل، الميزانية العمومية، ميزان المراجعة — جاهزة في أي لحظة بنقرة واحدة",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-6"/>
-                  </svg>
-                ),
-                color: "from-emerald-500 to-emerald-600",
-              },
-              {
-                title: "الفوترة الإلكترونية",
-                desc: "متكامل مع مصلحة الضرائب المصرية (ETA) وهيئة الزكاة السعودية (ZATCA) — إرسال مباشر",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 14l2 2 4-4"/>
-                  </svg>
-                ),
-                color: "from-orange-500 to-orange-600",
-              },
-              {
-                title: "عربي وإنجليزي",
-                desc: "واجهة كاملة بالعربية مع دعم الإنجليزية — أسماء حسابات ثنائية اللغة لكل شجرة",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10A15 15 0 0112 2z"/>
-                  </svg>
-                ),
-                color: "from-cyan-500 to-cyan-600",
-              },
-              {
-                title: "آمن وسحابي",
-                desc: "بياناتك مشفرة ومحمية على خوادم سحابية — متاحة من أي مكان وأي جهاز على مدار الساعة",
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="5" y="11" width="14" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
-                  </svg>
-                ),
-                color: "from-violet-500 to-violet-600",
-              },
-            ].map((feature) => (
-              <div
-                key={feature.title}
-                className="group p-7 rounded-2xl bg-white border border-border/60 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-5 shadow-lg group-hover:scale-110 transition-transform`}>
-                  {feature.icon}
-                </div>
-                <h4 className="text-lg font-bold text-[#021544] mb-2">{feature.title}</h4>
-                <p className="text-muted-foreground text-sm leading-relaxed">{feature.desc}</p>
+              { icon: "\ud83d\udcdd", title: "القيود المحاسبية", desc: "قيد مزدوج تلقائي مع ترحيل وعكس. كل عملية في النظام تُنشئ قيدها المحاسبي بدون تدخل يدوي. دعم كامل للقيد المركب.", color: "blue" },
+              { icon: "\ud83e\uddfe", title: "الفوترة الإلكترونية", desc: "متوافق مع ETA مصر و ZATCA السعودية. توقيع إلكتروني، QR Code، تكويد أصناف GS1/EGS، وإرسال مباشر لمنظومة الضرائب.", color: "green" },
+              { icon: "\ud83d\udc65", title: "العملاء والموردين", desc: "إدارة كاملة لحسابات العملاء والموردين. كشف حساب، تقرير تقادم ديون (30/60/90/120 يوم)، حد ائتمان، وشروط دفع مخصصة.", color: "purple" },
+              { icon: "\ud83d\udcb0", title: "الرواتب والموارد البشرية", desc: "مسير رواتب شهري تلقائي مع حساب التأمينات الاجتماعية GOSI (9.75% + 11.75%). بيانات الموظفين، البدلات، والقيد المحاسبي تلقائي.", color: "red" },
+              { icon: "\ud83d\udce6", title: "إدارة المخزون", desc: "تتبع المنتجات بالباتش وتاريخ الصلاحية. حركات وارد/صادر/تسوية مع تنبيهات نقص المخزون وتقييم تلقائي (FIFO/متوسط مرجح).", color: "amber" },
+              { icon: "\ud83c\udfd7\ufe0f", title: "الأصول الثابتة والإهلاك", desc: "سجل أصول متكامل مع إهلاك شهري تلقائي (قسط ثابت/متناقص). استبعاد وبيع الأصول مع حساب الربح والخسارة تلقائيًا.", color: "teal" },
+              { icon: "\ud83c\udfe6", title: "البنوك والنقدية", desc: "إدارة حسابات بنكية متعددة. إيداع، سحب، تحويل بين الحسابات، وتسوية/مطابقة بنكية. كل حركة تُنشئ قيد تلقائي.", color: "indigo" },
+              { icon: "\ud83c\udfed", title: "الإنتاج والتصنيع", desc: "أوامر إنتاج بـ 5 مراحل — من شراء المواد الخام إلى المنتج النهائي. دعم التشغيل الخارجي (مقاولي باطن) وتتبع التكلفة لكل مرحلة.", color: "violet" },
+              { icon: "\ud83d\udcca", title: "التقارير المالية", desc: "ميزان مراجعة، قائمة دخل، ميزانية عمومية، أستاذ عام، كشف حساب. جميع التقارير لحظية من القيود المرحّلة مباشرةً.", color: "sky" },
+              { icon: "\ud83c\udf0d", title: "14 دولة عربية", desc: "دعم كامل لـ 14 دولة مع ضرائب مخصصة لكل قطاع. العملات والأنظمة الضريبية تُحدد تلقائيًا حسب الدولة والقطاع.", color: "emerald" },
+              { icon: "\ud83d\udd10", title: "أمان على مستوى بنكي", desc: "تشفير SSL/TLS، مصادقة ثنائية (2FA) بكود إيميل عند كل دخول، عزل كامل بين الشركات، ونسخ احتياطي يومي تلقائي.", color: "rose" },
+              { icon: "\ud83e\udd16", title: "مساعد ذكي 24/7", desc: "شات بوت ذكي يجيب على أسئلتك عن النظام فورًا بالعربية. 45+ فئة سؤال تغطي كل الموديولات من القيود للرواتب للمخزون.", color: "cyan" },
+            ].map((feature, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-border/50 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-lg font-bold text-[#021544] mb-2 group-hover:text-[#0070F2] transition-colors">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -337,6 +280,76 @@ export default function HomePage() {
               <div className="text-3xl font-bold text-primary">100%</div>
               <div className="text-sm text-muted-foreground mt-1">سحابي وآمن</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ ACCOUNTING TIPS & NEWS ============ */}
+      <section className="py-20 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">نصائح محاسبية</span>
+            <h2 className="text-3xl font-bold text-[#021544] mt-4">أخبار ونصائح مالية</h2>
+            <p className="text-muted-foreground mt-2">ابقَ على اطلاع بآخر التحديثات الضريبية والمحاسبية</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                tag: "الفوترة الإلكترونية",
+                tagColor: "bg-green-100 text-green-700",
+                title: "المرحلة الثانية من ZATCA — ما الذي تحتاج معرفته؟",
+                desc: "هيئة الزكاة والضريبة والجمارك بدأت تطبيق المرحلة الثانية (التكامل) من الفوترة الإلكترونية. G-Ledger يدعم التكامل المباشر مع بوابة فاتورة شاملةً التوقيع الرقمي وختم التشفير.",
+                date: "مارس 2026",
+              },
+              {
+                tag: "مصر — ETA",
+                tagColor: "bg-blue-100 text-blue-700",
+                title: "تحديثات منظومة الفاتورة الإلكترونية المصرية 2026",
+                desc: "مصلحة الضرائب المصرية وسّعت نطاق الإلزام ليشمل جميع الممولين. النظام يدعم التكامل مع ETA بما في ذلك التوقيع الإلكتروني وتكويد الأصناف EGS/GS1.",
+                date: "فبراير 2026",
+              },
+              {
+                tag: "نصيحة محاسبية",
+                tagColor: "bg-purple-100 text-purple-700",
+                title: "5 أخطاء شائعة في المحاسبة وكيف تتجنبها",
+                desc: "1. عدم فصل المصروفات الشخصية عن التجارية\n2. تأخير تسجيل القيود\n3. إهمال التسويات البنكية\n4. عدم متابعة تقادم الديون\n5. نسيان احتساب الإهلاك الشهري — G-Ledger يحلها كلها تلقائيًا.",
+                date: "مارس 2026",
+              },
+              {
+                tag: "ضريبة",
+                tagColor: "bg-amber-100 text-amber-700",
+                title: "ضريبة القيمة المضافة — الفرق بين مصر والسعودية",
+                desc: "مصر 14% مع إعفاءات للقطاع الصحي والبنوك والزراعة + خصم منبع. السعودية 15% موحدة مع استثناء العقارات (5% RETT). G-Ledger يحسب الضريبة تلقائيًا حسب دولتك وقطاعك.",
+                date: "يناير 2026",
+              },
+              {
+                tag: "إدارة أعمال",
+                tagColor: "bg-rose-100 text-rose-700",
+                title: "كيف تختار النظام المحاسبي المناسب لشركتك؟",
+                desc: "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 15 قطاع جاهز مع تجربة مجانية بدون بطاقة ائتمان.",
+                date: "ديسمبر 2025",
+              },
+              {
+                tag: "تحديث النظام",
+                tagColor: "bg-cyan-100 text-cyan-700",
+                title: "G-Ledger يدعم الآن موديول الإنتاج والتصنيع",
+                desc: "أصبح بإمكانك تتبع دورة الإنتاج الكاملة — من شراء المواد الخام إلى المنتج النهائي. دعم التشغيل الخارجي (مقاولي الباطن) مع تتبع التكلفة في كل مرحلة وقيود تلقائية.",
+                date: "مارس 2026",
+              },
+            ].map((article, i) => (
+              <article key={i} className="bg-white rounded-2xl border border-border/50 overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                <div className="h-2" style={{ background: "linear-gradient(90deg, #021544, #0070F2)" }} />
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${article.tagColor}`}>{article.tag}</span>
+                    <span className="text-[11px] text-muted-foreground">{article.date}</span>
+                  </div>
+                  <h3 className="font-bold text-[#021544] mb-2 group-hover:text-[#0070F2] transition-colors leading-tight">{article.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">{article.desc}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
