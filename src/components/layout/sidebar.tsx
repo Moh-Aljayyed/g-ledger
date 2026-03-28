@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
+import { LogoIcon } from "@/components/logo";
 import { useState } from "react";
 
 interface NavGroup {
@@ -106,11 +107,8 @@ export function Sidebar() {
       {/* Logo */}
       <div className="px-4 py-5 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" fill="white" opacity="0.7"/>
-              <path d="M17 16l3-3-3-3v2h-4v2h4v2z" fill="#00C9A7"/>
-            </svg>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0070F2]/30 to-[#00C9A7]/20 flex items-center justify-center">
+            <LogoIcon size={22} />
           </div>
           <div>
             <h1 className="font-bold text-sm text-white">G-LEDGER</h1>

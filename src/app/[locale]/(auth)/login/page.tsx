@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { LogoIcon } from "@/components/logo";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { trpc } from "@/lib/trpc";
@@ -60,10 +61,11 @@ export default function LoginPage() {
       <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-xl bg-primary mx-auto flex items-center justify-center mb-4">
-            <span className="text-primary-foreground font-bold text-2xl">GL</span>
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#021544] to-[#0070F2] mx-auto flex items-center justify-center mb-4 shadow-lg">
+            <LogoIcon size={30} />
           </div>
-          <h1 className="text-2xl font-bold">{t("login")}</h1>
+          <h1 className="text-2xl font-bold text-[#021544]">{t("login")}</h1>
+          <p className="text-xs text-muted-foreground mt-1">المحاسب الذكي لكل القطاعات</p>
         </div>
 
         {error && (

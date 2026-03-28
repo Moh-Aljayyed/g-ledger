@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc";
 import Link from "next/link";
 import { useGeoLocation } from "./useGeoLocation";
+import { LogoIcon } from "@/components/logo";
 
 const SECTORS = [
   "INDUSTRIAL", "COMMERCIAL", "SERVICES", "BANKING", "INSURANCE",
@@ -140,12 +141,10 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#021544] to-[#0070F2] mx-auto flex items-center justify-center mb-4 shadow-lg">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" fill="white" opacity="0.7"/>
-              <path d="M17 16l3-3-3-3v2h-4v2h4v2z" fill="#00C9A7"/>
-            </svg>
+            <LogoIcon size={30} />
           </div>
           <h1 className="text-2xl font-bold text-[#021544]">{t("register")}</h1>
+          <p className="text-xs text-muted-foreground mt-1">المحاسب الذكي لكل القطاعات</p>
         </div>
 
         {/* Steps indicator */}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoFull } from "@/components/logo";
 
 export default function HomePage() {
   return (
@@ -6,21 +7,7 @@ export default function HomePage() {
       {/* ============ HEADER ============ */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border/50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {/* Logo */}
-            <div className="relative">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#021544] to-[#0052CC] flex items-center justify-center shadow-lg shadow-primary/20">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" fill="white" opacity="0.7"/>
-                  <path d="M17 16l3-3-3-3v2h-4v2h4v2z" fill="#00C9A7"/>
-                </svg>
-              </div>
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-[#021544] leading-tight">G-Ledger</h1>
-              <span className="text-[10px] text-muted-foreground leading-none">المحاسب الذكي</span>
-            </div>
-          </div>
+          <LogoFull size="md" variant="dark" />
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#021544]">
             <a href="#features" className="hover:text-primary transition-colors">المميزات</a>
