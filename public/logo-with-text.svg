@@ -1,0 +1,53 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#fbBg)"/>
+
+  <!-- Logo icon -->
+  <rect x="420" y="80" width="160" height="160" rx="32" fill="white" fill-opacity="0.15"/>
+  <rect x="428" y="88" width="144" height="144" rx="28" stroke="white" stroke-width="4" stroke-opacity="0.35"/>
+  <line x1="500" y1="88" x2="500" y2="232" stroke="white" stroke-width="2.5" stroke-opacity="0.25"/>
+  <!-- Left lines -->
+  <line x1="448" y1="120" x2="488" y2="120" stroke="white" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round"/>
+  <line x1="448" y1="144" x2="488" y2="144" stroke="white" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <line x1="448" y1="168" x2="488" y2="168" stroke="white" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+  <line x1="448" y1="192" x2="474" y2="192" stroke="white" stroke-width="4" stroke-opacity="0.3" stroke-linecap="round"/>
+  <!-- Right checkmarks -->
+  <path d="M516 120 L526 130 L546 110" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M516 146 L526 156 L546 136" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M516 172 L526 182 L546 162" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+  <!-- Pulse -->
+  <path d="M454 212 H478 L490 196 L500 220 L510 204 H542" stroke="#00C9A7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+
+  <!-- Logo icon - right side -->
+  <rect x="620" y="80" width="160" height="160" rx="32" fill="white" fill-opacity="0.15"/>
+  <rect x="628" y="88" width="144" height="144" rx="28" stroke="white" stroke-width="4" stroke-opacity="0.35"/>
+  <line x1="700" y1="88" x2="700" y2="232" stroke="white" stroke-width="2.5" stroke-opacity="0.25"/>
+  <line x1="648" y1="120" x2="688" y2="120" stroke="white" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round"/>
+  <line x1="648" y1="144" x2="688" y2="144" stroke="white" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <line x1="648" y1="168" x2="688" y2="168" stroke="white" stroke-width="4" stroke-opacity="0.4" stroke-linecap="round"/>
+  <line x1="648" y1="192" x2="674" y2="192" stroke="white" stroke-width="4" stroke-opacity="0.3" stroke-linecap="round"/>
+  <path d="M716 120 L726 130 L746 110" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M716 146 L726 156 L746 136" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M716 172 L726 182 L746 162" stroke="#00C9A7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+  <path d="M654 212 H678 L690 196 L700 220 L710 204 H742" stroke="#00C9A7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+
+  <!-- Text: G-Ledger -->
+  <text x="600" y="340" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="72" font-weight="bold" letter-spacing="4">G-Ledger</text>
+
+  <!-- Slogan Arabic -->
+  <text x="600" y="410" text-anchor="middle" fill="#00C9A7" font-family="Arial, sans-serif" font-size="36" font-weight="600">المحاسب الذكي لكل القطاعات</text>
+
+  <!-- Slogan English -->
+  <text x="600" y="460" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" opacity="0.6">Smart Accounting for Every Sector</text>
+
+  <!-- URL -->
+  <text x="600" y="560" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" opacity="0.4" letter-spacing="2">g-ledger.com</text>
+
+  <defs>
+    <linearGradient id="fbBg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#021544"/>
+      <stop offset="0.5" stop-color="#0a1e3d"/>
+      <stop offset="1" stop-color="#0070F2"/>
+    </linearGradient>
+  </defs>
+</svg>
