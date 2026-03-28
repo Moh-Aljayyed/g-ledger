@@ -24,6 +24,7 @@ const navGroups: NavGroup[] = [
   {
     label: "المبيعات",
     items: [
+      { key: "pos", href: "/pos", icon: "🖥️" },
       { key: "customers", href: "/customers", icon: "👥" },
       { key: "invoices", href: "/invoices", icon: "🧾" },
       { key: "paymentsReceived", href: "/payments?type=RECEIVED", icon: "💵" },

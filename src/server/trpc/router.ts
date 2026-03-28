@@ -17,6 +17,7 @@ import { fixedAssetsRouter } from "./routers/fixed-assets";
 import { subscriptionRouter } from "./routers/subscription";
 import { verificationRouter } from "./routers/verification";
 import { productionRouter } from "./routers/production";
+import { posRouter } from "./routers/pos";
 
 export const appRouter = router({
   auth: authRouter,
@@ -37,6 +38,7 @@ export const appRouter = router({
   subscription: subscriptionRouter,
   verification: verificationRouter,
   production: productionRouter,
+  pos: posRouter,
 });
 
 export type AppRouter = typeof appRouter;

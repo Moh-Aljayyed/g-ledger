@@ -97,7 +97,8 @@
     "bankAccounts": "البنوك والنقدية",
     "taxSettings": "إعدادات الضرائب",
     "settings": "الإعدادات",
-    "fiscalPeriods": "الفترات المالية"
+    "fiscalPeriods": "الفترات المالية",
+    "pos": "نقطة البيع"
   },
   "invoices": {
     "title": "الفواتير الإلكترونية",
