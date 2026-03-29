@@ -101,7 +101,9 @@
     "pos": "POS",
     "crm": "CRM",
     "expenses": "Expenses",
-    "projects": "Projects"
+    "projects": "Projects",
+    "leaves": "Leaves",
+    "helpdesk": "Helpdesk"
   },
   "invoices": {
     "title": "Electronic Invoices",

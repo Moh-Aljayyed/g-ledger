@@ -21,6 +21,8 @@ import { posRouter } from "./routers/pos";
 import { crmRouter } from "./routers/crm";
 import { expensesRouter } from "./routers/expenses";
 import { projectsRouter } from "./routers/projects";
+import { leavesRouter } from "./routers/leaves";
+import { helpdeskRouter } from "./routers/helpdesk";
 
 export const appRouter = router({
   auth: authRouter,
@@ -45,6 +47,8 @@ export const appRouter = router({
   crm: crmRouter,
   expenses: expensesRouter,
   projects: projectsRouter,
+  leaves: leavesRouter,
+  helpdesk: helpdeskRouter,
 });
 
 export type AppRouter = typeof appRouter;

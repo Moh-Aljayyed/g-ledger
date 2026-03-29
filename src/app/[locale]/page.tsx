@@ -491,88 +491,92 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الأسعار</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">أسعار بسيطة وشفافة</h2>
-            <p className="text-gray-500 mt-3">ادفع فقط حسب استهلاكك — بدون عقود أو التزامات</p>
+            <p className="text-muted-foreground mt-3">ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free Trial */}
-            <div className="relative bg-gradient-to-br from-[#00C9A7]/10 to-[#00C9A7]/5 rounded-2xl border-2 border-[#00C9A7]/30 p-8 hover:shadow-xl transition-all">
-              <div className="absolute -top-3 right-6 bg-[#00C9A7] text-white text-xs font-bold px-4 py-1 rounded-full">
-                الأكثر شيوعًا
-              </div>
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-[#021544] mb-2">التجربة المجانية</h3>
-                <div className="text-5xl font-bold text-[#00C9A7]">$0</div>
-                <p className="text-gray-500 text-sm mt-1">لمدة 6 أشهر</p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {[
-                  "100,000 KB مساحة تخزين",
-                  "3 مستخدمين",
-                  "جميع الموديولات متاحة",
-                  "بدون بطاقة ائتمان",
-                  "دعم فني كامل",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#00C9A7"/></svg>
-                    {item}
-                  </li>
-                ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {/* Free */}
+            <div className="rounded-2xl border-2 border-border p-6 hover:shadow-lg transition-all">
+              <div className="text-sm font-bold text-gray-500 mb-2">مجاني</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$0</div>
+              <div className="text-xs text-muted-foreground mb-6">6 أشهر تجربة</div>
+              <ul className="space-y-3 text-sm mb-6">
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> موديول واحد</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 3 مستخدمين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 100,000 KB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> شجرة حسابات جاهزة</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> مساعد ذكي</li>
               </ul>
-              <Link
-                href="/ar/register"
-                className="block w-full text-center px-8 py-3.5 font-bold bg-[#00C9A7] text-white rounded-xl hover:bg-[#00b396] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                ابدأ مجانًا الآن
-              </Link>
+              <Link href="/ar/register" className="block text-center py-3 rounded-xl border-2 border-[#021544] text-[#021544] font-bold hover:bg-[#021544] hover:text-white transition-all">ابدأ مجاناً</Link>
             </div>
 
-            {/* Pay as you go */}
-            <div className="bg-white rounded-2xl border border-border/50 p-8 hover:shadow-xl transition-all">
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-[#021544] mb-2">ادفع حسب استهلاكك</h3>
-                <div className="text-5xl font-bold text-[#0070F2]">$10</div>
-                <p className="text-gray-500 text-sm mt-1">لكل GB / شهريًا</p>
-              </div>
-              <p className="text-center text-sm text-gray-500 mb-6">خصومات تصاعدية — كل ما زادت المساحة قلّ السعر</p>
+            {/* Basic */}
+            <div className="rounded-2xl border-2 border-border p-6 hover:shadow-lg transition-all">
+              <div className="text-sm font-bold text-blue-600 mb-2">أساسي</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$8<span className="text-lg font-normal text-muted-foreground">/مستخدم/شهر</span></div>
+              <div className="text-xs text-muted-foreground mb-6">للشركات الصغيرة</div>
+              <ul className="space-y-3 text-sm mb-6">
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> محاسبة + فواتير + مخزون</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> تقارير مالية</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 1 GB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> فوترة إلكترونية</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> استيراد Excel</li>
+              </ul>
+              <Link href="/ar/register" className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all">ابدأ الآن</Link>
+            </div>
 
-              {/* Discount table */}
-              <div className="bg-[#F8FAFC] rounded-xl p-4 mb-8">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-gray-500 text-xs">
-                      <th className="text-right pb-2">المساحة</th>
-                      <th className="text-center pb-2">الخصم</th>
-                      <th className="text-center pb-2">السعر/شهر</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-[#021544] font-medium">
-                    {[
-                      { gb: "1 GB", discount: "—", price: "$10" },
-                      { gb: "5 GB", discount: "8%", price: "$46" },
-                      { gb: "10 GB", discount: "18%", price: "$82" },
-                      { gb: "20 GB", discount: "26%", price: "$148" },
-                    ].map((tier, i) => (
-                      <tr key={i} className="border-t border-border/30">
-                        <td className="py-2.5">{tier.gb}</td>
-                        <td className="py-2.5 text-center text-[#00C9A7] font-bold">{tier.discount}</td>
-                        <td className="py-2.5 text-center">{tier.price}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            {/* Professional - POPULAR */}
+            <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-lg transition-all relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full">الأكثر طلباً</div>
+              <div className="text-sm font-bold text-[#0070F2] mb-2">احترافي</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$15<span className="text-lg font-normal text-muted-foreground">/مستخدم/شهر</span></div>
+              <div className="text-xs text-muted-foreground mb-6">للشركات المتوسطة</div>
+              <ul className="space-y-3 text-sm mb-6">
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> كل الموديولات</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> CRM + مشاريع + مصروفات</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 10 GB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> نقاط البيع POS</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> موديول الإنتاج</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> دعم أولوية</li>
+              </ul>
+              <Link href="/ar/register" className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all shadow-lg">ابدأ الآن</Link>
+            </div>
 
-              <div className="text-center text-xs text-gray-400 mb-4">
-                2% خصم لكل GB حتى 10GB، ثم 1% لكل GB إضافي حتى 20GB
-              </div>
+            {/* Enterprise */}
+            <div className="rounded-2xl border-2 border-border p-6 hover:shadow-lg transition-all">
+              <div className="text-sm font-bold text-purple-600 mb-2">مؤسسي</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$25<span className="text-lg font-normal text-muted-foreground">/مستخدم/شهر</span></div>
+              <div className="text-xs text-muted-foreground mb-6">للشركات الكبيرة</div>
+              <ul className="space-y-3 text-sm mb-6">
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> كل شيء في الاحترافي</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> API خارجي</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 50 GB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> White Label</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> دعم مخصص 24/7</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> مستخدمين غير محدود</li>
+              </ul>
+              <Link href="/ar/register" className="block text-center py-3 rounded-xl border-2 border-purple-600 text-purple-600 font-bold hover:bg-purple-600 hover:text-white transition-all">تواصل معنا</Link>
+            </div>
+          </div>
 
-              <Link
-                href="/ar/register"
-                className="block w-full text-center px-8 py-3.5 font-bold bg-[#0070F2] text-white rounded-xl hover:bg-[#005ed4] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                اشترك الآن
-              </Link>
+          {/* Add-ons */}
+          <div className="bg-[#F8FAFC] rounded-2xl p-8">
+            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">إضافات مدفوعة</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {[
+                { name: "CRM", price: "+$3/مستخدم", desc: "إدارة العملاء المحتملين", icon: "🎯" },
+                { name: "eCommerce", price: "+$5/مستخدم", desc: "متجر إلكتروني", icon: "🛒" },
+                { name: "موظفين", price: "$2/موظف", desc: "HR + رواتب + إجازات", icon: "👥" },
+                { name: "POS", price: "+$3/جهاز", desc: "نقطة بيع", icon: "🖥️" },
+                { name: "تخزين", price: "$10/GB", desc: "مساحة إضافية", icon: "💾" },
+              ].map((addon, i) => (
+                <div key={i} className="bg-white rounded-xl p-4 border border-border text-center">
+                  <div className="text-2xl mb-2">{addon.icon}</div>
+                  <div className="font-bold text-sm text-[#021544]">{addon.name}</div>
+                  <div className="text-xs text-[#0070F2] font-bold mt-1">{addon.price}</div>
+                  <div className="text-[10px] text-muted-foreground mt-1">{addon.desc}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

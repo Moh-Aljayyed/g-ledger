@@ -53,6 +53,7 @@ const navGroups: NavGroup[] = [
     items: [
       { key: "employees", href: "/employees", icon: "🧑‍💼" },
       { key: "payroll", href: "/payroll", icon: "💰" },
+      { key: "leaves", href: "/leaves", icon: "🏖️" },
     ],
   },
   {
@@ -81,6 +82,12 @@ const navGroups: NavGroup[] = [
       { key: "trialBalance", href: "/trial-balance", icon: "⚖️" },
       { key: "incomeStatement", href: "/financial-statements/income-statement", icon: "📈" },
       { key: "balanceSheet", href: "/financial-statements/balance-sheet", icon: "📋" },
+    ],
+  },
+  {
+    label: "الدعم",
+    items: [
+      { key: "helpdesk", href: "/helpdesk", icon: "🎫" },
     ],
   },
   {
