@@ -501,6 +501,13 @@ export default function RegisterPage() {
           )}
         </form>
 
+        <p className="text-center text-[10px] text-muted-foreground mt-4">
+          بالتسجيل، أنت توافق على{" "}
+          <Link href="/ar/legal/terms" className="text-[#0070F2] hover:underline">شروط الاستخدام</Link>
+          {" "}و{" "}
+          <Link href="/ar/legal/privacy" className="text-[#0070F2] hover:underline">سياسة الخصوصية</Link>
+        </p>
+
         <p className="mt-6 text-center text-sm text-muted-foreground">
           {t("alreadyHaveAccount")}{" "}
           <Link href="/ar/login" className="text-[#0070F2] font-medium hover:underline">
