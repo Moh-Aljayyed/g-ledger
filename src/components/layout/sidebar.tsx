@@ -212,9 +212,14 @@ export function Sidebar() {
           </span>
           <span className="text-[9px] text-[#00C9A7] font-medium">{planName}</span>
         </div>
-        <div className="flex items-center justify-between">
+        {(usage as any)?.employeeCount > 0 && (
+          <div className="text-[9px] text-white/40 mt-1">
+            {(usage as any).employeeCount} موظف × $2 = ${(usage as any).employeeMonthlyCost}/شهر
+          </div>
+        )}
+        <div className="flex items-center justify-between mt-1">
           <span className="text-[9px] text-white/30">
-            {usage?.plan === "FREE_TRIAL" ? `متبقي ${daysRemaining} يوم` : `$${usage?.monthlyPriceUsd}/شهر`}
+            {usage?.plan === "FREE_TRIAL" ? `متبقي ${daysRemaining} يوم` : `$${(usage as any)?.totalMonthlyCost ?? usage?.monthlyPriceUsd}/شهر`}
           </span>
           <Link href="/ar/settings" className="text-[9px] text-[#00C9A7] hover:underline font-medium">
             {isBlocked ? "اشترك الآن" : "ترقية"}

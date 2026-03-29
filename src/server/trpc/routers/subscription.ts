@@ -191,9 +191,14 @@ export const subscriptionRouter = router({
       warningLevel,
       warningMessage,
 
+      // Employee pricing: $2/month per active employee
+      employeeCount: employeesCount,
+      employeeMonthlyCost: employeesCount * 2,
+
       // Pricing
       pricePerGbUsd: BASE_PRICE_PER_GB,
       monthlyPriceUsd: Number(subscription.monthlyPriceUsd),
+      totalMonthlyCost: Number(subscription.monthlyPriceUsd) + (employeesCount * 2),
 
       // Records breakdown
       totalRecords: accountsCount + entriesCount + invoicesCount + linesCount +

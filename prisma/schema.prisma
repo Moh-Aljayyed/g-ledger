@@ -169,6 +169,8 @@ model JournalEntry {
   createdById    String
   createdAt      DateTime           @default(now())
   postedAt       DateTime?
+  attachmentUrl  String?
+  attachmentName String?
 
   lines JournalLine[]
 
@@ -314,6 +316,8 @@ model Invoice {
 
   // Metadata
   notes             String?
+  attachmentUrl     String?
+  attachmentName    String?
 
   // Relations
   tenantId          String
@@ -496,6 +500,8 @@ model Bill {
   amountPaid    Decimal    @default(0) @db.Decimal(18, 4)
   currency      String     @default("SAR")
   notes         String?
+  attachmentUrl String?
+  attachmentName String?
   tenantId      String
   tenant        Tenant     @relation(fields: [tenantId], references: [id])
   journalEntryId String?
