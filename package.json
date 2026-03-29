@@ -21,6 +21,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "6.9",
+    "@stripe/stripe-js": "^9.0.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@tanstack/react-query": "^5.95.2",
     "@trpc/client": "^11.13.0",
@@ -44,6 +45,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "resend": "^6.9.4",
+    "stripe": "^21.0.1",
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
