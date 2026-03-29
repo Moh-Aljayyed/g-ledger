@@ -596,6 +596,7 @@ export default function HomePage() {
                 { name: "STC Pay", icon: "📲" },
                 { name: "Fawry", icon: "🏪" },
                 { name: "Vodafone Cash", icon: "📞" },
+                { name: "Instapay", icon: "🔄" },
                 { name: "Stripe", icon: "⚡" },
               ].map((method, i) => (
                 <div key={i} className="flex flex-col items-center gap-1 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-sm transition-all">
