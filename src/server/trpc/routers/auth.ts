@@ -1,6 +1,7 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { router, publicProcedure } from "../trpc";
+import { TRPCError } from "@trpc/server";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { db } from "@/server/db";
 import { provisionChartOfAccounts } from "@/server/services/chart-of-accounts.service";
 import { COUNTRIES, getVatRate } from "@/config/tax/countries";
@@ -31,6 +32,14 @@ export const authRouter = router({
 
     if (existing) {
       throw new Error("البريد الإلكتروني مسجل بالفعل");
+    }
+
+    // Check duplicate registration number (tax ID / CR)
+    if (input.registrationNumber) {
+      const existingReg = await db.tenant.findFirst({
+        where: { registrationNumber: input.registrationNumber },
+      });
+      if (existingReg) throw new Error("رقم السجل التجاري / الرقم الضريبي مسجل بالفعل");
     }
 
     // Get country config
@@ -130,5 +139,47 @@ export const authRouter = router({
     .mutation(async ({ input }) => {
       const key = input.method === "email" ? `email:${input.target}` : `whatsapp:${input.target}`;
       return verifyOTP(key, input.code);
+    }),
+
+  // Change sector (only if no data exists)
+  changeSector: protectedProcedure
+    .input(z.object({
+      sector: z.enum([
+        "INDUSTRIAL", "COMMERCIAL", "SERVICES", "BANKING", "INSURANCE",
+        "REAL_ESTATE", "CONTRACTING", "AGRICULTURAL", "TECHNOLOGY",
+        "NON_PROFIT", "CROWDFUNDING", "MEDICAL_HOSPITAL", "MEDICAL_PHARMACY",
+        "MEDICAL_CLINIC", "MEDICAL_LAB",
+      ]),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if tenant has any data
+      const [entries, invoices] = await Promise.all([
+        ctx.db.journalEntry.count({ where: { tenantId: ctx.tenantId } }),
+        ctx.db.invoice.count({ where: { tenantId: ctx.tenantId } }),
+      ]);
+
+      if (entries > 0 || invoices > 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "لا يمكن تغيير القطاع بعد إدخال قيود أو فواتير. يرجى التواصل مع الدعم.",
+        });
+      }
+
+      // Delete old chart of accounts
+      await ctx.db.account.deleteMany({ where: { tenantId: ctx.tenantId } });
+
+      // Update sector
+      const country = (await ctx.db.tenant.findUnique({ where: { id: ctx.tenantId } }))?.country || "SA";
+      const vatRate = getVatRate(country, input.sector);
+
+      await ctx.db.tenant.update({
+        where: { id: ctx.tenantId },
+        data: { sector: input.sector, vatRate },
+      });
+
+      // Re-provision chart of accounts
+      await provisionChartOfAccounts(ctx.tenantId, input.sector);
+
+      return { success: true, message: "تم تغيير القطاع وإعادة إعداد شجرة الحسابات بنجاح" };
     }),
 });

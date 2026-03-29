@@ -7,6 +7,7 @@ import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { LogoIcon } from "@/components/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useState } from "react";
 
 interface NavGroup {
@@ -139,6 +140,7 @@ export function Sidebar() {
               </span>
             )}
           </div>
+          <div className="mr-auto"><ThemeToggle /></div>
         </div>
       </div>
 

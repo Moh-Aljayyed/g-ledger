@@ -66,6 +66,8 @@ model Tenant {
   currency        String   @default("SAR")
   vatRate         Decimal  @default(15) @db.Decimal(5, 2)
   registrationNumber String? // السجل التجاري / الرقم الضريبي
+  referralCode    String?  @unique
+  referredBy      String?  // the referral code that referred this tenant
   fiscalYearStart Int      @default(1)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

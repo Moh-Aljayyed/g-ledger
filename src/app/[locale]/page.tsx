@@ -579,6 +579,55 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          {/* Payment Methods */}
+          <div className="mt-12 bg-white rounded-2xl border border-border p-8">
+            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">طرق الدفع</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* EGP Account */}
+              <div className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">🇪🇬</span>
+                  <div>
+                    <div className="font-bold text-[#021544]">تحويل بالجنيه المصري</div>
+                    <div className="text-xs text-muted-foreground">بنك التعمير والإسكان</div>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between"><span className="text-muted-foreground">اسم العميل:</span><span className="font-medium">منشأة محمد أحمد علي</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">رقم الحساب:</span><span className="font-mono font-medium">0890001331503</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">الفرع:</span><span className="font-medium">سموحة</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">نوع الحساب:</span><span className="font-medium">جاري</span></div>
+                  <div className="flex flex-col gap-1 mt-2 p-2 bg-white rounded-lg border">
+                    <span className="text-[10px] text-muted-foreground">IBAN:</span>
+                    <span className="font-mono text-xs font-bold text-[#0070F2] select-text">EG930038008900000890001331503</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* USD Account */}
+              <div className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">🇺🇸</span>
+                  <div>
+                    <div className="font-bold text-[#021544]">تحويل بالدولار</div>
+                    <div className="text-xs text-muted-foreground">بنك التعمير والإسكان</div>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between"><span className="text-muted-foreground">اسم العميل:</span><span className="font-medium">منشأة محمد أحمد علي</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">رقم الحساب:</span><span className="font-mono font-medium">0890001331495</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">الفرع:</span><span className="font-medium">سموحة</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">نوع الحساب:</span><span className="font-medium">جاري</span></div>
+                  <div className="flex flex-col gap-1 mt-2 p-2 bg-white rounded-lg border">
+                    <span className="text-[10px] text-muted-foreground">IBAN:</span>
+                    <span className="font-mono text-xs font-bold text-[#0070F2] select-text">EG180038008900000890001331495</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-4">بعد التحويل، أرسل إيصال التحويل عبر الماسنجر أو الإيميل لتفعيل اشتراكك</p>
+          </div>
         </div>
       </section>
 
