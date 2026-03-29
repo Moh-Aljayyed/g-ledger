@@ -98,7 +98,10 @@
     "taxSettings": "Tax Settings",
     "settings": "Settings",
     "fiscalPeriods": "Fiscal Periods",
-    "pos": "POS"
+    "pos": "POS",
+    "crm": "CRM",
+    "expenses": "Expenses",
+    "projects": "Projects"
   },
   "invoices": {
     "title": "Electronic Invoices",

@@ -26,6 +26,7 @@ const navGroups: NavGroup[] = [
     items: [
       { key: "pos", href: "/pos", icon: "🖥️" },
       { key: "customers", href: "/customers", icon: "👥" },
+      { key: "crm", href: "/crm", icon: "🎯" },
       { key: "invoices", href: "/invoices", icon: "🧾" },
       { key: "paymentsReceived", href: "/payments?type=RECEIVED", icon: "💵" },
     ],
@@ -52,6 +53,18 @@ const navGroups: NavGroup[] = [
     items: [
       { key: "employees", href: "/employees", icon: "🧑‍💼" },
       { key: "payroll", href: "/payroll", icon: "💰" },
+    ],
+  },
+  {
+    label: "المصروفات",
+    items: [
+      { key: "expenses", href: "/expenses", icon: "🧾" },
+    ],
+  },
+  {
+    label: "المشاريع",
+    items: [
+      { key: "projects", href: "/projects", icon: "📋" },
     ],
   },
   {

@@ -89,6 +89,9 @@ model Tenant {
   stockMovements StockMovement[]
   fixedAssets   FixedAsset[]
   depreciationEntries DepreciationEntry[]
+  leads         Lead[]
+  expenses      Expense[]
+  projects      Project[]
 }
 
 model User {
@@ -612,6 +615,7 @@ model Employee {
   tenantId       String
   tenant         Tenant         @relation(fields: [tenantId], references: [id])
   payrollItems   PayrollItem[]
+  expenses       Expense[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
@@ -950,4 +954,120 @@ model DepreciationEntry {
 
   @@index([assetId])
   @@index([tenantId, period])
+}
+
+// ============ CRM MODULE ============
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL
+  WON
+  LOST
+}
+
+model Lead {
+  id              String     @id @default(cuid())
+  name            String
+  email           String?
+  phone           String?
+  company         String?
+  source          String?    // website, referral, social, cold_call
+  status          LeadStatus @default(NEW)
+  expectedRevenue Decimal    @default(0) @db.Decimal(18, 4)
+  notes           String?
+  assignedTo      String?
+  wonDate         DateTime?
+  lostReason      String?
+  customerId      String?    // if converted
+  tenantId        String
+  tenant          Tenant     @relation(fields: [tenantId], references: [id])
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([tenantId, status])
+}
+
+// ============ EXPENSES MODULE ============
+
+enum ExpenseStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+  PAID
+}
+
+model Expense {
+  id              String        @id @default(cuid())
+  expenseNumber   String
+  employeeId      String?
+  employee        Employee?     @relation(fields: [employeeId], references: [id])
+  date            DateTime
+  category        String        // travel, meals, supplies, transport, other
+  description     String
+  amount          Decimal       @db.Decimal(18, 4)
+  vatAmount       Decimal       @default(0) @db.Decimal(18, 4)
+  totalAmount     Decimal       @db.Decimal(18, 4)
+  status          ExpenseStatus @default(DRAFT)
+  attachmentUrl   String?
+  attachmentName  String?
+  approvedBy      String?
+  approvedAt      DateTime?
+  journalEntryId  String?
+  notes           String?
+  tenantId        String
+  tenant          Tenant        @relation(fields: [tenantId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([tenantId, expenseNumber])
+  @@index([tenantId, status])
+}
+
+// ============ PROJECTS & TASKS MODULE ============
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(PLANNING)
+  startDate   DateTime?
+  endDate     DateTime?
+  budget      Decimal       @default(0) @db.Decimal(18, 4)
+  spent       Decimal       @default(0) @db.Decimal(18, 4)
+  managerId   String?
+  tenantId    String
+  tenant      Tenant        @relation(fields: [tenantId], references: [id])
+  tasks       Task[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([tenantId, status])
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  status      String   @default("TODO") // TODO, IN_PROGRESS, REVIEW, DONE
+  priority    String   @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  assigneeId  String?
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([projectId])
 }
