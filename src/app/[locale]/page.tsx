@@ -534,7 +534,7 @@ export default function HomePage() {
               <ul className="space-y-3 text-sm mb-6">
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> كل الموديولات</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> CRM + مشاريع + مصروفات</li>
-                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 10 GB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 2 GB تخزين</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> نقاط البيع POS</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> موديول الإنتاج</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> دعم أولوية</li>
@@ -550,7 +550,7 @@ export default function HomePage() {
               <ul className="space-y-3 text-sm mb-6">
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> كل شيء في الاحترافي</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> API خارجي</li>
-                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 50 GB تخزين</li>
+                <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 5 GB تخزين</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> White Label</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> دعم مخصص 24/7</li>
                 <li className="flex items-center gap-2"><span className="text-green-500">✓</span> مستخدمين غير محدود</li>
