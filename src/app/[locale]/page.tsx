@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LogoFull } from "@/components/logo";
 import { VisitorCounter } from "@/components/visitor-counter";
 import { LangLink } from "@/components/lang-link";
+import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animated-landing";
 
 export default function HomePage() {
   return (
@@ -163,6 +164,8 @@ export default function HomePage() {
           <div className="absolute bottom-10 left-20 w-96 h-96 bg-[#00C9A7] rounded-full blur-3xl" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0070F2] rounded-full blur-3xl opacity-30" />
         </div>
+        <div className="absolute top-40 right-20 w-64 h-64 bg-[#0070F2] rounded-full blur-3xl opacity-10 animate-blob" />
+        <div className="absolute bottom-20 left-40 w-72 h-72 bg-[#00C9A7] rounded-full blur-3xl opacity-10 animate-blob" style={{ animationDelay: '2s' }} />
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
 
@@ -224,6 +227,7 @@ export default function HomePage() {
 
             {/* Dashboard SVG illustration (left side in RTL) */}
             <div className="hidden lg:block">
+              <FloatingElement speed="slow">
               <div className="relative">
                 {/* Glow effect behind */}
                 <div className="absolute -inset-4 bg-[#0070F2]/20 rounded-3xl blur-2xl" />
@@ -314,8 +318,16 @@ export default function HomePage() {
                   <rect x="390" y="340" width="48" height="4" rx="2" fill="#94A3B8" opacity="0.08"/>
                 </svg>
               </div>
+              </FloatingElement>
             </div>
           </div>
+        </div>
+
+        {/* Scroll down indicator */}
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 animate-scroll">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto text-white/40">
+            <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
         </div>
 
         {/* Wave separator */}
@@ -329,15 +341,18 @@ export default function HomePage() {
       {/* ============ WHY DIFFERENT ============ */}
       <section id="why-different" className="py-24 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">ما يميّزنا</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">لماذا G-Ledger مختلف؟</h2>
             <p className="text-gray-500 mt-3 max-w-2xl mx-auto">الفرق الذي ستلاحظه من أول لحظة — ليس مجرد برنامج محاسبي آخر</p>
           </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 - Chart tree */}
-            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl">
+            <AnimatedCard delay={0}>
+            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -372,8 +387,10 @@ export default function HomePage() {
               </div>
             </div>
 
+            </AnimatedCard>
             {/* Card 2 - Globe with checkmark */}
-            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl">
+            <AnimatedCard delay={150}>
+            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -398,8 +415,10 @@ export default function HomePage() {
               </div>
             </div>
 
+            </AnimatedCard>
             {/* Card 3 - Auto-sync arrows */}
-            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl">
+            <AnimatedCard delay={300}>
+            <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -428,6 +447,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            </AnimatedCard>
           </div>
         </div>
       </section>
@@ -437,11 +457,13 @@ export default function HomePage() {
         {/* Subtle dot pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#021544 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
         <div className="relative max-w-7xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الموديولات</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">نظام ERP متكامل</h2>
             <p className="text-gray-500 mt-3 max-w-2xl mx-auto">12 موديول يغطي كل العمليات المحاسبية والإدارية — من القيد اليومي إلى التقارير المالية</p>
           </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
@@ -518,13 +540,15 @@ export default function HomePage() {
                 color: "#00C9A7",
               },
             ].map((mod, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+              <AnimatedCard delay={i * 80} key={i}>
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group shadow-premium">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: `${mod.color}15` }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill={mod.color}><path d={mod.iconPath}/></svg>
                 </div>
                 <h3 className="text-base font-bold text-[#021544] mb-1.5 group-hover:text-[#0070F2] transition-colors">{mod.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{mod.desc}</p>
               </div>
+              </AnimatedCard>
             ))}
           </div>
         </div>
@@ -542,6 +566,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Text content */}
             <div>
+              <AnimatedSection>
               <span className="text-sm font-semibold text-[#00C9A7] mb-2 block">الفوترة الإلكترونية</span>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 متوافق مع ETA مصر و ZATCA السعودية
@@ -549,6 +574,7 @@ export default function HomePage() {
               <p className="text-white/60 max-w-xl mb-10">
                 أرسل فواتيرك الإلكترونية مباشرة لمصلحة الضرائب — بدون وسيط وبدون تعقيد
               </p>
+              </AnimatedSection>
 
               <div className="space-y-8">
                 {/* Egypt Card */}
@@ -607,6 +633,7 @@ export default function HomePage() {
 
             {/* Invoice SVG illustration */}
             <div className="hidden lg:flex items-center justify-center">
+              <FloatingElement speed="delayed">
               <div className="relative">
                 <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
                 <svg viewBox="0 0 400 500" fill="none" className="relative w-full max-w-sm drop-shadow-2xl">
@@ -691,6 +718,7 @@ export default function HomePage() {
                   <rect x="296" y="436" width="28" height="5" rx="2" fill="#00C9A7" opacity="0.3"/>
                 </svg>
               </div>
+              </FloatingElement>
             </div>
           </div>
         </div>
@@ -699,15 +727,17 @@ export default function HomePage() {
       {/* ============ SECTORS ============ */}
       <section id="sectors" className="py-24 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">القطاعات المدعومة</span>
             <h3 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">
-              15 قطاع بشجرة حسابات جاهزة
+              <span className="gradient-text">15 قطاع</span> بشجرة حسابات جاهزة
             </h3>
             <p className="text-gray-500 max-w-xl mx-auto mt-3">
               اختر قطاعك وابدأ فورًا — النظام يجهّز لك الشجرة المحاسبية والضرائب المناسبة تلقائيًا
             </p>
           </div>
+          </AnimatedSection>
 
           <div className="flex flex-wrap justify-center gap-4">
             {[
@@ -744,11 +774,13 @@ export default function HomePage() {
       {/* ============ COMPARISON TABLE ============ */}
       <section className="py-24 relative" style={{ background: "linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 50%, #F8FAFC 100%)" }}>
         <div className="max-w-5xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">المقارنة</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">قارن بنفسك</h2>
             <p className="text-gray-500 mt-3">شوف الفرق بين G-Ledger والبرامج المحاسبية الأخرى</p>
           </div>
+          </AnimatedSection>
 
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
@@ -808,15 +840,17 @@ export default function HomePage() {
       {/* ============ PRICING ============ */}
       <section id="pricing" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الأسعار</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">أسعار بسيطة وشفافة</h2>
             <p className="text-gray-500 mt-3">ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك</p>
           </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {/* Free */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
               <div className="text-sm font-bold text-gray-500 mb-2">مجاني</div>
               <div className="text-4xl font-bold text-[#021544] mb-1">$0</div>
               <div className="text-xs text-gray-400 mb-6">6 أشهر تجربة</div>
@@ -832,7 +866,7 @@ export default function HomePage() {
             </div>
 
             {/* Basic */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
               <div className="text-sm font-bold text-blue-600 mb-2">أساسي</div>
               <div className="text-4xl font-bold text-[#021544] mb-1">$8<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
               <div className="text-xs text-gray-400 mb-6">للشركات الصغيرة</div>
@@ -848,7 +882,7 @@ export default function HomePage() {
             </div>
 
             {/* Professional - POPULAR */}
-            <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-xl transition-all duration-300 relative bg-gradient-to-b from-[#EFF6FF] to-white">
+            <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-xl transition-all duration-300 relative bg-gradient-to-b from-[#EFF6FF] to-white card-3d shadow-premium-lg glow-blue">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-l from-[#021544] to-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">الأكثر طلباً</div>
               <div className="text-sm font-bold text-[#0070F2] mb-2">احترافي</div>
               <div className="text-4xl font-bold text-[#021544] mb-1">$15<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
@@ -865,7 +899,7 @@ export default function HomePage() {
             </div>
 
             {/* Enterprise */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
               <div className="text-sm font-bold text-purple-600 mb-2">مؤسسي</div>
               <div className="text-4xl font-bold text-[#021544] mb-1">$25<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
               <div className="text-xs text-gray-400 mb-6">للشركات الكبيرة</div>
@@ -976,11 +1010,13 @@ export default function HomePage() {
       {/* ============ ACCOUNTING TIPS & NEWS ============ */}
       <section className="py-24 relative" style={{ background: "linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%)" }}>
         <div className="max-w-7xl mx-auto px-6">
+          <AnimatedSection>
           <div className="text-center mb-20">
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">نصائح محاسبية</span>
             <h2 className="text-3xl font-bold text-[#021544] mt-4">أخبار ونصائح مالية</h2>
             <p className="text-gray-500 mt-2">ابقَ على اطلاع بآخر التحديثات الضريبية والمحاسبية</p>
           </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
