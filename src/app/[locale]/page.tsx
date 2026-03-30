@@ -470,7 +470,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #021544 0%, #0a2a6e 50%, #0070F2 100%)" }}>
         {/* Background image */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 img-branded">
           <img
             src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
             alt="تحليلات الأعمال على شاشة الكمبيوتر"
@@ -674,7 +674,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {/* Card 1 - Chart tree */}
             <AnimatedCard delay={0}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
-              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4 img-branded">
                 <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" alt="رسوم بيانية ومستندات مالية" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -715,7 +715,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {/* Card 2 - Globe with checkmark */}
             <AnimatedCard delay={150}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
-              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4 img-branded">
                 <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=600&q=80" alt="آلة حاسبة ومستندات مالية" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -746,7 +746,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {/* Card 3 - Auto-sync arrows */}
             <AnimatedCard delay={300}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
-              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4 img-branded">
                 <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="لوحة تحكم وتحليلات" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -881,7 +881,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <AnimatedCard delay={i * 80} key={i}>
               <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group shadow-premium overflow-hidden">
                 {mod.image && (
-                  <div className="h-32 overflow-hidden rounded-xl -mx-6 -mt-6 mb-4">
+                  <div className="h-32 overflow-hidden rounded-xl -mx-6 -mt-6 mb-4 img-branded">
                     <img src={mod.image} alt={mod.imageAlt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
                   </div>
                 )}
@@ -967,7 +967,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <FloatingElement speed="delayed">
               <div className="relative">
                 <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
-                <div className="absolute -top-8 -right-8 w-48 h-48 rounded-2xl overflow-hidden opacity-30 rotate-6">
+                <div className="absolute -top-8 -right-8 w-48 h-48 rounded-2xl overflow-hidden opacity-30 rotate-6 img-branded">
                   <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="محترف أعمال مع جهاز لوحي" className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <svg viewBox="0 0 400 500" fill="none" className="relative w-full max-w-sm drop-shadow-2xl">
@@ -1167,7 +1167,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <div className="w-full max-w-md mx-auto h-40 overflow-hidden rounded-2xl mb-8">
+            <div className="w-full max-w-md mx-auto h-40 overflow-hidden rounded-2xl mb-8 img-branded">
               <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80" alt="عملات معدنية ترمز للتسعير" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.pricing.badge}</span>
@@ -1271,62 +1271,36 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.pricing.paymentMethods}</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {[
-                {
-                  name: "Visa",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#1A1F71"/><text x="8" y="16" fill="white" fontSize="10" fontWeight="bold" fontFamily="sans-serif">VISA</text></svg>
-                },
-                {
-                  name: "Mastercard",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><circle cx="16" cy="12" r="7" fill="#EB001B" opacity="0.9"/><circle cx="24" cy="12" r="7" fill="#F79E1B" opacity="0.9"/><ellipse cx="20" cy="12" rx="3.5" ry="6" fill="#FF5F00" opacity="0.8"/></svg>
-                },
-                {
-                  name: isAr ? "مدى" : "Mada",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#004B87"/><rect x="8" y="8" width="10" height="8" rx="1" fill="#F5A623"/><rect x="22" y="8" width="10" height="8" rx="1" fill="white" opacity="0.8"/></svg>
-                },
-                {
-                  name: "Apple Pay",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#000"/><path d="M14 7c-.6.7-1.5 1.2-2.4 1.1-.1-1 .4-2 .9-2.6.6-.7 1.5-1.1 2.3-1.1.1 1-.3 2-.8 2.6z" fill="white"/><path d="M14.8 8.3c-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.6-.7s1.6.7 2.7.6c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3-.1 0-2.1-.8-2.1-3.1 0-2 1.6-2.9 1.7-3-.9-1.4-2.4-1.6-2.9-1.7z" fill="white" transform="translate(8 -3) scale(0.7)"/></svg>
-                },
-                {
-                  name: "Google Pay",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><circle cx="14" cy="10" r="3" fill="#4285F4"/><circle cx="20" cy="10" r="3" fill="#EA4335"/><circle cx="26" cy="10" r="3" fill="#FBBC05"/><circle cx="20" cy="16" r="3" fill="#34A853"/></svg>
-                },
-                {
-                  name: isAr ? "ميزة" : "Meeza",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#005BAA"/><rect x="6" y="7" width="28" height="10" rx="5" fill="white" opacity="0.2"/><text x="11" y="16" fill="white" fontSize="8" fontWeight="bold" fontFamily="sans-serif">meeza</text></svg>
-                },
-                {
-                  name: "PayPal",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><path d="M15 6h4c2 0 3.5 1 3 3.5S19.5 13 17.5 13H16l-.5 3.5h-2.5L15 6z" fill="#003087"/><path d="M13 8h4c2 0 3.5 1 3 3.5S17.5 15 15.5 15H14l-.5 3.5h-2.5L13 8z" fill="#009CDE"/></svg>
-                },
-                {
-                  name: isAr ? "تحويل بنكي" : "Bank Transfer",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5"/><path d="M8 10v7h3v-7H8zm6 0v7h3v-7h-3zM6 20h23v-2H6v2zm18-10v7h3v-7h-3zM17.5 4L6 8.5V10h23V8.5L17.5 4z" fill="#64748B"/></svg>
-                },
-                {
-                  name: "STC Pay",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#5F259F"/><text x="7" y="15" fill="white" fontSize="8" fontWeight="bold" fontFamily="sans-serif">STC</text><circle cx="32" cy="12" r="4" fill="white" opacity="0.2"/></svg>
-                },
-                {
-                  name: "Fawry",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F5A623"/><text x="6" y="15" fill="white" fontSize="8" fontWeight="bold" fontFamily="sans-serif">fawry</text></svg>
-                },
-                {
-                  name: "Vodafone Cash",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#E60000"/><circle cx="20" cy="12" r="7" fill="none" stroke="white" strokeWidth="1.5"/><path d="M18 8c0 0 2 4 2 4s2-4 2-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
-                },
-                {
-                  name: "Instapay",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#00A651"/><path d="M12 8l4 4-4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/><path d="M20 8l4 4-4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.5"/></svg>
-                },
-                {
-                  name: "Stripe",
-                  svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#635BFF"/><text x="7" y="15" fill="white" fontSize="9" fontWeight="bold" fontFamily="sans-serif">stripe</text></svg>
-                },
+                { name: "Visa", color: "#1A1F71",
+                  svg: `<svg viewBox="0 0 48 16" fill="none"><path d="M19.2 1l-3.2 14h-2.6l3.2-14h2.6zm12.8 9l1.4-3.8.8 3.8h-2.2zm2.9-9h2.4l-2.1 14h-2.2l.1-.7c0 0-2.1.9-3.6.9-3.4 0-4.2-2.9-4.2-2.9l6.5-11.3h3.1zm-8.2 0s-2.8-.6-4.4.5c-1.3.9-2 2.4-1.5 4 .5 1.5 2 2 3.3 2.5 1 .4 1.3.7 1.2 1.2-.1.6-1 1-2 .9-.9 0-2.5-.5-2.5-.5l-.4 2.2s1.4.5 3.2.5c2.3 0 4-1 4.3-3 .3-1.7-.5-2.8-2.2-3.5-1-.5-1.6-.7-1.5-1.3.1-.5.7-.9 1.8-.8.7 0 1.8.3 1.8.3l.4-2zM8.6 1L5 15H2.1L.2 3.4C.1 2.8 0 2.5-.5 2.2-1 1.9-2.3 1.5-2.3 1.5L-2.2 1h4.2c.8 0 1.5.6 1.6 1.4l1 5.5L7.8 1h2.6z" fill="#1A1F71" transform="translate(6,0)"/></svg>` },
+                { name: "Mastercard", color: "#EB001B",
+                  svg: `<svg viewBox="0 0 48 32" fill="none"><circle cx="18" cy="16" r="12" fill="#EB001B"/><circle cx="30" cy="16" r="12" fill="#F79E1B"/><path d="M24 6.8a12 12 0 010 18.4 12 12 0 000-18.4z" fill="#FF5F00"/></svg>` },
+                { name: isAr ? "مدى" : "Mada", color: "#003B71",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="2" y="2" width="44" height="16" rx="4" fill="#003B71"/><text x="24" y="13" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial">mada</text></svg>` },
+                { name: "Apple Pay", color: "#000",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><path d="M12 4c-.7 0-1.5.3-2 .8-.4.5-.8 1.2-.7 1.9.8 0 1.5-.3 2-.8.4-.5.7-1.2.7-1.9zm.6 2c-1.1 0-2 .6-2.5.6s-1.3-.6-2.2-.6c-1.1 0-2.2.7-2.8 1.7-1.2 2-.3 5 .8 6.7.6.8 1.2 1.7 2.1 1.7s1.2-.6 2.2-.6 1.3.6 2.2.6 1.5-.9 2-1.7c.6-.9.9-1.8.9-1.8s-1.7-.7-1.7-2.6c0-1.6 1.3-2.4 1.4-2.4-.8-1.2-2-1.3-2.4-1.3z" fill="black"/><text x="28" y="13" fill="black" font-size="7" font-weight="600" font-family="Arial">Pay</text></svg>` },
+                { name: "Google Pay", color: "#4285F4",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="4" y="3" width="40" height="14" rx="3" fill="white" stroke="#dadce0"/><text x="24" y="13" text-anchor="middle" font-size="7" font-weight="500" font-family="Arial"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan><tspan fill="#5f6368"> Pay</tspan></text></svg>` },
+                { name: isAr ? "ميزة" : "Meeza", color: "#1B3A6B",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="2" y="2" width="44" height="16" rx="4" fill="#1B3A6B"/><text x="24" y="13" text-anchor="middle" fill="#E8A317" font-size="8" font-weight="bold" font-family="Arial">Meeza</text></svg>` },
+                { name: "PayPal", color: "#003087",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><text x="8" y="14" fill="#003087" font-size="10" font-weight="bold" font-family="Arial">Pay</text><text x="28" y="14" fill="#009cde" font-size="10" font-weight="bold" font-family="Arial">Pal</text></svg>` },
+                { name: isAr ? "تحويل بنكي" : "Bank Transfer", color: "#059669",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="8" y="3" width="32" height="14" rx="2" fill="#059669" opacity="0.1"/><path d="M18 6h12v1H18V6zm-2 2h16v1H16V8zm0 4h16v2H16v-2zm2 3h12v1H18v-1z" fill="#059669"/><path d="M24 4l6 3H18l6-3z" fill="#059669"/></svg>` },
+                { name: "STC Pay", color: "#5F259F",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="4" y="3" width="40" height="14" rx="4" fill="#5F259F"/><text x="24" y="13" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial">STC Pay</text></svg>` },
+                { name: "Fawry", color: "#F7941D",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="4" y="3" width="40" height="14" rx="4" fill="#F7941D"/><text x="24" y="13" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial">FAWRY</text></svg>` },
+                { name: "Vodafone Cash", color: "#E60000",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><circle cx="14" cy="10" r="8" fill="#E60000"/><text x="14" y="13" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="Arial">v</text><text x="32" y="13" fill="#E60000" font-size="6" font-weight="600" font-family="Arial">Cash</text></svg>` },
+                { name: "Instapay", color: "#00A651",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="4" y="3" width="40" height="14" rx="4" fill="#00A651"/><text x="24" y="13" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial">InstaPay</text></svg>` },
+                { name: "Stripe", color: "#635BFF",
+                  svg: `<svg viewBox="0 0 48 20" fill="none"><rect x="4" y="3" width="40" height="14" rx="4" fill="#635BFF"/><text x="24" y="13" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial">stripe</text></svg>` },
               ].map((method, i) => (
-                <div key={i} className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-                  {method.svg}
-                  <span className="text-xs font-medium text-[#021544]">{method.name}</span>
+                <div key={i} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                  <div className="w-full h-10 flex items-center justify-center" dangerouslySetInnerHTML={{ __html: method.svg }} />
+                  <span className="text-xs font-semibold" style={{ color: method.color }}>{method.name}</span>
                 </div>
               ))}
             </div>
@@ -1349,7 +1323,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {t.tipArticles.map((article, i) => (
               <article key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
-                <div className="h-36 overflow-hidden">
+                <div className="h-36 overflow-hidden img-branded">
                   <img src={article.image} alt={article.imageAlt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
                 </div>
                 <div className="h-1.5" style={{ background: "linear-gradient(90deg, #021544, #0070F2, #00C9A7)" }} />
@@ -1370,7 +1344,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* ============ CTA SECTION ============ */}
       <section className="py-24 relative overflow-hidden">
         {/* Background image with overlay */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 img-branded">
           <img
             src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80"
             alt="فريق عمل في مكتب حديث"
