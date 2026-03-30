@@ -185,34 +185,79 @@ export default function RegisterPage() {
               {/* Country Selection */}
               <div>
                 <label className="block text-sm font-medium mb-1.5">الدولة</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
-                  {[
-                    { code: "SA", flag: "🇸🇦", name: "السعودية" },
-                    { code: "EG", flag: "🇪🇬", name: "مصر" },
-                    { code: "AE", flag: "🇦🇪", name: "الإمارات" },
-                    { code: "KW", flag: "🇰🇼", name: "الكويت" },
-                    { code: "BH", flag: "🇧🇭", name: "البحرين" },
-                    { code: "OM", flag: "🇴🇲", name: "عمان" },
-                    { code: "QA", flag: "🇶🇦", name: "قطر" },
-                    { code: "JO", flag: "🇯🇴", name: "الأردن" },
-                    { code: "IQ", flag: "🇮🇶", name: "العراق" },
-                    { code: "MA", flag: "🇲🇦", name: "المغرب" },
-                    { code: "TN", flag: "🇹🇳", name: "تونس" },
-                    { code: "SD", flag: "🇸🇩", name: "السودان" },
-                  ].map((c) => (
-                    <button
-                      key={c.code}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, country: c.code as any })}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                        formData.country === c.code
-                          ? "bg-[#0070F2] text-white"
-                          : "bg-muted text-muted-foreground hover:bg-muted/80"
-                      }`}
-                    >
-                      <span>{c.flag}</span> {c.name}
-                    </button>
-                  ))}
+                <div className="max-h-[320px] overflow-y-auto border border-border rounded-xl p-3 space-y-4">
+                  {/* Arab Countries */}
+                  <div>
+                    <p className="text-xs font-bold text-muted-foreground mb-2">الدول العربية</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {[
+                        { code: "SA", flag: "🇸🇦", name: "السعودية" },
+                        { code: "EG", flag: "🇪🇬", name: "مصر" },
+                        { code: "AE", flag: "🇦🇪", name: "الإمارات" },
+                        { code: "KW", flag: "🇰🇼", name: "الكويت" },
+                        { code: "BH", flag: "🇧🇭", name: "البحرين" },
+                        { code: "OM", flag: "🇴🇲", name: "عمان" },
+                        { code: "QA", flag: "🇶🇦", name: "قطر" },
+                        { code: "JO", flag: "🇯🇴", name: "الأردن" },
+                        { code: "IQ", flag: "🇮🇶", name: "العراق" },
+                        { code: "MA", flag: "🇲🇦", name: "المغرب" },
+                        { code: "TN", flag: "🇹🇳", name: "تونس" },
+                        { code: "SD", flag: "🇸🇩", name: "السودان" },
+                        { code: "LY", flag: "🇱🇾", name: "ليبيا" },
+                        { code: "LB", flag: "🇱🇧", name: "لبنان" },
+                      ].map((c) => (
+                        <button
+                          key={c.code}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, country: c.code as any })}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                            formData.country === c.code
+                              ? "bg-[#0070F2] text-white"
+                              : "bg-muted text-muted-foreground hover:bg-muted/80"
+                          }`}
+                        >
+                          <span>{c.flag}</span> {c.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Global Countries */}
+                  <div>
+                    <p className="text-xs font-bold text-muted-foreground mb-2">دول عالمية</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {[
+                        { code: "US", flag: "🇺🇸", name: "الولايات المتحدة" },
+                        { code: "IN", flag: "🇮🇳", name: "الهند" },
+                        { code: "CN", flag: "🇨🇳", name: "الصين" },
+                        { code: "ID", flag: "🇮🇩", name: "إندونيسيا" },
+                        { code: "PK", flag: "🇵🇰", name: "باكستان" },
+                        { code: "BR", flag: "🇧🇷", name: "البرازيل" },
+                        { code: "NG", flag: "🇳🇬", name: "نيجيريا" },
+                        { code: "BD", flag: "🇧🇩", name: "بنغلاديش" },
+                        { code: "RU", flag: "🇷🇺", name: "روسيا" },
+                        { code: "MX", flag: "🇲🇽", name: "المكسيك" },
+                        { code: "TR", flag: "🇹🇷", name: "تركيا" },
+                        { code: "DE", flag: "🇩🇪", name: "ألمانيا" },
+                        { code: "GB", flag: "🇬🇧", name: "المملكة المتحدة" },
+                        { code: "FR", flag: "🇫🇷", name: "فرنسا" },
+                        { code: "MY", flag: "🇲🇾", name: "ماليزيا" },
+                      ].map((c) => (
+                        <button
+                          key={c.code}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, country: c.code as any })}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                            formData.country === c.code
+                              ? "bg-[#0070F2] text-white"
+                              : "bg-muted text-muted-foreground hover:bg-muted/80"
+                          }`}
+                        >
+                          <span>{c.flag}</span> {c.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 

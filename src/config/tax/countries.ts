@@ -438,6 +438,211 @@ export const COUNTRIES: Record<string, CountryConfig> = {
     defaultVatRate: 0,
     taxTypes: [],
   },
+
+  // === TOP GLOBAL COUNTRIES ===
+
+  US: {
+    code: "US",
+    nameAr: "الولايات المتحدة",
+    nameEn: "United States",
+    flag: "🇺🇸",
+    currency: "USD",
+    currencyNameAr: "دولار أمريكي",
+    currencySymbol: "$",
+    hasEInvoice: false,
+    defaultVatRate: 0,
+    taxTypes: [{ code: "SALES_TAX", nameAr: "ضريبة المبيعات", nameEn: "Sales Tax", rate: 0 }],
+    notes: "Sales tax varies by state (0-10%)",
+  },
+
+  IN: {
+    code: "IN",
+    nameAr: "الهند",
+    nameEn: "India",
+    flag: "🇮🇳",
+    currency: "INR",
+    currencyNameAr: "روبية هندية",
+    currencySymbol: "₹",
+    hasEInvoice: true,
+    eInvoiceSystem: "GST e-Invoice",
+    defaultVatRate: 18,
+    taxTypes: [{ code: "GST", nameAr: "ضريبة السلع والخدمات", nameEn: "GST", rate: 18 }],
+  },
+
+  CN: {
+    code: "CN",
+    nameAr: "الصين",
+    nameEn: "China",
+    flag: "🇨🇳",
+    currency: "CNY",
+    currencyNameAr: "يوان صيني",
+    currencySymbol: "¥",
+    hasEInvoice: true,
+    eInvoiceSystem: "Golden Tax (Fapiao)",
+    defaultVatRate: 13,
+    taxTypes: [{ code: "VAT", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT", rate: 13 }],
+  },
+
+  ID: {
+    code: "ID",
+    nameAr: "إندونيسيا",
+    nameEn: "Indonesia",
+    flag: "🇮🇩",
+    currency: "IDR",
+    currencyNameAr: "روبية إندونيسية",
+    currencySymbol: "Rp",
+    hasEInvoice: true,
+    defaultVatRate: 11,
+    taxTypes: [{ code: "PPN", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (PPN)", rate: 11 }],
+  },
+
+  PK: {
+    code: "PK",
+    nameAr: "باكستان",
+    nameEn: "Pakistan",
+    flag: "🇵🇰",
+    currency: "PKR",
+    currencyNameAr: "روبية باكستانية",
+    currencySymbol: "₨",
+    hasEInvoice: false,
+    defaultVatRate: 18,
+    taxTypes: [{ code: "GST", nameAr: "ضريبة المبيعات العامة", nameEn: "General Sales Tax", rate: 18 }],
+  },
+
+  BR: {
+    code: "BR",
+    nameAr: "البرازيل",
+    nameEn: "Brazil",
+    flag: "🇧🇷",
+    currency: "BRL",
+    currencyNameAr: "ريال برازيلي",
+    currencySymbol: "R$",
+    hasEInvoice: true,
+    eInvoiceSystem: "NF-e",
+    defaultVatRate: 17,
+    taxTypes: [{ code: "ICMS", nameAr: "ضريبة التداول", nameEn: "ICMS", rate: 17 }],
+  },
+
+  NG: {
+    code: "NG",
+    nameAr: "نيجيريا",
+    nameEn: "Nigeria",
+    flag: "🇳🇬",
+    currency: "NGN",
+    currencyNameAr: "نيرة نيجيرية",
+    currencySymbol: "₦",
+    hasEInvoice: false,
+    defaultVatRate: 7.5,
+    taxTypes: [{ code: "VAT", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT", rate: 7.5 }],
+  },
+
+  BD: {
+    code: "BD",
+    nameAr: "بنغلاديش",
+    nameEn: "Bangladesh",
+    flag: "🇧🇩",
+    currency: "BDT",
+    currencyNameAr: "تاكا بنغلاديشية",
+    currencySymbol: "৳",
+    hasEInvoice: false,
+    defaultVatRate: 15,
+    taxTypes: [{ code: "VAT", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT", rate: 15 }],
+  },
+
+  RU: {
+    code: "RU",
+    nameAr: "روسيا",
+    nameEn: "Russia",
+    flag: "🇷🇺",
+    currency: "RUB",
+    currencyNameAr: "روبل روسي",
+    currencySymbol: "₽",
+    hasEInvoice: true,
+    defaultVatRate: 20,
+    taxTypes: [{ code: "NDS", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (NDS)", rate: 20 }],
+  },
+
+  MX: {
+    code: "MX",
+    nameAr: "المكسيك",
+    nameEn: "Mexico",
+    flag: "🇲🇽",
+    currency: "MXN",
+    currencyNameAr: "بيزو مكسيكي",
+    currencySymbol: "$",
+    hasEInvoice: true,
+    eInvoiceSystem: "CFDI",
+    defaultVatRate: 16,
+    taxTypes: [{ code: "IVA", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (IVA)", rate: 16 }],
+  },
+
+  TR: {
+    code: "TR",
+    nameAr: "تركيا",
+    nameEn: "Turkey",
+    flag: "🇹🇷",
+    currency: "TRY",
+    currencyNameAr: "ليرة تركية",
+    currencySymbol: "₺",
+    hasEInvoice: true,
+    eInvoiceSystem: "e-Fatura",
+    defaultVatRate: 20,
+    taxTypes: [{ code: "KDV", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (KDV)", rate: 20 }],
+  },
+
+  DE: {
+    code: "DE",
+    nameAr: "ألمانيا",
+    nameEn: "Germany",
+    flag: "🇩🇪",
+    currency: "EUR",
+    currencyNameAr: "يورو",
+    currencySymbol: "€",
+    hasEInvoice: true,
+    eInvoiceSystem: "XRechnung",
+    defaultVatRate: 19,
+    taxTypes: [{ code: "UST", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (USt)", rate: 19 }],
+  },
+
+  GB: {
+    code: "GB",
+    nameAr: "المملكة المتحدة",
+    nameEn: "United Kingdom",
+    flag: "🇬🇧",
+    currency: "GBP",
+    currencyNameAr: "جنيه إسترليني",
+    currencySymbol: "£",
+    hasEInvoice: false,
+    defaultVatRate: 20,
+    taxTypes: [{ code: "VAT", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT", rate: 20 }],
+  },
+
+  FR: {
+    code: "FR",
+    nameAr: "فرنسا",
+    nameEn: "France",
+    flag: "🇫🇷",
+    currency: "EUR",
+    currencyNameAr: "يورو",
+    currencySymbol: "€",
+    hasEInvoice: true,
+    eInvoiceSystem: "Chorus Pro",
+    defaultVatRate: 20,
+    taxTypes: [{ code: "TVA", nameAr: "ضريبة القيمة المضافة", nameEn: "VAT (TVA)", rate: 20 }],
+  },
+
+  MY: {
+    code: "MY",
+    nameAr: "ماليزيا",
+    nameEn: "Malaysia",
+    flag: "🇲🇾",
+    currency: "MYR",
+    currencyNameAr: "رينغيت ماليزي",
+    currencySymbol: "RM",
+    hasEInvoice: true,
+    defaultVatRate: 8,
+    taxTypes: [{ code: "SST", nameAr: "ضريبة المبيعات والخدمات", nameEn: "SST", rate: 8 }],
+  },
 };
 
 // Get VAT rate for a specific country + sector
@@ -463,14 +668,44 @@ export function getSectorTaxConfig(countryCode: string, sectorCode: string): Sec
   };
 }
 
+// Arab country codes
+const ARAB_COUNTRIES = ["SA", "EG", "AE", "KW", "BH", "OM", "QA", "JO", "IQ", "MA", "TN", "SD", "LY", "LB"];
+
+// Global countries ordered by population
+const GLOBAL_COUNTRIES_BY_POP = ["CN", "IN", "US", "ID", "PK", "BR", "NG", "BD", "RU", "MX", "TR", "DE", "GB", "FR", "MY"];
+
 // Get all countries as array
 export function getAllCountries() {
   return Object.values(COUNTRIES).sort((a, b) => {
-    // SA and EG first, then alphabetical
-    if (a.code === "SA") return -1;
-    if (b.code === "SA") return 1;
-    if (a.code === "EG") return -1;
-    if (b.code === "EG") return 1;
-    return a.nameAr.localeCompare(b.nameAr);
+    const aIsArab = ARAB_COUNTRIES.includes(a.code);
+    const bIsArab = ARAB_COUNTRIES.includes(b.code);
+
+    // Arab countries first
+    if (aIsArab && !bIsArab) return -1;
+    if (!aIsArab && bIsArab) return 1;
+
+    // Within Arab: SA first, then EG, then alphabetical
+    if (aIsArab && bIsArab) {
+      if (a.code === "SA") return -1;
+      if (b.code === "SA") return 1;
+      if (a.code === "EG") return -1;
+      if (b.code === "EG") return 1;
+      return a.nameAr.localeCompare(b.nameAr);
+    }
+
+    // Within global: sort by population order
+    const aIdx = GLOBAL_COUNTRIES_BY_POP.indexOf(a.code);
+    const bIdx = GLOBAL_COUNTRIES_BY_POP.indexOf(b.code);
+    return aIdx - bIdx;
   });
+}
+
+// Get Arab countries
+export function getArabCountries() {
+  return getAllCountries().filter(c => ARAB_COUNTRIES.includes(c.code));
+}
+
+// Get global (non-Arab) countries
+export function getGlobalCountries() {
+  return getAllCountries().filter(c => !ARAB_COUNTRIES.includes(c.code));
 }

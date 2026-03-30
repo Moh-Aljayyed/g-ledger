@@ -39,7 +39,7 @@ export default function HomePage() {
               "البنوك والنقدية",
               "الإنتاج والتصنيع",
               "التقارير المالية",
-              "14 دولة عربية مدعومة",
+              "29+ دولة حول العالم مدعومة",
               "15 قطاع بشجرة حسابات جاهزة",
             ],
             author: {
@@ -115,7 +115,7 @@ export default function HomePage() {
                 name: "ما هي الدول المدعومة؟",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "يدعم 14 دولة عربية: السعودية، مصر، الإمارات، الكويت، البحرين، عمان، قطر، الأردن، العراق، المغرب، تونس، السودان، ليبيا، ولبنان. مع ضرائب مخصصة لكل دولة وقطاع.",
+                  text: "يدعم 29+ دولة حول العالم: 14 دولة عربية (السعودية، مصر، الإمارات، الكويت، البحرين، عمان، قطر، الأردن، العراق، المغرب، تونس، السودان، ليبيا، لبنان) و15 دولة عالمية (الولايات المتحدة، الهند، الصين، إندونيسيا، باكستان، البرازيل، نيجيريا، بنغلاديش، روسيا، المكسيك، تركيا، ألمانيا، المملكة المتحدة، فرنسا، ماليزيا). مع ضرائب وعملات مخصصة لكل دولة وقطاع.",
                 },
               },
             ],
@@ -167,7 +167,7 @@ export default function HomePage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-medium mb-8">
               <span className="w-2 h-2 rounded-full bg-[#00C9A7] animate-pulse" />
-              متوافق مع ETA + ZATCA | 14 دولة عربية | 15 قطاع
+              متوافق مع ETA + ZATCA | 29+ دولة حول العالم | 15 قطاع
             </div>
 
             <h1 className="text-4xl md:text-[56px] font-bold text-white leading-tight mb-6">
@@ -202,7 +202,7 @@ export default function HomePage() {
             <div className="flex flex-wrap justify-center gap-8 mt-8">
               {[
                 { label: "15 قطاع", icon: "M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" },
-                { label: "14 دولة", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" },
+                { label: "29+ دولة", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" },
                 { label: "2FA حماية", icon: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" },
                 { label: "شات بوت ذكي", icon: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" },
               ].map((badge) => (
@@ -263,7 +263,7 @@ export default function HomePage() {
                   هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 3%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك.
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[#00C9A7] text-sm font-semibold">
-                  <span>14 دولة عربية</span>
+                  <span>29+ دولة حول العالم</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function HomePage() {
               { icon: "\ud83c\udfe6", title: "البنوك والنقدية", desc: "حسابات متعددة، تحويلات، تسوية بنكية تلقائية" },
               { icon: "\ud83c\udfed", title: "الإنتاج والتصنيع", desc: "5 مراحل — من المواد الخام إلى المنتج النهائي" },
               { icon: "\ud83d\udcca", title: "التقارير المالية", desc: "ميزان مراجعة، قائمة دخل، ميزانية، أستاذ عام" },
-              { icon: "\ud83c\udf0d", title: "14 دولة عربية", desc: "ضرائب وعملات مخصصة لكل دولة وقطاع تلقائيًا" },
+              { icon: "\ud83c\udf0d", title: "29+ دولة حول العالم", desc: "ضرائب وعملات مخصصة لكل دولة وقطاع تلقائيًا" },
               { icon: "\ud83d\udd10", title: "أمان بنكي", desc: "2FA + OTP عند كل دخول، تشفير SSL، عزل كامل" },
               { icon: "\ud83e\udd16", title: "مساعد ذكي", desc: "شات بوت بالعربية — 45+ فئة سؤال عن كل الموديولات" },
             ].map((mod, i) => (
@@ -449,7 +449,7 @@ export default function HomePage() {
                 <tbody>
                   {[
                     { feature: "شجرة حسابات جاهزة حسب القطاع", gl: { text: "15 قطاع", status: "green" }, other: { text: "شجرة فارغة", status: "red" } },
-                    { feature: "ضرائب مخصصة لكل دولة وقطاع", gl: { text: "14 دولة", status: "green" }, other: { text: "نسبة واحدة", status: "red" } },
+                    { feature: "ضرائب مخصصة لكل دولة وقطاع", gl: { text: "29+ دولة", status: "green" }, other: { text: "نسبة واحدة", status: "red" } },
                     { feature: "قيود تلقائية من كل موديول", gl: { text: "تلقائي 100%", status: "green" }, other: { text: "يدوي غالبًا", status: "yellow" } },
                     { feature: "فوترة إلكترونية ETA + ZATCA", gl: { text: "مدمجة", status: "green" }, other: { text: "إضافة مدفوعة", status: "yellow" } },
                     { feature: "موديول إنتاج (5 مراحل)", gl: { text: "متكامل", status: "green" }, other: { text: "غير متوفر", status: "red" } },
