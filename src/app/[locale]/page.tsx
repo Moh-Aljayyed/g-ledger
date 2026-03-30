@@ -158,6 +158,16 @@ export default function HomePage() {
 
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #021544 0%, #0a2a6e 50%, #0070F2 100%)" }}>
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+            alt="تحليلات الأعمال على شاشة الكمبيوتر"
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-[#021544]/90 via-[#0a2a6e]/85 to-[#0070F2]/80" />
+        </div>
         {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-10 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -353,6 +363,9 @@ export default function HomePage() {
             {/* Card 1 - Chart tree */}
             <AnimatedCard delay={0}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" alt="رسوم بيانية ومستندات مالية" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+              </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -391,6 +404,9 @@ export default function HomePage() {
             {/* Card 2 - Globe with checkmark */}
             <AnimatedCard delay={150}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+                <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=600&q=80" alt="آلة حاسبة ومستندات مالية" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+              </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -419,6 +435,9 @@ export default function HomePage() {
             {/* Card 3 - Auto-sync arrows */}
             <AnimatedCard delay={300}>
             <div className="relative bg-gradient-to-br from-[#021544] to-[#0070F2] rounded-2xl p-8 text-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-premium">
+              <div className="h-40 overflow-hidden rounded-t-xl -mx-8 -mt-8 mb-4">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="لوحة تحكم وتحليلات" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+              </div>
               <div className="absolute top-0 left-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
@@ -472,12 +491,16 @@ export default function HomePage() {
                 desc: "قيد مزدوج تلقائي مع ترحيل وعكس وقيد مركب",
                 iconPath: "M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2zm14-2l3 3-3 3v-2h-4v-2h4v-2z",
                 color: "#0070F2",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6e?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "محاسبة وتقارير مالية",
               },
               {
                 title: "الفوترة الإلكترونية",
                 desc: "ETA مصر + ZATCA السعودية مع توقيع إلكتروني وQR",
                 iconPath: "M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 9h-2v2H9v-2H7v-2h2V7h2v2h2v2zm-2-7V3.5L16.5 9H13c-.55 0-1-.45-1-1z",
                 color: "#00C9A7",
+                image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "توقيع مستندات رسمية",
               },
               {
                 title: "العملاء والموردين",
@@ -490,12 +513,16 @@ export default function HomePage() {
                 desc: "مسير رواتب تلقائي مع تأمينات GOSI وبدلات",
                 iconPath: "M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z",
                 color: "#00C9A7",
+                image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "فريق عمل في بيئة مكتبية",
               },
               {
                 title: "المخزون",
                 desc: "باتش، صلاحية، FIFO/متوسط مرجح، تنبيهات نقص",
                 iconPath: "M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zm-5 12H9v-2h6v2zm5-7H4V4h16v3z",
                 color: "#0070F2",
+                image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "إدارة المخزون والتخزين",
               },
               {
                 title: "الأصول الثابتة",
@@ -541,7 +568,12 @@ export default function HomePage() {
               },
             ].map((mod, i) => (
               <AnimatedCard delay={i * 80} key={i}>
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group shadow-premium">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group shadow-premium overflow-hidden">
+                {mod.image && (
+                  <div className="h-32 overflow-hidden rounded-xl -mx-6 -mt-6 mb-4">
+                    <img src={mod.image} alt={mod.imageAlt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                )}
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: `${mod.color}15` }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill={mod.color}><path d={mod.iconPath}/></svg>
                 </div>
@@ -636,6 +668,9 @@ export default function HomePage() {
               <FloatingElement speed="delayed">
               <div className="relative">
                 <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
+                <div className="absolute -top-8 -right-8 w-48 h-48 rounded-2xl overflow-hidden opacity-30 rotate-6">
+                  <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="محترف أعمال مع جهاز لوحي" className="w-full h-full object-cover" loading="lazy" />
+                </div>
                 <svg viewBox="0 0 400 500" fill="none" className="relative w-full max-w-sm drop-shadow-2xl">
                   {/* Main invoice document */}
                   <rect x="40" y="20" width="320" height="460" rx="16" fill="white" />
@@ -842,6 +877,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
+            <div className="w-full max-w-md mx-auto h-40 overflow-hidden rounded-2xl mb-8">
+              <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80" alt="عملات معدنية ترمز للتسعير" className="w-full h-full object-cover" loading="lazy" />
+            </div>
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الأسعار</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">أسعار بسيطة وشفافة</h2>
             <p className="text-gray-500 mt-3">ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك</p>
@@ -1026,6 +1064,8 @@ export default function HomePage() {
                 title: "المرحلة الثانية من ZATCA — ما الذي تحتاج معرفته؟",
                 desc: "هيئة الزكاة والضريبة والجمارك بدأت تطبيق المرحلة الثانية (التكامل) من الفوترة الإلكترونية. G-Ledger يدعم التكامل المباشر مع بوابة فاتورة شاملةً التوقيع الرقمي وختم التشفير.",
                 date: "مارس 2026",
+                image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "بيانات رقمية وتحليلات",
               },
               {
                 tag: "مصر — ETA",
@@ -1033,6 +1073,8 @@ export default function HomePage() {
                 title: "تحديثات منظومة الفاتورة الإلكترونية المصرية 2026",
                 desc: "مصلحة الضرائب المصرية وسّعت نطاق الإلزام ليشمل جميع الممولين. النظام يدعم التكامل مع ETA بما في ذلك التوقيع الإلكتروني وتكويد الأصناف EGS/GS1.",
                 date: "فبراير 2026",
+                image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "مستندات مالية ورسوم بيانية",
               },
               {
                 tag: "نصيحة محاسبية",
@@ -1040,6 +1082,8 @@ export default function HomePage() {
                 title: "5 أخطاء شائعة في المحاسبة وكيف تتجنبها",
                 desc: "1. عدم فصل المصروفات الشخصية عن التجارية\n2. تأخير تسجيل القيود\n3. إهمال التسويات البنكية\n4. عدم متابعة تقادم الديون\n5. نسيان احتساب الإهلاك الشهري — G-Ledger يحلها كلها تلقائيًا.",
                 date: "مارس 2026",
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "شخص يعمل على حسابات مالية",
               },
               {
                 tag: "ضريبة",
@@ -1047,6 +1091,8 @@ export default function HomePage() {
                 title: "ضريبة القيمة المضافة — الفرق بين مصر والسعودية",
                 desc: "مصر 14% مع إعفاءات للقطاع الصحي والبنوك والزراعة + خصم منبع. السعودية 15% موحدة مع استثناء العقارات (5% RETT). G-Ledger يحسب الضريبة تلقائيًا حسب دولتك وقطاعك.",
                 date: "يناير 2026",
+                image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "حسابات ضريبية ومالية",
               },
               {
                 tag: "إدارة أعمال",
@@ -1054,6 +1100,8 @@ export default function HomePage() {
                 title: "كيف تختار النظام المحاسبي المناسب لشركتك؟",
                 desc: "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 15 قطاع جاهز مع تجربة مجانية بدون بطاقة ائتمان.",
                 date: "ديسمبر 2025",
+                image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "فريق عمل يتعاون في مكتب",
               },
               {
                 tag: "تحديث النظام",
@@ -1061,9 +1109,14 @@ export default function HomePage() {
                 title: "G-Ledger يدعم الآن موديول الإنتاج والتصنيع",
                 desc: "أصبح بإمكانك تتبع دورة الإنتاج الكاملة — من شراء المواد الخام إلى المنتج النهائي. دعم التشغيل الخارجي (مقاولي الباطن) مع تتبع التكلفة في كل مرحلة وقيود تلقائية.",
                 date: "مارس 2026",
+                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=80",
+                imageAlt: "تكنولوجيا وتصنيع حديث",
               },
             ].map((article, i) => (
               <article key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div className="h-36 overflow-hidden">
+                  <img src={article.image} alt={article.imageAlt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
                 <div className="h-1.5" style={{ background: "linear-gradient(90deg, #021544, #0070F2, #00C9A7)" }} />
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
@@ -1080,7 +1133,17 @@ export default function HomePage() {
       </section>
 
       {/* ============ CTA SECTION ============ */}
-      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #021544 0%, #0070F2 100%)" }}>
+      <section className="py-24 relative overflow-hidden">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80"
+            alt="فريق عمل في مكتب حديث"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(2,21,68,0.92) 0%, rgba(0,112,242,0.88) 100%)" }} />
+        </div>
         {/* Background SVG pattern */}
         <div className="absolute inset-0 opacity-[0.04]">
           <svg width="100%" height="100%">
