@@ -4,9 +4,320 @@ import { VisitorCounter } from "@/components/visitor-counter";
 import { LangLink } from "@/components/lang-link";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animated-landing";
 
-export default function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+
+  const t = {
+    nav: {
+      features: isAr ? "المميزات" : "Features",
+      sectors: isAr ? "القطاعات" : "Sectors",
+      einvoice: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
+      pricing: isAr ? "الأسعار" : "Pricing",
+      blog: isAr ? "المدونة" : "Blog",
+      login: isAr ? "تسجيل الدخول" : "Login",
+      register: isAr ? "ابدأ تجربتك المجانية" : "Start Free Trial",
+    },
+    hero: {
+      badge: isAr ? "29+ دولة | 15 قطاع | فوترة إلكترونية" : "29+ Countries | 15 Sectors | E-Invoicing",
+      title1: isAr ? "اختر قطاعك..." : "Choose Your Sector...",
+      title2: isAr ? "ونظامك جاهز" : "Your System is Ready",
+      subtitle: isAr
+        ? "أول نظام محاسبي عربي بشجرة حسابات جاهزة لكل قطاع وضرائب مخصصة لكل دولة — النظام يجهّز لك كل شيء في ثوانٍ"
+        : "The first accounting system with a ready chart of accounts for every sector and custom taxes for every country — setup in seconds",
+      cta1: isAr ? "ابدأ مجانًا — 6 أشهر بدون بطاقة" : "Start Free — 6 Months No Card",
+      cta2: isAr ? "شاهد المميزات" : "View Features",
+      trust1: isAr ? "15 قطاع" : "15 Sectors",
+      trust2: isAr ? "29+ دولة" : "29+ Countries",
+      trust3: isAr ? "2FA حماية" : "2FA Security",
+      trust4: isAr ? "شات بوت ذكي" : "AI Chatbot",
+    },
+    whyDifferent: {
+      badge: isAr ? "ما يميّزنا" : "What Sets Us Apart",
+      title: isAr ? "لماذا G-Ledger مختلف؟" : "Why is G-Ledger Different?",
+      subtitle: isAr ? "الفرق الذي ستلاحظه من أول لحظة — ليس مجرد برنامج محاسبي آخر" : "The difference you'll notice from the first moment — not just another accounting software",
+      card1Title: isAr ? "شجرة حسابات جاهزة — مش فاضية" : "Ready Chart of Accounts — Not Empty",
+      card1Desc: isAr
+        ? "البرامج الأخرى تعطيك شجرة فارغة وتتركك تبنيها من الصفر. G-Ledger يعطيك شجرة مكتملة ومصممة خصيصًا لقطاعك — صناعي، طبي، مقاولات، أو أي قطاع آخر."
+        : "Other software gives you an empty chart. G-Ledger gives you a complete chart designed specifically for your sector — manufacturing, medical, contracting, or any other.",
+      card1Stat: isAr ? "15 قطاع جاهز" : "15 Ready Sectors",
+      card2Title: isAr ? "ضرائب ذكية — مش رقم واحد للكل" : "Smart Taxes — Not One Rate for All",
+      card2Desc: isAr
+        ? "هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 3%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك."
+        : "Did you know Egypt's medical sector is VAT-exempt while contracting is 14% + 3% WHT? G-Ledger knows — and calculates the correct tax automatically for your country and sector.",
+      card2Stat: isAr ? "29+ دولة حول العالم" : "29+ Countries Worldwide",
+      card3Title: isAr ? "كل شيء ينشئ قيد تلقائي" : "Everything Creates Auto Journal Entries",
+      card3Desc: isAr
+        ? "فاتورة؟ قيد. راتب؟ قيد. حركة مخزون؟ قيد. إهلاك؟ قيد. إنتاج؟ قيد. كل عملية في النظام تُنشئ قيدها المحاسبي تلقائيًا — صفر إدخال يدوي."
+        : "Invoice? Entry. Salary? Entry. Stock? Entry. Depreciation? Entry. Production? Entry. Every operation auto-creates its journal entry — zero manual input.",
+      card3Stat: isAr ? "تلقائي 100%" : "100% Automatic",
+    },
+    modules: {
+      badge: isAr ? "الموديولات" : "Modules",
+      title: isAr ? "نظام ERP متكامل" : "Complete ERP System",
+      subtitle: isAr ? "12 موديول يغطي كل العمليات المحاسبية والإدارية — من القيد اليومي إلى التقارير المالية" : "12 modules covering all accounting and administrative operations — from journal entries to financial reports",
+    },
+    moduleItems: [
+      {
+        title: isAr ? "القيود المحاسبية" : "Journal Entries",
+        desc: isAr ? "قيد مزدوج تلقائي مع ترحيل وعكس وقيد مركب" : "Auto double-entry with posting, reversal & compound entries",
+      },
+      {
+        title: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
+        desc: isAr ? "ETA مصر + ZATCA السعودية مع توقيع إلكتروني وQR" : "ETA Egypt + ZATCA Saudi with digital signature & QR",
+      },
+      {
+        title: isAr ? "العملاء والموردين" : "Clients & Vendors",
+        desc: isAr ? "كشف حساب، تقادم ديون، حد ائتمان، شروط دفع" : "Statements, aging, credit limits, payment terms",
+      },
+      {
+        title: isAr ? "الرواتب والـ HR" : "Payroll & HR",
+        desc: isAr ? "مسير رواتب تلقائي مع تأمينات GOSI وبدلات" : "Auto payroll with GOSI insurance & allowances",
+      },
+      {
+        title: isAr ? "المخزون" : "Inventory",
+        desc: isAr ? "باتش، صلاحية، FIFO/متوسط مرجح، تنبيهات نقص" : "Batch, expiry, FIFO/weighted avg, low stock alerts",
+      },
+      {
+        title: isAr ? "الأصول الثابتة" : "Fixed Assets",
+        desc: isAr ? "إهلاك شهري تلقائي — قسط ثابت أو متناقص" : "Auto monthly depreciation — straight-line or declining",
+      },
+      {
+        title: isAr ? "البنوك والنقدية" : "Banks & Cash",
+        desc: isAr ? "حسابات متعددة، تحويلات، تسوية بنكية تلقائية" : "Multi-accounts, transfers, auto bank reconciliation",
+      },
+      {
+        title: isAr ? "الإنتاج والتصنيع" : "Production & Manufacturing",
+        desc: isAr ? "5 مراحل — من المواد الخام إلى المنتج النهائي" : "5 phases — from raw materials to finished product",
+      },
+      {
+        title: isAr ? "التقارير المالية" : "Financial Reports",
+        desc: isAr ? "ميزان مراجعة، قائمة دخل، ميزانية، أستاذ عام" : "Trial balance, income statement, balance sheet, general ledger",
+      },
+      {
+        title: isAr ? "29+ دولة حول العالم" : "29+ Countries Worldwide",
+        desc: isAr ? "ضرائب وعملات مخصصة لكل دولة وقطاع تلقائيًا" : "Custom taxes & currencies for each country & sector automatically",
+      },
+      {
+        title: isAr ? "أمان بنكي" : "Bank-Level Security",
+        desc: isAr ? "2FA + OTP عند كل دخول، تشفير SSL، عزل كامل" : "2FA + OTP on every login, SSL encryption, full isolation",
+      },
+      {
+        title: isAr ? "مساعد ذكي" : "AI Assistant",
+        desc: isAr ? "شات بوت بالعربية — 45+ فئة سؤال عن كل الموديولات" : "Arabic chatbot — 45+ question categories across all modules",
+      },
+    ],
+    einvoice: {
+      badge: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
+      title: isAr ? "متوافق مع ETA مصر و ZATCA السعودية" : "ETA Egypt & ZATCA Saudi Compliant",
+      subtitle: isAr ? "أرسل فواتيرك الإلكترونية مباشرة لمصلحة الضرائب — بدون وسيط وبدون تعقيد" : "Send e-invoices directly to tax authorities — no middleman, no complexity",
+      egyptTitle: isAr ? "مصر — مصلحة الضرائب (ETA)" : "Egypt — Tax Authority (ETA)",
+      egyptItems: isAr
+        ? [
+            "تكامل مباشر عبر API مع منظومة الفاتورة الإلكترونية",
+            "دعم التوقيع الإلكتروني وتكويد الأصناف (EGS/GS1)",
+            "ض.ق.م + ضريبة الجدول + الخصم من المنبع",
+            "بيئة اختبار Pre-Production + بيئة الإنتاج",
+            "ضرائب مخصصة: طبي = 0%، مقاولات = 14% + 3% خصم منبع",
+          ]
+        : [
+            "Direct API integration with the e-invoicing system",
+            "Digital signature & item coding support (EGS/GS1)",
+            "VAT + Table Tax + Withholding Tax",
+            "Pre-Production test environment + Production",
+            "Custom taxes: Medical = 0%, Contracting = 14% + 3% WHT",
+          ],
+      saudiTitle: isAr ? "السعودية — هيئة الزكاة (ZATCA)" : "Saudi Arabia — ZATCA",
+      saudiItems: isAr
+        ? [
+            "المرحلة الأولى (التوليد) والثانية (التكامل)",
+            "فواتير XML (UBL 2.1) مع QR Code وتوقيع رقمي",
+            "Clearance للقياسية + Reporting للمبسطة",
+            "CSID Onboarding + بوابة فاتورة (FATOORA)",
+            "ضريبة القيمة المضافة 15% مع استثناء RETT 5%",
+          ]
+        : [
+            "Phase 1 (Generation) & Phase 2 (Integration)",
+            "XML invoices (UBL 2.1) with QR Code & digital signature",
+            "Clearance for standard + Reporting for simplified",
+            "CSID Onboarding + FATOORA portal",
+            "15% VAT with RETT 5% exception",
+          ],
+    },
+    sectors: {
+      badge: isAr ? "القطاعات المدعومة" : "Supported Sectors",
+      title1: isAr ? "15 قطاع" : "15 Sectors",
+      title2: isAr ? " بشجرة حسابات جاهزة" : " with Ready Chart of Accounts",
+      subtitle: isAr ? "اختر قطاعك وابدأ فورًا — النظام يجهّز لك الشجرة المحاسبية والضرائب المناسبة تلقائيًا" : "Choose your sector and start immediately — the system sets up your chart of accounts and taxes automatically",
+    },
+    sectorNames: isAr
+      ? ["صناعي","تجاري","خدمي","بنوك ومالي","تأمين","عقاري","مقاولات","زراعي","تقني / SaaS","غير ربحي","تمويل جماعي","مستشفيات","صيدليات","عيادات","معامل تحاليل"]
+      : ["Manufacturing","Commercial","Services","Banking & Finance","Insurance","Real Estate","Contracting","Agriculture","Tech / SaaS","Non-Profit","Crowdfunding","Hospitals","Pharmacies","Clinics","Laboratories"],
+    comparison: {
+      badge: isAr ? "المقارنة" : "Comparison",
+      title: isAr ? "قارن بنفسك" : "Compare Yourself",
+      subtitle: isAr ? "شوف الفرق بين G-Ledger والبرامج المحاسبية الأخرى" : "See the difference between G-Ledger and other accounting software",
+      featureHeader: isAr ? "الميزة" : "Feature",
+      otherHeader: isAr ? "البرامج الأخرى" : "Other Software",
+    },
+    comparisonRows: [
+      { feature: isAr ? "شجرة حسابات جاهزة حسب القطاع" : "Ready chart of accounts per sector", gl: { text: isAr ? "15 قطاع" : "15 Sectors", status: "green" }, other: { text: isAr ? "شجرة فارغة" : "Empty chart", status: "red" } },
+      { feature: isAr ? "ضرائب مخصصة لكل دولة وقطاع" : "Custom taxes per country & sector", gl: { text: isAr ? "29+ دولة" : "29+ Countries", status: "green" }, other: { text: isAr ? "نسبة واحدة" : "One rate", status: "red" } },
+      { feature: isAr ? "قيود تلقائية من كل موديول" : "Auto entries from every module", gl: { text: isAr ? "تلقائي 100%" : "100% Auto", status: "green" }, other: { text: isAr ? "يدوي غالبًا" : "Mostly manual", status: "yellow" } },
+      { feature: isAr ? "فوترة إلكترونية ETA + ZATCA" : "E-invoicing ETA + ZATCA", gl: { text: isAr ? "مدمجة" : "Built-in", status: "green" }, other: { text: isAr ? "إضافة مدفوعة" : "Paid add-on", status: "yellow" } },
+      { feature: isAr ? "موديول إنتاج (5 مراحل)" : "Production module (5 phases)", gl: { text: isAr ? "متكامل" : "Integrated", status: "green" }, other: { text: isAr ? "غير متوفر" : "Not available", status: "red" } },
+      { feature: isAr ? "مساعد ذكي (AI Chatbot)" : "AI Chatbot", gl: { text: isAr ? "45+ سؤال" : "45+ Questions", status: "green" }, other: { text: isAr ? "لا يوجد" : "None", status: "red" } },
+      { feature: isAr ? "2FA + OTP عند كل دخول" : "2FA + OTP on every login", gl: { text: isAr ? "إلزامي" : "Mandatory", status: "green" }, other: { text: isAr ? "اختياري" : "Optional", status: "yellow" } },
+      { feature: isAr ? "تجربة مجانية بدون بطاقة" : "Free trial without card", gl: { text: isAr ? "6 أشهر" : "6 Months", status: "green" }, other: { text: isAr ? "14 يوم فقط" : "14 days only", status: "yellow" } },
+    ],
+    pricing: {
+      badge: isAr ? "الأسعار" : "Pricing",
+      title: isAr ? "أسعار بسيطة وشفافة" : "Simple & Transparent Pricing",
+      subtitle: isAr ? "ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك" : "Pay only for what you need — start free and scale as you grow",
+      free: isAr ? "مجاني" : "Free",
+      freeTrialPeriod: isAr ? "6 أشهر تجربة" : "6-month trial",
+      basic: isAr ? "أساسي" : "Basic",
+      basicDesc: isAr ? "للشركات الصغيرة" : "For small businesses",
+      professional: isAr ? "احترافي" : "Professional",
+      professionalDesc: isAr ? "للشركات المتوسطة" : "For medium businesses",
+      enterprise: isAr ? "مؤسسي" : "Enterprise",
+      enterpriseDesc: isAr ? "للشركات الكبيرة" : "For large businesses",
+      mostPopular: isAr ? "الأكثر طلباً" : "Most Popular",
+      startFree: isAr ? "ابدأ مجاناً" : "Start Free",
+      startNow: isAr ? "ابدأ الآن" : "Start Now",
+      contactUs: isAr ? "تواصل معنا" : "Contact Us",
+      perUserMonth: isAr ? "/مستخدم/شهر" : "/user/mo",
+      addons: isAr ? "إضافات مدفوعة" : "Paid Add-ons",
+      paymentMethods: isAr ? "طرق الدفع المدعومة" : "Supported Payment Methods",
+      paymentNote: isAr ? "ادفع بأمان عبر بوابات الدفع المعتمدة — لا نحفظ بيانات بطاقتك" : "Pay securely via certified gateways — we never store your card details",
+    },
+    pricingFreeItems: isAr
+      ? ["موديول واحد", "3 مستخدمين", "100,000 KB تخزين", "شجرة حسابات جاهزة", "مساعد ذكي"]
+      : ["One module", "3 users", "100,000 KB storage", "Ready chart of accounts", "AI assistant"],
+    pricingBasicItems: isAr
+      ? ["محاسبة + فواتير + مخزون", "تقارير مالية", "1 GB تخزين", "فوترة إلكترونية", "استيراد Excel"]
+      : ["Accounting + Invoicing + Inventory", "Financial reports", "1 GB storage", "E-invoicing", "Excel import"],
+    pricingProItems: isAr
+      ? ["كل الموديولات", "CRM + مشاريع + مصروفات", "2 GB تخزين", "نقاط البيع POS", "موديول الإنتاج", "دعم أولوية"]
+      : ["All modules", "CRM + Projects + Expenses", "2 GB storage", "POS Point of Sale", "Production module", "Priority support"],
+    pricingEnterpriseItems: isAr
+      ? ["كل شيء في الاحترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7", "مستخدمين غير محدود"]
+      : ["Everything in Professional", "External API", "5 GB storage", "White Label", "Dedicated 24/7 support", "Unlimited users"],
+    addonItems: [
+      { name: "CRM", price: isAr ? "+$3/مستخدم" : "+$3/user", desc: isAr ? "إدارة العملاء المحتملين" : "Lead management" },
+      { name: "eCommerce", price: isAr ? "+$5/مستخدم" : "+$5/user", desc: isAr ? "متجر إلكتروني" : "Online store" },
+      { name: isAr ? "موظفين" : "Employees", price: isAr ? "$2/موظف" : "$2/employee", desc: isAr ? "HR + رواتب + إجازات" : "HR + payroll + leave" },
+      { name: "POS", price: isAr ? "+$3/جهاز" : "+$3/device", desc: isAr ? "نقطة بيع" : "Point of sale" },
+      { name: isAr ? "تخزين" : "Storage", price: "$10/GB", desc: isAr ? "مساحة إضافية" : "Extra space" },
+    ],
+    tips: {
+      badge: isAr ? "نصائح محاسبية" : "Accounting Tips",
+      title: isAr ? "أخبار ونصائح مالية" : "Financial News & Tips",
+      subtitle: isAr ? "ابقَ على اطلاع بآخر التحديثات الضريبية والمحاسبية" : "Stay updated with the latest tax and accounting news",
+    },
+    tipArticles: [
+      {
+        tag: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
+        tagColor: "bg-green-100 text-green-700",
+        title: isAr ? "المرحلة الثانية من ZATCA — ما الذي تحتاج معرفته؟" : "ZATCA Phase 2 — What You Need to Know",
+        desc: isAr
+          ? "هيئة الزكاة والضريبة والجمارك بدأت تطبيق المرحلة الثانية (التكامل) من الفوترة الإلكترونية. G-Ledger يدعم التكامل المباشر مع بوابة فاتورة شاملةً التوقيع الرقمي وختم التشفير."
+          : "ZATCA has started implementing Phase 2 (Integration) of e-invoicing. G-Ledger supports direct integration with the FATOORA portal including digital signatures and cryptographic stamps.",
+        date: isAr ? "مارس 2026" : "March 2026",
+        image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "بيانات رقمية وتحليلات" : "Digital data and analytics",
+      },
+      {
+        tag: isAr ? "مصر — ETA" : "Egypt — ETA",
+        tagColor: "bg-blue-100 text-blue-700",
+        title: isAr ? "تحديثات منظومة الفاتورة الإلكترونية المصرية 2026" : "Egypt E-Invoice System Updates 2026",
+        desc: isAr
+          ? "مصلحة الضرائب المصرية وسّعت نطاق الإلزام ليشمل جميع الممولين. النظام يدعم التكامل مع ETA بما في ذلك التوقيع الإلكتروني وتكويد الأصناف EGS/GS1."
+          : "Egypt's Tax Authority expanded the mandate to all taxpayers. The system supports ETA integration including digital signatures and EGS/GS1 item coding.",
+        date: isAr ? "فبراير 2026" : "February 2026",
+        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "مستندات مالية ورسوم بيانية" : "Financial documents and charts",
+      },
+      {
+        tag: isAr ? "نصيحة محاسبية" : "Accounting Tip",
+        tagColor: "bg-purple-100 text-purple-700",
+        title: isAr ? "5 أخطاء شائعة في المحاسبة وكيف تتجنبها" : "5 Common Accounting Mistakes & How to Avoid Them",
+        desc: isAr
+          ? "1. عدم فصل المصروفات الشخصية عن التجارية\n2. تأخير تسجيل القيود\n3. إهمال التسويات البنكية\n4. عدم متابعة تقادم الديون\n5. نسيان احتساب الإهلاك الشهري — G-Ledger يحلها كلها تلقائيًا."
+          : "1. Not separating personal & business expenses\n2. Delaying journal entries\n3. Neglecting bank reconciliation\n4. Not tracking aging receivables\n5. Forgetting monthly depreciation — G-Ledger solves all automatically.",
+        date: isAr ? "مارس 2026" : "March 2026",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "شخص يعمل على حسابات مالية" : "Person working on financial accounts",
+      },
+      {
+        tag: isAr ? "ضريبة" : "Tax",
+        tagColor: "bg-amber-100 text-amber-700",
+        title: isAr ? "ضريبة القيمة المضافة — الفرق بين مصر والسعودية" : "VAT — Difference Between Egypt & Saudi Arabia",
+        desc: isAr
+          ? "مصر 14% مع إعفاءات للقطاع الصحي والبنوك والزراعة + خصم منبع. السعودية 15% موحدة مع استثناء العقارات (5% RETT). G-Ledger يحسب الضريبة تلقائيًا حسب دولتك وقطاعك."
+          : "Egypt 14% with exemptions for healthcare, banks & agriculture + WHT. Saudi 15% unified with real estate exception (5% RETT). G-Ledger calculates tax automatically based on your country and sector.",
+        date: isAr ? "يناير 2026" : "January 2026",
+        image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "حسابات ضريبية ومالية" : "Tax and financial calculations",
+      },
+      {
+        tag: isAr ? "إدارة أعمال" : "Business Management",
+        tagColor: "bg-rose-100 text-rose-700",
+        title: isAr ? "كيف تختار النظام المحاسبي المناسب لشركتك؟" : "How to Choose the Right Accounting System for Your Business?",
+        desc: isAr
+          ? "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 15 قطاع جاهز مع تجربة مجانية بدون بطاقة ائتمان."
+          : "Key criteria: sector support with ready chart of accounts, e-invoicing compliance, ease of use, security, and cost. G-Ledger offers 15 ready sectors with a free trial — no credit card needed.",
+        date: isAr ? "ديسمبر 2025" : "December 2025",
+        image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "فريق عمل يتعاون في مكتب" : "Team collaborating in an office",
+      },
+      {
+        tag: isAr ? "تحديث النظام" : "System Update",
+        tagColor: "bg-cyan-100 text-cyan-700",
+        title: isAr ? "G-Ledger يدعم الآن موديول الإنتاج والتصنيع" : "G-Ledger Now Supports Production & Manufacturing Module",
+        desc: isAr
+          ? "أصبح بإمكانك تتبع دورة الإنتاج الكاملة — من شراء المواد الخام إلى المنتج النهائي. دعم التشغيل الخارجي (مقاولي الباطن) مع تتبع التكلفة في كل مرحلة وقيود تلقائية."
+          : "You can now track the full production cycle — from raw material purchase to finished product. Support for outsourcing (subcontractors) with cost tracking at every stage and auto journal entries.",
+        date: isAr ? "مارس 2026" : "March 2026",
+        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=80",
+        imageAlt: isAr ? "تكنولوجيا وتصنيع حديث" : "Modern technology and manufacturing",
+      },
+    ],
+    cta: {
+      badge: isAr ? "بدون بطاقة ائتمان — بدون التزام" : "No Credit Card — No Commitment",
+      title: isAr ? "ابدأ الآن — مجانًا" : "Start Now — Free",
+      subtitle: isAr ? "سجّل واحصل على تجربة مجانية 6 أشهر — بدون بطاقة ائتمان، بدون التزام" : "Register and get a 6-month free trial — no credit card, no commitment",
+      cta: isAr ? "ابدأ تجربتك المجانية" : "Start Your Free Trial",
+      stat1Label: isAr ? "قطاع مدعوم" : "Supported Sectors",
+      stat2Label: isAr ? "دولة عربية" : "Arab Countries",
+      stat3Label: isAr ? "أشهر مجانًا" : "Free Months",
+      stat4Label: isAr ? "قيود تلقائية" : "Auto Entries",
+    },
+    footer: {
+      company: isAr ? "الشركة" : "Company",
+      about: isAr ? "عن G-Ledger" : "About G-Ledger",
+      features: isAr ? "المميزات" : "Features",
+      pricing: isAr ? "الأسعار" : "Pricing",
+      sectors: isAr ? "القطاعات" : "Sectors",
+      resources: isAr ? "الموارد" : "Resources",
+      helpCenter: isAr ? "مركز المساعدة" : "Help Center",
+      faq: isAr ? "الأسئلة الشائعة" : "FAQ",
+      einvoice: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
+      terms: isAr ? "شروط الاستخدام" : "Terms of Service",
+      privacy: isAr ? "سياسة الخصوصية" : "Privacy Policy",
+      sla: isAr ? "اتفاقية الخدمة" : "SLA",
+      contact: isAr ? "تواصل معنا" : "Contact Us",
+      messenger: isAr ? "ماسنجر" : "Messenger",
+      smartAccountant: isAr ? "المحاسب الذكي" : "Smart Accounting",
+      brandDesc: isAr
+        ? "نظام محاسبي سحابي متعدد القطاعات مع شجرة حسابات جاهزة وضرائب مخصصة لكل دولة وقطاع."
+        : "Multi-sector cloud accounting system with ready chart of accounts and custom taxes for every country and sector.",
+      copyright: isAr ? "© 2026 G-Ledger — المحاسب الذكي. جميع الحقوق محفوظة." : "© 2026 G-Ledger — Smart Accounting. All rights reserved.",
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-white" dir="rtl" style={{ fontFamily: "'Cairo', sans-serif" }}>
+    <div className="min-h-screen bg-white" dir={isAr ? "rtl" : "ltr"} style={{ fontFamily: "'Cairo', sans-serif" }}>
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
@@ -131,26 +442,26 @@ export default function HomePage() {
           <LogoFull size="md" variant="dark" />
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#021544]">
-            <a href="#features" className="hover:text-[#0070F2] transition-colors">المميزات</a>
-            <a href="#sectors" className="hover:text-[#0070F2] transition-colors">القطاعات</a>
-            <a href="#einvoice" className="hover:text-[#0070F2] transition-colors">الفوترة الإلكترونية</a>
-            <a href="#pricing" className="hover:text-[#0070F2] transition-colors">الأسعار</a>
-            <Link href="/ar/blog" className="hover:text-[#0070F2] transition-colors">المدونة</Link>
+            <a href="#features" className="hover:text-[#0070F2] transition-colors">{t.nav.features}</a>
+            <a href="#sectors" className="hover:text-[#0070F2] transition-colors">{t.nav.sectors}</a>
+            <a href="#einvoice" className="hover:text-[#0070F2] transition-colors">{t.nav.einvoice}</a>
+            <a href="#pricing" className="hover:text-[#0070F2] transition-colors">{t.nav.pricing}</a>
+            <Link href={`/${locale}/blog`} className="hover:text-[#0070F2] transition-colors">{t.nav.blog}</Link>
           </nav>
 
           <div className="flex items-center gap-3">
             <LangLink variant="header" />
             <Link
-              href="/ar/login"
+              href={`/${locale}/login`}
               className="px-5 py-2.5 text-sm font-semibold text-[#021544] hover:text-[#0070F2] transition-colors"
             >
-              تسجيل الدخول
+              {t.nav.login}
             </Link>
             <Link
-              href="/ar/register"
-              className="px-6 py-2.5 text-sm font-semibold bg-gradient-to-l from-[#021544] to-[#0070F2] text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              href={`/${locale}/register`}
+              className={`px-6 py-2.5 text-sm font-semibold bg-gradient-to-l from-[#021544] to-[#0070F2] text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all`}
             >
-              ابدأ تجربتك المجانية
+              {t.nav.register}
             </Link>
           </div>
         </div>
@@ -186,31 +497,31 @@ export default function HomePage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-medium mb-8">
                 <span className="w-2 h-2 rounded-full bg-[#00C9A7] animate-pulse" />
-                29+ دولة | 15 قطاع | فوترة إلكترونية
+                {t.hero.badge}
               </div>
 
               <h1 className="text-4xl md:text-[56px] font-bold text-white leading-tight mb-6">
-                اختر قطاعك...
+                {t.hero.title1}
                 <br />
-                <span className="text-[#00C9A7]">ونظامك جاهز</span>
+                <span className="text-[#00C9A7]">{t.hero.title2}</span>
               </h1>
 
               <p className="text-lg md:text-xl text-white/75 max-w-xl mb-10 leading-relaxed">
-                أول نظام محاسبي عربي بشجرة حسابات جاهزة لكل قطاع وضرائب مخصصة لكل دولة — النظام يجهّز لك كل شيء في ثوانٍ
+                {t.hero.subtitle}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <Link
-                  href="/ar/register"
+                  href={`/${locale}/register`}
                   className="px-10 py-4 text-base font-bold bg-white text-[#021544] rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
                 >
-                  ابدأ مجانًا — 6 أشهر بدون بطاقة
+                  {t.hero.cta1}
                 </Link>
                 <a
                   href="#why-different"
                   className="px-10 py-4 text-base font-semibold bg-white/10 text-white rounded-xl border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm text-center"
                 >
-                  شاهد المميزات
+                  {t.hero.cta2}
                 </a>
               </div>
 
@@ -220,10 +531,10 @@ export default function HomePage() {
               {/* Trust badges */}
               <div className="flex flex-wrap gap-6 mt-8">
                 {[
-                  { label: "15 قطاع", icon: "M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" },
-                  { label: "29+ دولة", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" },
-                  { label: "2FA حماية", icon: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" },
-                  { label: "شات بوت ذكي", icon: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" },
+                  { label: t.hero.trust1, icon: "M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z" },
+                  { label: t.hero.trust2, icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" },
+                  { label: t.hero.trust3, icon: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" },
+                  { label: t.hero.trust4, icon: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" },
                 ].map((badge) => (
                   <div key={badge.label} className="flex items-center gap-2 text-white/70 text-sm">
                     <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
@@ -353,9 +664,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">ما يميّزنا</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">لماذا G-Ledger مختلف؟</h2>
-            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">الفرق الذي ستلاحظه من أول لحظة — ليس مجرد برنامج محاسبي آخر</p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.whyDifferent.badge}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.whyDifferent.title}</h2>
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">{t.whyDifferent.subtitle}</p>
           </div>
           </AnimatedSection>
 
@@ -389,12 +700,12 @@ export default function HomePage() {
                     <path d="M48 10l2 2 4-4" stroke="#00C9A7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">شجرة حسابات جاهزة — مش فاضية</h3>
+                <h3 className="text-xl font-bold mb-3">{t.whyDifferent.card1Title}</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
-                  البرامج الأخرى تعطيك شجرة فارغة وتتركك تبنيها من الصفر. G-Ledger يعطيك شجرة مكتملة ومصممة خصيصًا لقطاعك — صناعي، طبي، مقاولات، أو أي قطاع آخر.
+                  {t.whyDifferent.card1Desc}
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[#00C9A7] text-sm font-semibold">
-                  <span>15 قطاع جاهز</span>
+                  <span>{t.whyDifferent.card1Stat}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
                 </div>
               </div>
@@ -420,12 +731,12 @@ export default function HomePage() {
                     <path d="M40 44l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">ضرائب ذكية — مش رقم واحد للكل</h3>
+                <h3 className="text-xl font-bold mb-3">{t.whyDifferent.card2Title}</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
-                  هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 3%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك.
+                  {t.whyDifferent.card2Desc}
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[#00C9A7] text-sm font-semibold">
-                  <span>29+ دولة حول العالم</span>
+                  <span>{t.whyDifferent.card2Stat}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
                 </div>
               </div>
@@ -456,12 +767,12 @@ export default function HomePage() {
                     <path d="M27 30l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">كل شيء ينشئ قيد تلقائي</h3>
+                <h3 className="text-xl font-bold mb-3">{t.whyDifferent.card3Title}</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
-                  فاتورة؟ قيد. راتب؟ قيد. حركة مخزون؟ قيد. إهلاك؟ قيد. إنتاج؟ قيد. كل عملية في النظام تُنشئ قيدها المحاسبي تلقائيًا — صفر إدخال يدوي.
+                  {t.whyDifferent.card3Desc}
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[#00C9A7] text-sm font-semibold">
-                  <span>تلقائي 100%</span>
+                  <span>{t.whyDifferent.card3Stat}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
                 </div>
               </div>
@@ -478,91 +789,91 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الموديولات</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">نظام ERP متكامل</h2>
-            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">12 موديول يغطي كل العمليات المحاسبية والإدارية — من القيد اليومي إلى التقارير المالية</p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.modules.badge}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.modules.title}</h2>
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">{t.modules.subtitle}</p>
           </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
               {
-                title: "القيود المحاسبية",
-                desc: "قيد مزدوج تلقائي مع ترحيل وعكس وقيد مركب",
+                title: t.moduleItems[0].title,
+                desc: t.moduleItems[0].desc,
                 iconPath: "M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2zm14-2l3 3-3 3v-2h-4v-2h4v-2z",
                 color: "#0070F2",
                 image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6e?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "محاسبة وتقارير مالية",
+                imageAlt: isAr ? "محاسبة وتقارير مالية" : "Accounting and financial reports",
               },
               {
-                title: "الفوترة الإلكترونية",
-                desc: "ETA مصر + ZATCA السعودية مع توقيع إلكتروني وQR",
+                title: t.moduleItems[1].title,
+                desc: t.moduleItems[1].desc,
                 iconPath: "M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 9h-2v2H9v-2H7v-2h2V7h2v2h2v2zm-2-7V3.5L16.5 9H13c-.55 0-1-.45-1-1z",
                 color: "#00C9A7",
                 image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "توقيع مستندات رسمية",
+                imageAlt: isAr ? "توقيع مستندات رسمية" : "Signing official documents",
               },
               {
-                title: "العملاء والموردين",
-                desc: "كشف حساب، تقادم ديون، حد ائتمان، شروط دفع",
+                title: t.moduleItems[2].title,
+                desc: t.moduleItems[2].desc,
                 iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z",
                 color: "#0070F2",
               },
               {
-                title: "الرواتب والـ HR",
-                desc: "مسير رواتب تلقائي مع تأمينات GOSI وبدلات",
+                title: t.moduleItems[3].title,
+                desc: t.moduleItems[3].desc,
                 iconPath: "M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z",
                 color: "#00C9A7",
                 image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "فريق عمل في بيئة مكتبية",
+                imageAlt: isAr ? "فريق عمل في بيئة مكتبية" : "Team in office environment",
               },
               {
-                title: "المخزون",
-                desc: "باتش، صلاحية، FIFO/متوسط مرجح، تنبيهات نقص",
+                title: t.moduleItems[4].title,
+                desc: t.moduleItems[4].desc,
                 iconPath: "M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zm-5 12H9v-2h6v2zm5-7H4V4h16v3z",
                 color: "#0070F2",
                 image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "إدارة المخزون والتخزين",
+                imageAlt: isAr ? "إدارة المخزون والتخزين" : "Inventory and storage management",
               },
               {
-                title: "الأصول الثابتة",
-                desc: "إهلاك شهري تلقائي — قسط ثابت أو متناقص",
+                title: t.moduleItems[5].title,
+                desc: t.moduleItems[5].desc,
                 iconPath: "M1 11v10h6v-5h2v5h6V11L8 6l-7 5zm12 8h-2v-5H5v5H3v-7l5-3.5 5 3.5v7zm4-12h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm-4-16v2H7L17 1v4h4v2h-4z",
                 color: "#00C9A7",
               },
               {
-                title: "البنوك والنقدية",
-                desc: "حسابات متعددة، تحويلات، تسوية بنكية تلقائية",
+                title: t.moduleItems[6].title,
+                desc: t.moduleItems[6].desc,
                 iconPath: "M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z",
                 color: "#0070F2",
               },
               {
-                title: "الإنتاج والتصنيع",
-                desc: "5 مراحل — من المواد الخام إلى المنتج النهائي",
+                title: t.moduleItems[7].title,
+                desc: t.moduleItems[7].desc,
                 iconPath: "M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7zM7 9H4V5h3v4zm10 6h3v4h-3v-4zm0-10h3v4h-3V5z",
                 color: "#00C9A7",
               },
               {
-                title: "التقارير المالية",
-                desc: "ميزان مراجعة، قائمة دخل، ميزانية، أستاذ عام",
+                title: t.moduleItems[8].title,
+                desc: t.moduleItems[8].desc,
                 iconPath: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
                 color: "#0070F2",
               },
               {
-                title: "29+ دولة حول العالم",
-                desc: "ضرائب وعملات مخصصة لكل دولة وقطاع تلقائيًا",
+                title: t.moduleItems[9].title,
+                desc: t.moduleItems[9].desc,
                 iconPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z",
                 color: "#00C9A7",
               },
               {
-                title: "أمان بنكي",
-                desc: "2FA + OTP عند كل دخول، تشفير SSL، عزل كامل",
+                title: t.moduleItems[10].title,
+                desc: t.moduleItems[10].desc,
                 iconPath: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z",
                 color: "#0070F2",
               },
               {
-                title: "مساعد ذكي",
-                desc: "شات بوت بالعربية — 45+ فئة سؤال عن كل الموديولات",
+                title: t.moduleItems[11].title,
+                desc: t.moduleItems[11].desc,
                 iconPath: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z",
                 color: "#00C9A7",
               },
@@ -599,12 +910,12 @@ export default function HomePage() {
             {/* Text content */}
             <div>
               <AnimatedSection>
-              <span className="text-sm font-semibold text-[#00C9A7] mb-2 block">الفوترة الإلكترونية</span>
+              <span className="text-sm font-semibold text-[#00C9A7] mb-2 block">{t.einvoice.badge}</span>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                متوافق مع ETA مصر و ZATCA السعودية
+                {t.einvoice.title}
               </h3>
               <p className="text-white/60 max-w-xl mb-10">
-                أرسل فواتيرك الإلكترونية مباشرة لمصلحة الضرائب — بدون وسيط وبدون تعقيد
+                {t.einvoice.subtitle}
               </p>
               </AnimatedSection>
 
@@ -617,16 +928,10 @@ export default function HomePage() {
                       <rect y="9.33" width="28" height="9.33" fill="white"/>
                       <rect y="18.67" width="28" height="9.33" fill="#111"/>
                     </svg>
-                    مصر — مصلحة الضرائب (ETA)
+                    {t.einvoice.egyptTitle}
                   </h4>
                   <ul className="space-y-3 text-white/70 text-sm">
-                    {[
-                      "تكامل مباشر عبر API مع منظومة الفاتورة الإلكترونية",
-                      "دعم التوقيع الإلكتروني وتكويد الأصناف (EGS/GS1)",
-                      "ض.ق.م + ضريبة الجدول + الخصم من المنبع",
-                      "بيئة اختبار Pre-Production + بيئة الإنتاج",
-                      "ضرائب مخصصة: طبي = 0%، مقاولات = 14% + 3% خصم منبع",
-                    ].map((item, i) => (
+                    {t.einvoice.egyptItems.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#00C9A7"/></svg>
                         {item}
@@ -643,16 +948,10 @@ export default function HomePage() {
                       <rect x="4" y="10" width="20" height="3" rx="1" fill="white" opacity="0.5"/>
                       <rect x="10" y="16" width="8" height="2" rx="1" fill="white" opacity="0.3"/>
                     </svg>
-                    السعودية — هيئة الزكاة (ZATCA)
+                    {t.einvoice.saudiTitle}
                   </h4>
                   <ul className="space-y-3 text-white/70 text-sm">
-                    {[
-                      "المرحلة الأولى (التوليد) والثانية (التكامل)",
-                      "فواتير XML (UBL 2.1) مع QR Code وتوقيع رقمي",
-                      "Clearance للقياسية + Reporting للمبسطة",
-                      "CSID Onboarding + بوابة فاتورة (FATOORA)",
-                      "ضريبة القيمة المضافة 15% مع استثناء RETT 5%",
-                    ].map((item, i) => (
+                    {t.einvoice.saudiItems.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#00C9A7"/></svg>
                         {item}
@@ -764,33 +1063,33 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">القطاعات المدعومة</span>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.sectors.badge}</span>
             <h3 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">
-              <span className="gradient-text">15 قطاع</span> بشجرة حسابات جاهزة
+              <span className="gradient-text">{t.sectors.title1}</span>{t.sectors.title2}
             </h3>
             <p className="text-gray-500 max-w-xl mx-auto mt-3">
-              اختر قطاعك وابدأ فورًا — النظام يجهّز لك الشجرة المحاسبية والضرائب المناسبة تلقائيًا
+              {t.sectors.subtitle}
             </p>
           </div>
           </AnimatedSection>
 
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { name: "صناعي", iconPath: "M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7z", color: "#0070F2" },
-              { name: "تجاري", iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z", color: "#00C9A7" },
-              { name: "خدمي", iconPath: "M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z", color: "#0070F2" },
-              { name: "بنوك ومالي", iconPath: "M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z", color: "#00C9A7" },
-              { name: "تأمين", iconPath: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z", color: "#0070F2" },
-              { name: "عقاري", iconPath: "M1 11v10h6v-5h2v5h6V11L8 6l-7 5zm12 8h-2v-5H5v5H3v-7l5-3.5 5 3.5v7zm4-12h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm-4-16v2H7L17 1v4h4v2h-4z", color: "#00C9A7" },
-              { name: "مقاولات", iconPath: "M13 2v8h8V2h-8zM3 14v8h8v-8H3zm0-12v8h8V2H3zm13.66 4.66l-5.66 5.66 2.83 2.83 5.66-5.66-2.83-2.83z", color: "#0070F2" },
-              { name: "زراعي", iconPath: "M17.12 10a6.997 6.997 0 00-2.28-3.87l.97-.97a.996.996 0 10-1.41-1.41l-.97.97A6.986 6.986 0 0010 3.51V2c0-.55-.45-1-1-1s-1 .45-1 1v1.51A6.98 6.98 0 001 10h16.12zM1 12c0 4.97 4.03 9 9 9v-9H1z", color: "#00C9A7" },
-              { name: "تقني / SaaS", iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z", color: "#0070F2" },
-              { name: "غير ربحي", iconPath: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", color: "#00C9A7" },
-              { name: "تمويل جماعي", iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z", color: "#0070F2" },
-              { name: "مستشفيات", iconPath: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z", color: "#00C9A7" },
-              { name: "صيدليات", iconPath: "M6 3h12v2H6V3zm6 4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm3 7h-2v2h-2v-2H9v-2h2v-2h2v2h2v2z", color: "#0070F2" },
-              { name: "عيادات", iconPath: "M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z", color: "#00C9A7" },
-              { name: "معامل تحاليل", iconPath: "M7 2v2h1v14a4 4 0 008 0V4h1V2H7zm4 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z", color: "#0070F2" },
+              { name: t.sectorNames[0], iconPath: "M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7z", color: "#0070F2" },
+              { name: t.sectorNames[1], iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z", color: "#00C9A7" },
+              { name: t.sectorNames[2], iconPath: "M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z", color: "#0070F2" },
+              { name: t.sectorNames[3], iconPath: "M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z", color: "#00C9A7" },
+              { name: t.sectorNames[4], iconPath: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z", color: "#0070F2" },
+              { name: t.sectorNames[5], iconPath: "M1 11v10h6v-5h2v5h6V11L8 6l-7 5zm12 8h-2v-5H5v5H3v-7l5-3.5 5 3.5v7zm4-12h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm-4-16v2H7L17 1v4h4v2h-4z", color: "#00C9A7" },
+              { name: t.sectorNames[6], iconPath: "M13 2v8h8V2h-8zM3 14v8h8v-8H3zm0-12v8h8V2H3zm13.66 4.66l-5.66 5.66 2.83 2.83 5.66-5.66-2.83-2.83z", color: "#0070F2" },
+              { name: t.sectorNames[7], iconPath: "M17.12 10a6.997 6.997 0 00-2.28-3.87l.97-.97a.996.996 0 10-1.41-1.41l-.97.97A6.986 6.986 0 0010 3.51V2c0-.55-.45-1-1-1s-1 .45-1 1v1.51A6.98 6.98 0 001 10h16.12zM1 12c0 4.97 4.03 9 9 9v-9H1z", color: "#00C9A7" },
+              { name: t.sectorNames[8], iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z", color: "#0070F2" },
+              { name: t.sectorNames[9], iconPath: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", color: "#00C9A7" },
+              { name: t.sectorNames[10], iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z", color: "#0070F2" },
+              { name: t.sectorNames[11], iconPath: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z", color: "#00C9A7" },
+              { name: t.sectorNames[12], iconPath: "M6 3h12v2H6V3zm6 4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm3 7h-2v2h-2v-2H9v-2h2v-2h2v2h2v2z", color: "#0070F2" },
+              { name: t.sectorNames[13], iconPath: "M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z", color: "#00C9A7" },
+              { name: t.sectorNames[14], iconPath: "M7 2v2h1v14a4 4 0 008 0V4h1V2H7zm4 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z", color: "#0070F2" },
             ].map((sector) => (
               <div
                 key={sector.name}
@@ -811,9 +1110,9 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">المقارنة</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">قارن بنفسك</h2>
-            <p className="text-gray-500 mt-3">شوف الفرق بين G-Ledger والبرامج المحاسبية الأخرى</p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.comparison.badge}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.comparison.title}</h2>
+            <p className="text-gray-500 mt-3">{t.comparison.subtitle}</p>
           </div>
           </AnimatedSection>
 
@@ -822,24 +1121,15 @@ export default function HomePage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-[#021544] text-white">
-                    <th className="text-right py-4 px-6 font-bold">الميزة</th>
+                    <th className={`${isAr ? "text-right" : "text-left"} py-4 px-6 font-bold`}>{t.comparison.featureHeader}</th>
                     <th className="text-center py-4 px-6 font-bold">
                       <span className="text-[#00C9A7]">G-Ledger</span>
                     </th>
-                    <th className="text-center py-4 px-6 font-bold">البرامج الأخرى</th>
+                    <th className="text-center py-4 px-6 font-bold">{t.comparison.otherHeader}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    { feature: "شجرة حسابات جاهزة حسب القطاع", gl: { text: "15 قطاع", status: "green" }, other: { text: "شجرة فارغة", status: "red" } },
-                    { feature: "ضرائب مخصصة لكل دولة وقطاع", gl: { text: "29+ دولة", status: "green" }, other: { text: "نسبة واحدة", status: "red" } },
-                    { feature: "قيود تلقائية من كل موديول", gl: { text: "تلقائي 100%", status: "green" }, other: { text: "يدوي غالبًا", status: "yellow" } },
-                    { feature: "فوترة إلكترونية ETA + ZATCA", gl: { text: "مدمجة", status: "green" }, other: { text: "إضافة مدفوعة", status: "yellow" } },
-                    { feature: "موديول إنتاج (5 مراحل)", gl: { text: "متكامل", status: "green" }, other: { text: "غير متوفر", status: "red" } },
-                    { feature: "مساعد ذكي (AI Chatbot)", gl: { text: "45+ سؤال", status: "green" }, other: { text: "لا يوجد", status: "red" } },
-                    { feature: "2FA + OTP عند كل دخول", gl: { text: "إلزامي", status: "green" }, other: { text: "اختياري", status: "yellow" } },
-                    { feature: "تجربة مجانية بدون بطاقة", gl: { text: "6 أشهر", status: "green" }, other: { text: "14 يوم فقط", status: "yellow" } },
-                  ].map((row, i) => (
+                  {t.comparisonRows.map((row, i) => (
                     <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                       <td className="py-4 px-6 font-medium text-[#021544]">{row.feature}</td>
                       <td className="py-4 px-6 text-center">
@@ -880,89 +1170,89 @@ export default function HomePage() {
             <div className="w-full max-w-md mx-auto h-40 overflow-hidden rounded-2xl mb-8">
               <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80" alt="عملات معدنية ترمز للتسعير" className="w-full h-full object-cover" loading="lazy" />
             </div>
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">الأسعار</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">أسعار بسيطة وشفافة</h2>
-            <p className="text-gray-500 mt-3">ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك</p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.pricing.badge}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.pricing.title}</h2>
+            <p className="text-gray-500 mt-3">{t.pricing.subtitle}</p>
           </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {/* Free */}
             <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-gray-500 mb-2">مجاني</div>
+              <div className="text-sm font-bold text-gray-500 mb-2">{t.pricing.free}</div>
               <div className="text-4xl font-bold text-[#021544] mb-1">$0</div>
-              <div className="text-xs text-gray-400 mb-6">6 أشهر تجربة</div>
+              <div className="text-xs text-gray-400 mb-6">{t.pricing.freeTrialPeriod}</div>
               <ul className="space-y-3 text-sm mb-6">
-                {["موديول واحد", "3 مستخدمين", "100,000 KB تخزين", "شجرة حسابات جاهزة", "مساعد ذكي"].map((item, i) => (
+                {t.pricingFreeItems.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link href="/ar/register" className="block text-center py-3 rounded-xl border-2 border-[#021544] text-[#021544] font-bold hover:bg-[#021544] hover:text-white transition-all">ابدأ مجاناً</Link>
+              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl border-2 border-[#021544] text-[#021544] font-bold hover:bg-[#021544] hover:text-white transition-all">{t.pricing.startFree}</Link>
             </div>
 
             {/* Basic */}
             <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-blue-600 mb-2">أساسي</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$8<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
-              <div className="text-xs text-gray-400 mb-6">للشركات الصغيرة</div>
+              <div className="text-sm font-bold text-blue-600 mb-2">{t.pricing.basic}</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$8<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-xs text-gray-400 mb-6">{t.pricing.basicDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
-                {["محاسبة + فواتير + مخزون", "تقارير مالية", "1 GB تخزين", "فوترة إلكترونية", "استيراد Excel"].map((item, i) => (
+                {t.pricingBasicItems.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link href="/ar/register" className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all">ابدأ الآن</Link>
+              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all">{t.pricing.startNow}</Link>
             </div>
 
             {/* Professional - POPULAR */}
             <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-xl transition-all duration-300 relative bg-gradient-to-b from-[#EFF6FF] to-white card-3d shadow-premium-lg glow-blue">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-l from-[#021544] to-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">الأكثر طلباً</div>
-              <div className="text-sm font-bold text-[#0070F2] mb-2">احترافي</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$15<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
-              <div className="text-xs text-gray-400 mb-6">للشركات المتوسطة</div>
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-l from-[#021544] to-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">{t.pricing.mostPopular}</div>
+              <div className="text-sm font-bold text-[#0070F2] mb-2">{t.pricing.professional}</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$15<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-xs text-gray-400 mb-6">{t.pricing.professionalDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
-                {["كل الموديولات", "CRM + مشاريع + مصروفات", "2 GB تخزين", "نقاط البيع POS", "موديول الإنتاج", "دعم أولوية"].map((item, i) => (
+                {t.pricingProItems.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link href="/ar/register" className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all shadow-lg">ابدأ الآن</Link>
+              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all shadow-lg">{t.pricing.startNow}</Link>
             </div>
 
             {/* Enterprise */}
             <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-purple-600 mb-2">مؤسسي</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$25<span className="text-lg font-normal text-gray-400">/مستخدم/شهر</span></div>
-              <div className="text-xs text-gray-400 mb-6">للشركات الكبيرة</div>
+              <div className="text-sm font-bold text-purple-600 mb-2">{t.pricing.enterprise}</div>
+              <div className="text-4xl font-bold text-[#021544] mb-1">$25<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-xs text-gray-400 mb-6">{t.pricing.enterpriseDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
-                {["كل شيء في الاحترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7", "مستخدمين غير محدود"].map((item, i) => (
+                {t.pricingEnterpriseItems.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link href="/ar/register" className="block text-center py-3 rounded-xl border-2 border-purple-600 text-purple-600 font-bold hover:bg-purple-600 hover:text-white transition-all">تواصل معنا</Link>
+              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl border-2 border-purple-600 text-purple-600 font-bold hover:bg-purple-600 hover:text-white transition-all">{t.pricing.contactUs}</Link>
             </div>
           </div>
 
           {/* Add-ons */}
           <div className="bg-gradient-to-br from-[#F8FAFC] to-[#EFF6FF] rounded-2xl p-8 border border-gray-100">
-            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">إضافات مدفوعة</h3>
+            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.pricing.addons}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               {[
-                { name: "CRM", price: "+$3/مستخدم", desc: "إدارة العملاء المحتملين", iconPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
-                { name: "eCommerce", price: "+$5/مستخدم", desc: "متجر إلكتروني", iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1z" },
-                { name: "موظفين", price: "$2/موظف", desc: "HR + رواتب + إجازات", iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z" },
-                { name: "POS", price: "+$3/جهاز", desc: "نقطة بيع", iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4z" },
-                { name: "تخزين", price: "$10/GB", desc: "مساحة إضافية", iconPath: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zM2 14h20v-4H2v4zm2-3h2v2H4v-2z" },
+                { name: t.addonItems[0].name, price: t.addonItems[0].price, desc: t.addonItems[0].desc, iconPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
+                { name: t.addonItems[1].name, price: t.addonItems[1].price, desc: t.addonItems[1].desc, iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1z" },
+                { name: t.addonItems[2].name, price: t.addonItems[2].price, desc: t.addonItems[2].desc, iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z" },
+                { name: t.addonItems[3].name, price: t.addonItems[3].price, desc: t.addonItems[3].desc, iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4z" },
+                { name: t.addonItems[4].name, price: t.addonItems[4].price, desc: t.addonItems[4].desc, iconPath: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zM2 14h20v-4H2v4zm2-3h2v2H4v-2z" },
               ].map((addon, i) => (
                 <div key={i} className="bg-white rounded-xl p-4 border border-gray-100 text-center hover:shadow-md transition-all">
                   <div className="w-10 h-10 rounded-lg bg-[#0070F2]/10 flex items-center justify-center mx-auto mb-2">
@@ -978,7 +1268,7 @@ export default function HomePage() {
 
           {/* Payment Methods */}
           <div className="mt-12 bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
-            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">طرق الدفع المدعومة</h3>
+            <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.pricing.paymentMethods}</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {[
                 {
@@ -990,7 +1280,7 @@ export default function HomePage() {
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><circle cx="16" cy="12" r="7" fill="#EB001B" opacity="0.9"/><circle cx="24" cy="12" r="7" fill="#F79E1B" opacity="0.9"/><ellipse cx="20" cy="12" rx="3.5" ry="6" fill="#FF5F00" opacity="0.8"/></svg>
                 },
                 {
-                  name: "مدى",
+                  name: isAr ? "مدى" : "Mada",
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#004B87"/><rect x="8" y="8" width="10" height="8" rx="1" fill="#F5A623"/><rect x="22" y="8" width="10" height="8" rx="1" fill="white" opacity="0.8"/></svg>
                 },
                 {
@@ -1002,7 +1292,7 @@ export default function HomePage() {
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><circle cx="14" cy="10" r="3" fill="#4285F4"/><circle cx="20" cy="10" r="3" fill="#EA4335"/><circle cx="26" cy="10" r="3" fill="#FBBC05"/><circle cx="20" cy="16" r="3" fill="#34A853"/></svg>
                 },
                 {
-                  name: "ميزة",
+                  name: isAr ? "ميزة" : "Meeza",
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#005BAA"/><rect x="6" y="7" width="28" height="10" rx="5" fill="white" opacity="0.2"/><text x="11" y="16" fill="white" fontSize="8" fontWeight="bold" fontFamily="sans-serif">meeza</text></svg>
                 },
                 {
@@ -1010,7 +1300,7 @@ export default function HomePage() {
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F9F9F9" stroke="#E2E8F0" strokeWidth="0.5"/><path d="M15 6h4c2 0 3.5 1 3 3.5S19.5 13 17.5 13H16l-.5 3.5h-2.5L15 6z" fill="#003087"/><path d="M13 8h4c2 0 3.5 1 3 3.5S17.5 15 15.5 15H14l-.5 3.5h-2.5L13 8z" fill="#009CDE"/></svg>
                 },
                 {
-                  name: "تحويل بنكي",
+                  name: isAr ? "تحويل بنكي" : "Bank Transfer",
                   svg: <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5"/><path d="M8 10v7h3v-7H8zm6 0v7h3v-7h-3zM6 20h23v-2H6v2zm18-10v7h3v-7h-3zM17.5 4L6 8.5V10h23V8.5L17.5 4z" fill="#64748B"/></svg>
                 },
                 {
@@ -1040,7 +1330,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-400 text-center mt-4">ادفع بأمان عبر بوابات الدفع المعتمدة — لا نحفظ بيانات بطاقتك</p>
+            <p className="text-xs text-gray-400 text-center mt-4">{t.pricing.paymentNote}</p>
           </div>
         </div>
       </section>
@@ -1050,69 +1340,14 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">نصائح محاسبية</span>
-            <h2 className="text-3xl font-bold text-[#021544] mt-4">أخبار ونصائح مالية</h2>
-            <p className="text-gray-500 mt-2">ابقَ على اطلاع بآخر التحديثات الضريبية والمحاسبية</p>
+            <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.tips.badge}</span>
+            <h2 className="text-3xl font-bold text-[#021544] mt-4">{t.tips.title}</h2>
+            <p className="text-gray-500 mt-2">{t.tips.subtitle}</p>
           </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                tag: "الفوترة الإلكترونية",
-                tagColor: "bg-green-100 text-green-700",
-                title: "المرحلة الثانية من ZATCA — ما الذي تحتاج معرفته؟",
-                desc: "هيئة الزكاة والضريبة والجمارك بدأت تطبيق المرحلة الثانية (التكامل) من الفوترة الإلكترونية. G-Ledger يدعم التكامل المباشر مع بوابة فاتورة شاملةً التوقيع الرقمي وختم التشفير.",
-                date: "مارس 2026",
-                image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "بيانات رقمية وتحليلات",
-              },
-              {
-                tag: "مصر — ETA",
-                tagColor: "bg-blue-100 text-blue-700",
-                title: "تحديثات منظومة الفاتورة الإلكترونية المصرية 2026",
-                desc: "مصلحة الضرائب المصرية وسّعت نطاق الإلزام ليشمل جميع الممولين. النظام يدعم التكامل مع ETA بما في ذلك التوقيع الإلكتروني وتكويد الأصناف EGS/GS1.",
-                date: "فبراير 2026",
-                image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "مستندات مالية ورسوم بيانية",
-              },
-              {
-                tag: "نصيحة محاسبية",
-                tagColor: "bg-purple-100 text-purple-700",
-                title: "5 أخطاء شائعة في المحاسبة وكيف تتجنبها",
-                desc: "1. عدم فصل المصروفات الشخصية عن التجارية\n2. تأخير تسجيل القيود\n3. إهمال التسويات البنكية\n4. عدم متابعة تقادم الديون\n5. نسيان احتساب الإهلاك الشهري — G-Ledger يحلها كلها تلقائيًا.",
-                date: "مارس 2026",
-                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "شخص يعمل على حسابات مالية",
-              },
-              {
-                tag: "ضريبة",
-                tagColor: "bg-amber-100 text-amber-700",
-                title: "ضريبة القيمة المضافة — الفرق بين مصر والسعودية",
-                desc: "مصر 14% مع إعفاءات للقطاع الصحي والبنوك والزراعة + خصم منبع. السعودية 15% موحدة مع استثناء العقارات (5% RETT). G-Ledger يحسب الضريبة تلقائيًا حسب دولتك وقطاعك.",
-                date: "يناير 2026",
-                image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "حسابات ضريبية ومالية",
-              },
-              {
-                tag: "إدارة أعمال",
-                tagColor: "bg-rose-100 text-rose-700",
-                title: "كيف تختار النظام المحاسبي المناسب لشركتك؟",
-                desc: "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 15 قطاع جاهز مع تجربة مجانية بدون بطاقة ائتمان.",
-                date: "ديسمبر 2025",
-                image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "فريق عمل يتعاون في مكتب",
-              },
-              {
-                tag: "تحديث النظام",
-                tagColor: "bg-cyan-100 text-cyan-700",
-                title: "G-Ledger يدعم الآن موديول الإنتاج والتصنيع",
-                desc: "أصبح بإمكانك تتبع دورة الإنتاج الكاملة — من شراء المواد الخام إلى المنتج النهائي. دعم التشغيل الخارجي (مقاولي الباطن) مع تتبع التكلفة في كل مرحلة وقيود تلقائية.",
-                date: "مارس 2026",
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=80",
-                imageAlt: "تكنولوجيا وتصنيع حديث",
-              },
-            ].map((article, i) => (
+            {t.tipArticles.map((article, i) => (
               <article key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
                 <div className="h-36 overflow-hidden">
                   <img src={article.image} alt={article.imageAlt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
@@ -1164,30 +1399,30 @@ export default function HomePage() {
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-xs font-medium mb-8">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="#00C9A7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            بدون بطاقة ائتمان — بدون التزام
+            {t.cta.badge}
           </div>
 
           <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            ابدأ الآن — مجانًا
+            {t.cta.title}
           </h3>
           <p className="text-white/70 text-lg mb-12 max-w-lg mx-auto leading-relaxed">
-            سجّل واحصل على تجربة مجانية 6 أشهر — بدون بطاقة ائتمان، بدون التزام
+            {t.cta.subtitle}
           </p>
 
           <Link
-            href="/ar/register"
+            href={`/${locale}/register`}
             className="inline-block px-14 py-5 text-lg font-bold bg-white text-[#021544] rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
           >
-            ابدأ تجربتك المجانية
+            {t.cta.cta}
           </Link>
 
           {/* Stats */}
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             {[
-              { value: "15+", label: "قطاع مدعوم" },
-              { value: "14", label: "دولة عربية" },
-              { value: "6", label: "أشهر مجانًا" },
-              { value: "100%", label: "قيود تلقائية" },
+              { value: "15+", label: t.cta.stat1Label },
+              { value: "14", label: t.cta.stat2Label },
+              { value: "6", label: t.cta.stat3Label },
+              { value: "100%", label: t.cta.stat4Label },
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="text-4xl font-bold text-[#00C9A7]">{stat.value}</div>
@@ -1204,36 +1439,36 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div className="md:col-span-1">
-              <h4 className="text-sm font-bold mb-4 text-white/80">الشركة</h4>
+              <h4 className="text-sm font-bold mb-4 text-white/80">{t.footer.company}</h4>
               <ul className="space-y-2 text-white/50 text-sm">
-                <li><a href="#why-different" className="hover:text-white transition-colors">عن G-Ledger</a></li>
-                <li><a href="#features" className="hover:text-white transition-colors">المميزات</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">الأسعار</a></li>
-                <li><a href="#sectors" className="hover:text-white transition-colors">القطاعات</a></li>
+                <li><a href="#why-different" className="hover:text-white transition-colors">{t.footer.about}</a></li>
+                <li><a href="#features" className="hover:text-white transition-colors">{t.footer.features}</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">{t.footer.pricing}</a></li>
+                <li><a href="#sectors" className="hover:text-white transition-colors">{t.footer.sectors}</a></li>
               </ul>
             </div>
 
             {/* Resources */}
             <div>
-              <h4 className="text-sm font-bold mb-4 text-white/80">الموارد</h4>
+              <h4 className="text-sm font-bold mb-4 text-white/80">{t.footer.resources}</h4>
               <ul className="space-y-2 text-white/50 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">مركز المساعدة</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">الأسئلة الشائعة</a></li>
-                <li><a href="#einvoice" className="hover:text-white transition-colors">الفوترة الإلكترونية</a></li>
-                <li><Link href="/ar/legal/terms" className="hover:text-white transition-colors">شروط الاستخدام</Link></li>
-                <li><Link href="/ar/legal/privacy" className="hover:text-white transition-colors">سياسة الخصوصية</Link></li>
-                <li><Link href="/ar/legal/sla" className="hover:text-white transition-colors">اتفاقية الخدمة</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.helpCenter}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.faq}</a></li>
+                <li><a href="#einvoice" className="hover:text-white transition-colors">{t.footer.einvoice}</a></li>
+                <li><Link href={`/${locale}/legal/terms`} className="hover:text-white transition-colors">{t.footer.terms}</Link></li>
+                <li><Link href={`/${locale}/legal/privacy`} className="hover:text-white transition-colors">{t.footer.privacy}</Link></li>
+                <li><Link href={`/${locale}/legal/sla`} className="hover:text-white transition-colors">{t.footer.sla}</Link></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h4 className="text-sm font-bold mb-4 text-white/80">تواصل معنا</h4>
+              <h4 className="text-sm font-bold mb-4 text-white/80">{t.footer.contact}</h4>
               <ul className="space-y-2 text-white/50 text-sm">
                 <li>
                   <a href="https://m.me/61574741902666" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.12 7.24V22l3.04-1.67c.82.23 1.68.35 2.58.35h.26c5.64 0 10-4.13 10-9.68C21 6.13 17.64 2 12 2z"/></svg>
-                    ماسنجر
+                    {t.footer.messenger}
                   </a>
                 </li>
                 <li>
@@ -1256,11 +1491,11 @@ export default function HomePage() {
                 </div>
                 <div>
                   <span className="text-lg font-bold">G-Ledger</span>
-                  <span className="text-xs text-white/50 block">المحاسب الذكي</span>
+                  <span className="text-xs text-white/50 block">{t.footer.smartAccountant}</span>
                 </div>
               </div>
               <p className="text-white/50 text-sm leading-relaxed">
-                نظام محاسبي سحابي متعدد القطاعات مع شجرة حسابات جاهزة وضرائب مخصصة لكل دولة وقطاع.
+                {t.footer.brandDesc}
               </p>
             </div>
           </div>
@@ -1269,7 +1504,7 @@ export default function HomePage() {
             <VisitorCounter variant="footer" />
           </div>
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-white/40 text-xs">
-            <span>&copy; 2026 G-Ledger — المحاسب الذكي. جميع الحقوق محفوظة.</span>
+            <span>{t.footer.copyright}</span>
             <div className="flex items-center gap-4 mt-2 md:mt-0">
               <a
                 href="https://www.facebook.com/profile.php?id=61574741902666"
