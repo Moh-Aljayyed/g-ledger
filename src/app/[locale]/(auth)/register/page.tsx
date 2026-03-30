@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc";
 import Link from "next/link";
 import { useGeoLocation } from "./useGeoLocation";
 import { LogoIcon } from "@/components/logo";
+import { LangLink } from "@/components/lang-link";
 
 const SECTORS = [
   "INDUSTRIAL", "COMMERCIAL", "SERVICES", "BANKING", "INSURANCE",
@@ -20,6 +21,9 @@ export default function RegisterPage() {
   const ts = useTranslations("sectors");
   const td = useTranslations("sectorDescriptions");
   const router = useRouter();
+  const pathname = usePathname();
+  const isArabic = pathname.startsWith("/ar");
+  const localePath = isArabic ? "/ar" : "/en";
 
   const { country: detectedCountry } = useGeoLocation();
 
@@ -92,7 +96,7 @@ export default function RegisterPage() {
 
   const register = trpc.auth.register.useMutation({
     onSuccess: () => {
-      router.push("/ar/login");
+      router.push(`${localePath}/login`);
     },
     onError: (err) => {
       setError(err.message);
@@ -138,6 +142,11 @@ export default function RegisterPage() {
   return (
     <div className="w-full max-w-2xl">
       <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
+        {/* Language Toggle */}
+        <div className="text-center mb-4">
+          <LangLink variant="auth" />
+        </div>
+
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#021544] to-[#0070F2] mx-auto flex items-center justify-center mb-4 shadow-lg">
@@ -548,14 +557,14 @@ export default function RegisterPage() {
 
         <p className="text-center text-[10px] text-muted-foreground mt-4">
           بالتسجيل، أنت توافق على{" "}
-          <Link href="/ar/legal/terms" className="text-[#0070F2] hover:underline">شروط الاستخدام</Link>
+          <Link href={`${localePath}/legal/terms`} className="text-[#0070F2] hover:underline">شروط الاستخدام</Link>
           {" "}و{" "}
-          <Link href="/ar/legal/privacy" className="text-[#0070F2] hover:underline">سياسة الخصوصية</Link>
+          <Link href={`${localePath}/legal/privacy`} className="text-[#0070F2] hover:underline">سياسة الخصوصية</Link>
         </p>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           {t("alreadyHaveAccount")}{" "}
-          <Link href="/ar/login" className="text-[#0070F2] font-medium hover:underline">
+          <Link href={`${localePath}/login`} className="text-[#0070F2] font-medium hover:underline">
             {t("login")}
           </Link>
         </p>

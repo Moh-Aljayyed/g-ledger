@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { LogoIcon } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LangLink } from "@/components/lang-link";
 import { useState } from "react";
 
 interface NavGroup {
@@ -105,7 +106,8 @@ export function Sidebar() {
   const ts = useTranslations("sectors");
   const pathname = usePathname();
   const { data: session } = useSession();
-  const basePath = "/ar";
+  const isArabic = pathname.startsWith("/ar");
+  const basePath = isArabic ? "/ar" : "/en";
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (label: string) => {
@@ -243,10 +245,15 @@ export function Sidebar() {
           <span className="text-[9px] text-white/30">
             {usage?.plan === "FREE_TRIAL" ? `متبقي ${daysRemaining} يوم` : `$${(usage as any)?.totalMonthlyCost ?? usage?.monthlyPriceUsd}/شهر`}
           </span>
-          <Link href="/ar/settings" className="text-[9px] text-[#00C9A7] hover:underline font-medium">
+          <Link href={`${basePath}/settings`} className="text-[9px] text-[#00C9A7] hover:underline font-medium">
             {isBlocked ? "اشترك الآن" : "ترقية"}
           </Link>
         </div>
+      </div>
+
+      {/* Language Toggle */}
+      <div className="mx-3 mb-2">
+        <LangLink variant="sidebar" />
       </div>
 
       {/* User */}
@@ -266,7 +273,7 @@ export function Sidebar() {
             </div>
           </div>
           <button
-            onClick={() => signOut({ callbackUrl: "/ar/login" })}
+            onClick={() => signOut({ callbackUrl: `${basePath}/login` })}
             className="w-full px-3 py-1.5 text-[10px] text-white/40 hover:text-red-400 hover:bg-white/5 rounded-lg transition-colors text-center"
           >
             تسجيل الخروج

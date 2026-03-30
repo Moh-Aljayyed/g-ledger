@@ -3,7 +3,36 @@ import { routing } from "./i18n/routing";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Arabic-speaking country codes
+const ARABIC_COUNTRIES = [
+  "SA", "EG", "AE", "KW", "BH", "OM", "QA", "JO", "IQ",
+  "MA", "TN", "SD", "LY", "LB", "SY", "YE", "DJ", "MR", "PS",
+];
+
 const intlMiddleware = createMiddleware(routing);
+
+function detectPreferredLocale(request: NextRequest): "ar" | "en" {
+  // 1. Check cookie for persisted preference
+  const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
+  if (cookieLocale === "ar" || cookieLocale === "en") {
+    return cookieLocale;
+  }
+
+  // 2. Check Accept-Language header
+  const acceptLang = request.headers.get("Accept-Language") || "";
+  if (acceptLang.match(/^ar\b/i) || acceptLang.match(/,\s*ar\b/i)) {
+    return "ar";
+  }
+
+  // 3. Check geo header (Vercel sets x-vercel-ip-country)
+  const country = request.headers.get("x-vercel-ip-country") || "";
+  if (ARABIC_COUNTRIES.includes(country.toUpperCase())) {
+    return "ar";
+  }
+
+  // 4. Default to English for all other countries
+  return "en";
+}
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -12,6 +41,35 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith("/api/") || pathname.startsWith("/_next/") || pathname.startsWith("/logo") || pathname.endsWith(".txt") || pathname.endsWith(".xml") || pathname.endsWith(".json") || pathname.endsWith(".svg") || pathname.endsWith(".png") || pathname.endsWith(".ico")) {
     const response = NextResponse.next();
     // Still add security headers
+    addSecurityHeaders(response);
+    return response;
+  }
+
+  // If user is visiting root "/" without locale, detect and redirect
+  if (pathname === "/") {
+    const locale = detectPreferredLocale(request);
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}`;
+    const response = NextResponse.redirect(url);
+    response.cookies.set("NEXT_LOCALE", locale, {
+      maxAge: 365 * 24 * 60 * 60,
+      path: "/",
+      sameSite: "lax",
+    });
+    addSecurityHeaders(response);
+    return response;
+  }
+
+  // If user explicitly navigates to /ar or /en, persist their choice
+  const localeMatch = pathname.match(/^\/(ar|en)(\/|$)/);
+  if (localeMatch) {
+    const chosenLocale = localeMatch[1] as "ar" | "en";
+    const response = intlMiddleware(request);
+    response.cookies.set("NEXT_LOCALE", chosenLocale, {
+      maxAge: 365 * 24 * 60 * 60,
+      path: "/",
+      sameSite: "lax",
+    });
     addSecurityHeaders(response);
     return response;
   }

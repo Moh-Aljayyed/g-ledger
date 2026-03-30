@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoFull } from "@/components/logo";
 import { VisitorCounter } from "@/components/visitor-counter";
+import { LangLink } from "@/components/lang-link";
 
 export default function HomePage() {
   return (
@@ -137,6 +138,7 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <LangLink variant="header" />
             <Link
               href="/ar/login"
               className="px-5 py-2.5 text-sm font-semibold text-[#021544] hover:text-[#0070F2] transition-colors"

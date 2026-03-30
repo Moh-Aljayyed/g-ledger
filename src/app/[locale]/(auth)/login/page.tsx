@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { LogoIcon } from "@/components/logo";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { trpc } from "@/lib/trpc";
+import { LangLink } from "@/components/lang-link";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
   const router = useRouter();
+  const pathname = usePathname();
+  const isArabic = pathname.startsWith("/ar");
+  const localePath = isArabic ? "/ar" : "/en";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,7 +30,7 @@ export default function LoginPage() {
   const verifyOTPMutation = trpc.auth.verifyOTP.useMutation({
     onSuccess: (data) => {
       if (data.valid) {
-        router.push("/ar/dashboard");
+        router.push(`${localePath}/dashboard`);
         router.refresh();
       } else {
         setError(data.error || "رمز غير صحيح");
@@ -59,6 +63,11 @@ export default function LoginPage() {
   return (
     <div className="w-full max-w-md">
       <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
+        {/* Language Toggle */}
+        <div className="text-center mb-4">
+          <LangLink variant="auth" />
+        </div>
+
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#021544] to-[#0070F2] mx-auto flex items-center justify-center mb-4 shadow-lg">
@@ -141,7 +150,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           {t("dontHaveAccount")}{" "}
-          <Link href="/ar/register" className="text-primary font-medium hover:underline">
+          <Link href={`${localePath}/register`} className="text-primary font-medium hover:underline">
             {t("register")}
           </Link>
         </p>
