@@ -96,6 +96,7 @@ model Tenant {
   leads         Lead[]
   expenses      Expense[]
   projects      Project[]
+  apiKeys       ApiKey[]
 }
 
 model User {
@@ -1155,4 +1156,20 @@ model Ticket {
   @@unique([tenantId, ticketNumber])
   @@index([tenantId, status])
   @@index([tenantId, priority])
+}
+
+// ============ API KEYS ============
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  isActive    Boolean  @default(true)
+  lastUsedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([key])
+  @@index([tenantId])
 }

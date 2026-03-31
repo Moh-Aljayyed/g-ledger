@@ -15,6 +15,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       einvoice: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
       pricing: isAr ? "الأسعار" : "Pricing",
       blog: isAr ? "المدونة" : "Blog",
+      api: isAr ? "API المطورين" : "Developer API",
       login: isAr ? "تسجيل الدخول" : "Login",
       register: isAr ? "ابدأ تجربتك المجانية" : "Start Free Trial",
     },
@@ -447,6 +448,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <a href="#einvoice" className="hover:text-[#0070F2] transition-colors">{t.nav.einvoice}</a>
             <a href="#pricing" className="hover:text-[#0070F2] transition-colors">{t.nav.pricing}</a>
             <Link href={`/${locale}/blog`} className="hover:text-[#0070F2] transition-colors">{t.nav.blog}</Link>
+            <Link href={`/${locale}/api-docs`} className="hover:text-[#0070F2] transition-colors">{t.nav.api}</Link>
           </nav>
 
           <div className="flex items-center gap-3">

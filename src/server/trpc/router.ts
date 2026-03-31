@@ -24,6 +24,7 @@ import { projectsRouter } from "./routers/projects";
 import { leavesRouter } from "./routers/leaves";
 import { helpdeskRouter } from "./routers/helpdesk";
 import { referralRouter } from "./routers/referral";
+import { apiKeysRouter } from "./routers/api-keys";
 
 export const appRouter = router({
   auth: authRouter,
@@ -51,6 +52,7 @@ export const appRouter = router({
   leaves: leavesRouter,
   helpdesk: helpdeskRouter,
   referral: referralRouter,
+  apiKeys: apiKeysRouter,
 });
 
 export type AppRouter = typeof appRouter;

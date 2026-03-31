@@ -103,7 +103,8 @@
     "expenses": "Expenses",
     "projects": "Projects",
     "leaves": "Leaves",
-    "helpdesk": "Helpdesk"
+    "helpdesk": "Helpdesk",
+    "apiDocs": "Developer API"
   },
   "invoices": {
     "title": "Electronic Invoices",

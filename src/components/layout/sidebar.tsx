@@ -93,6 +93,12 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
+    label: "النظام",
+    items: [
+      { key: "apiDocs", href: "/api-docs", icon: "🔗" },
+    ],
+  },
+  {
     label: "الإعدادات",
     items: [
       { key: "taxSettings", href: "/tax-settings", icon: "🏛️" },

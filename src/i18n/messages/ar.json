@@ -103,7 +103,8 @@
     "expenses": "المصروفات",
     "projects": "المشاريع",
     "leaves": "الإجازات",
-    "helpdesk": "تذاكر الدعم"
+    "helpdesk": "تذاكر الدعم",
+    "apiDocs": "API المطورين"
   },
   "invoices": {
     "title": "الفواتير الإلكترونية",
