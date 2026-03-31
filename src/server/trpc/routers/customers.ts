@@ -108,6 +108,16 @@ export const customersRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // Get tenant country for validation
+      const tenant = await ctx.db.tenant.findUnique({ where: { id: ctx.tenantId }, select: { country: true } });
+      const country = tenant?.country || "SA";
+
+      // Saudi Arabia requires: address, city, taxId for B2B
+      if (country === "SA") {
+        if (!input.address) throw new TRPCError({ code: "BAD_REQUEST", message: "العنوان مطلوب في السعودية" });
+        if (!input.city) throw new TRPCError({ code: "BAD_REQUEST", message: "المدينة مطلوبة في السعودية" });
+      }
+
       const existing = await ctx.db.customer.findFirst({
         where: { tenantId: ctx.tenantId, code: input.code },
       });

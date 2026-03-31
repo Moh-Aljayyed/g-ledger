@@ -99,6 +99,12 @@ export const vendorsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const tenant = await ctx.db.tenant.findUnique({ where: { id: ctx.tenantId }, select: { country: true } });
+      if (tenant?.country === "SA") {
+        if (!input.address) throw new TRPCError({ code: "BAD_REQUEST", message: "العنوان مطلوب في السعودية" });
+        if (!input.city) throw new TRPCError({ code: "BAD_REQUEST", message: "المدينة مطلوبة في السعودية" });
+      }
+
       const existing = await ctx.db.vendor.findFirst({
         where: { tenantId: ctx.tenantId, code: input.code },
       });
