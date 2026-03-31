@@ -290,7 +290,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       subtitle: isAr ? "سجّل واحصل على تجربة مجانية 6 أشهر — بدون بطاقة ائتمان، بدون التزام" : "Register and get a 6-month free trial — no credit card, no commitment",
       cta: isAr ? "ابدأ تجربتك المجانية" : "Start Your Free Trial",
       stat1Label: isAr ? "قطاع مدعوم" : "Supported Sectors",
-      stat2Label: isAr ? "دولة عربية" : "Arab Countries",
+      stat2Label: isAr ? "دولة حول العالم" : "Countries Worldwide",
       stat3Label: isAr ? "أشهر مجانًا" : "Free Months",
       stat4Label: isAr ? "قيود تلقائية" : "Auto Entries",
     },
@@ -540,17 +540,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
 
-            {/* Dashboard SVG illustration (left side in RTL) */}
+            {/* Dashboard image (left side in RTL) */}
             <div className="hidden lg:block">
               <FloatingElement speed="slow">
               <div className="relative">
-                {/* Glow effect behind */}
                 <div className="absolute -inset-4 bg-[#0070F2]/20 rounded-3xl blur-2xl" />
-                <svg viewBox="0 0 500 400" fill="none" className="relative w-full drop-shadow-2xl">
-                  {/* Browser frame */}
-                  <rect x="20" y="20" width="460" height="360" rx="12" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
-                  <rect x="20" y="20" width="460" height="36" rx="12" fill="#F1F5F9"/>
-                  <rect x="20" y="20" width="460" height="36" rx="12" fill="#F1F5F9"/>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 img-branded">
+                  <img src="https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=600" alt={isAr ? "لوحة تحكم محاسبية" : "Accounting Dashboard"} className="w-full h-auto" loading="eager" />
+                </div>
+                <svg viewBox="0 0 1 1" className="hidden">
                   <circle cx="42" cy="38" r="6" fill="#EF4444"/>
                   <circle cx="62" cy="38" r="6" fill="#F59E0B"/>
                   <circle cx="82" cy="38" r="6" fill="#22C55E"/>
@@ -916,7 +914,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
             {/* Text content */}
             <div>
               <AnimatedSection>
@@ -929,9 +927,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </p>
               </AnimatedSection>
 
-              <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Egypt Card */}
-                <div className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 p-8 hover:bg-white/15 transition-all">
+                <div className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 p-6 hover:bg-white/15 transition-all">
                   <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                       <rect width="28" height="9.33" fill="#CE1126"/>
@@ -951,7 +949,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </div>
 
                 {/* Saudi Card */}
-                <div className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 p-8 hover:bg-white/15 transition-all">
+                <div className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 p-6 hover:bg-white/15 transition-all">
                   <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                       <rect width="28" height="28" rx="2" fill="#006C35"/>
@@ -1304,7 +1302,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             {[
               { value: "15+", label: t.cta.stat1Label },
-              { value: "14", label: t.cta.stat2Label },
+              { value: "29+", label: t.cta.stat2Label },
               { value: "6", label: t.cta.stat3Label },
               { value: "100%", label: t.cta.stat4Label },
             ].map((stat, i) => (
