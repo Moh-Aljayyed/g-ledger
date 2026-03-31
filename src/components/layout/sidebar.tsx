@@ -95,6 +95,7 @@ const navGroups: NavGroup[] = [
   {
     label: "النظام",
     items: [
+      { key: "referral", href: "/referral", icon: "🎁" },
       { key: "apiDocs", href: "/api-docs", icon: "🔗" },
     ],
   },
