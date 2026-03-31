@@ -972,17 +972,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
 
-            {/* Invoice image */}
-            <div className="hidden lg:flex items-center justify-center">
-              <FloatingElement speed="delayed">
-              <div className="relative">
-                <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 img-branded">
-                  <img src="https://images.pexels.com/photos/6863183/pexels-photo-6863183.jpeg?auto=compress&cs=tinysrgb&w=500" alt={isAr ? "فاتورة إلكترونية" : "Electronic Invoice"} className="w-80 h-auto object-cover" loading="lazy" />
-                </div>
-              </div>
-              </FloatingElement>
-            </div>
           </div>
         </div>
       </section>
