@@ -471,16 +471,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #021544 0%, #0a2a6e 50%, #0070F2 100%)" }}>
-        {/* Background image */}
-        <div className="absolute inset-0 img-branded">
-          <img
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
-            alt="تحليلات الأعمال على شاشة الكمبيوتر"
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-[#021544]/90 via-[#0a2a6e]/85 to-[#0070F2]/80" />
-        </div>
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
         {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-10 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -1184,9 +1176,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
           <div className="text-center mb-20">
-            <div className="w-full max-w-md mx-auto h-40 overflow-hidden rounded-2xl mb-8 img-branded">
-              <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80" alt="عملات معدنية ترمز للتسعير" className="w-full h-full object-cover" loading="lazy" />
-            </div>
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.pricing.badge}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.pricing.title}</h2>
             <p className="text-gray-500 mt-3">{t.pricing.subtitle}</p>
@@ -1360,15 +1349,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* ============ CTA SECTION ============ */}
       <section className="py-24 relative overflow-hidden">
-        {/* Background image with overlay */}
-        <div className="absolute inset-0 img-branded">
-          <img
-            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80"
-            alt="فريق عمل في مكتب حديث"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(2,21,68,0.92) 0%, rgba(0,112,242,0.88) 100%)" }} />
+        {/* Background gradient */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #021544 0%, #0070F2 100%)" }}>
+          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
         </div>
         {/* Background SVG pattern */}
         <div className="absolute inset-0 opacity-[0.04]">
