@@ -30,33 +30,33 @@ export default function RegisterPage() {
     step1: isArabic ? "بيانات المنشأة" : "Business Info",
     step2: isArabic ? "الحساب والتحقق" : "Account & Verify",
     step3: isArabic ? "القطاع" : "Sector",
-    enterRegNum: isArabic ? "{ui.enterRegNum}" : "Enter your commercial registration or tax number to auto-fetch business data",
+    enterRegNum: isArabic ? "أدخل رقم السجل التجاري أو الرقم الضريبي وسيتم جلب بيانات المنشأة تلقائيًا" : "Enter your commercial registration or tax number to auto-fetch business data",
     country: isArabic ? "الدولة" : "Country",
-    arabCountries: isArabic ? "{ui.arabCountries}" : "Arab Countries",
-    globalCountries: isArabic ? "{ui.globalCountries}" : "Global Countries",
+    arabCountries: isArabic ? "الدول العربية" : "Arab Countries",
+    globalCountries: isArabic ? "دول عالمية" : "Global Countries",
     regNumLabel: isArabic ? "الرقم الضريبي" : "Tax/Registration Number",
     businessName: isArabic ? "اسم المنشأة" : "Business Name",
     businessNamePlaceholder: isArabic ? "اسم المنشأة" : "Business Name",
-    autoFilled: isArabic ? "{ui.autoFilled}" : "Auto-filled from commercial registration",
-    nextAccount: isArabic ? "{ui.nextAccount}" : "Next — Account Details",
-    skipNoReg: isArabic ? "{ui.skipNoReg}" : "Skip — I don't have a registration number",
-    verifyIdentity: isArabic ? "{ui.verifyIdentity}" : "Identity Verification",
+    autoFilled: isArabic ? "تم تعبئة الاسم تلقائيًا من السجل التجاري" : "Auto-filled from commercial registration",
+    nextAccount: isArabic ? "التالي — بيانات الحساب" : "Next — Account Details",
+    skipNoReg: isArabic ? "تخطي — لا أملك رقم سجل تجاري" : "Skip — I don't have a registration number",
+    verifyIdentity: isArabic ? "التحقق من الهوية" : "Identity Verification",
     viaEmail: isArabic ? "إيميل" : "Email",
     viaWhatsapp: isArabic ? "واتساب" : "WhatsApp",
     sendOtpEmail: isArabic ? "إرسال رمز التحقق للإيميل" : "Send verification code to email",
     sendOtpWhatsapp: isArabic ? "إرسال رمز التحقق للواتساب" : "Send code via WhatsApp",
-    sending: isArabic ? "{ui.sending}" : "Sending...",
+    sending: isArabic ? "جاري الإرسال..." : "Sending...",
     otpSentTo: isArabic ? "تم إرسال رمز مكون من 6 أرقام" : "6-digit code sent",
     verify: isArabic ? "تحقق" : "Verify",
-    verifying: isArabic ? "{ui.verifying}" : "Verifying...",
+    verifying: isArabic ? "جاري التحقق..." : "Verifying...",
     resendAfter: isArabic ? "إعادة الإرسال بعد" : "Resend after",
     seconds: isArabic ? "ثانية" : "seconds",
-    resend: isArabic ? "{ui.resend}" : "Resend code",
-    verified: isArabic ? "{ui.verified}" : "✓ Verified successfully",
-    back: isArabic ? "{ui.back}" : "Back",
-    nextSector: isArabic ? "{ui.nextSector}" : "Next — Choose Sector",
-    chooseSector: isArabic ? "{ui.chooseSector}" : "Choose your business sector. Chart of accounts will be set up automatically.",
-    creating: isArabic ? "{ui.creating}" : "Creating...",
+    resend: isArabic ? "إعادة إرسال الرمز" : "Resend code",
+    verified: isArabic ? "✓ تم التحقق بنجاح" : "✓ Verified successfully",
+    back: isArabic ? "رجوع" : "Back",
+    nextSector: isArabic ? "التالي — اختر القطاع" : "Next — Choose Sector",
+    chooseSector: isArabic ? "اختر القطاع المناسب لنشاطك التجاري. سيتم إعداد شجرة الحسابات تلقائيًا." : "Choose your business sector. Chart of accounts will be set up automatically.",
+    creating: isArabic ? "جاري الإنشاء..." : "Creating...",
     enterPhone: isArabic ? "أدخل رقم الواتساب" : "Enter WhatsApp number",
     passwordMismatch: isArabic ? "كلمة المرور غير متطابقة" : "Passwords don't match",
     selectSector: isArabic ? "يرجى اختيار القطاع" : "Please select a sector",
@@ -64,7 +64,7 @@ export default function RegisterPage() {
     termsLink: isArabic ? "شروط الاستخدام" : "Terms of Service",
     and: isArabic ? "و" : "and",
     privacyLink: isArabic ? "سياسة الخصوصية" : "Privacy Policy",
-    slogan: isArabic ? "{ui.slogan}" : "Smart Accounting for Every Sector",
+    slogan: isArabic ? "المحاسب الذكي لكل القطاعات" : "Smart Accounting for Every Sector",
   };
 
   const { country: detectedCountry } = useGeoLocation();
@@ -505,7 +505,7 @@ export default function RegisterPage() {
                     }}
                       disabled={sendEmailOTP.isPending || sendWhatsAppOTP.isPending}
                       className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005ed4] disabled:opacity-50">
-                      {sendEmailOTP.isPending || sendWhatsAppOTP.isPending ? "{ui.sending}" :
+                      {sendEmailOTP.isPending || sendWhatsAppOTP.isPending ? ui.sending :
                         otpMethod === "email" ? ui.sendOtpEmail : ui.sendOtpWhatsapp}
                     </button>
                   ) : (
@@ -526,7 +526,7 @@ export default function RegisterPage() {
                       }}
                         disabled={otpCode.length !== 6 || verifyOTP.isPending}
                         className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium disabled:opacity-50">
-                        {verifyOTP.isPending ? "{ui.verifying}" : "تحقق"}
+                        {verifyOTP.isPending ? ui.verifying : "تحقق"}
                       </button>
                       {otpCountdown > 0 ? (
                         <p className="text-xs text-muted-foreground text-center">{ui.resendAfter} {otpCountdown} {ui.seconds}</p>
@@ -600,7 +600,7 @@ export default function RegisterPage() {
                   disabled={!formData.sector || register.isPending}
                   className="flex-1 py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all"
                 >
-                  {register.isPending ? "{ui.creating}" : t("register")}
+                  {register.isPending ? ui.creating : t("register")}
                 </button>
               </div>
             </div>
