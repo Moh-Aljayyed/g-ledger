@@ -315,7 +315,10 @@ export default function RegisterPage() {
               {/* Registration Number Input */}
               <div>
                 <label className="block text-sm font-medium mb-1.5">
-                  {formData.country === "SA" ? "رقم السجل التجاري (10 أرقام)" : "الرقم الضريبي (9 أرقام)"}
+                  {isArabic
+                    ? (formData.country === "SA" ? "رقم السجل التجاري (10 أرقام) *" : formData.country === "EG" ? "الرقم الضريبي (9 أرقام)" : "رقم السجل التجاري / الرقم الضريبي *")
+                    : (formData.country === "SA" ? "Commercial Registration (10 digits) *" : formData.country === "EG" ? "Tax ID (9 digits)" : "Registration / Tax Number *")
+                  }
                 </label>
                 <div className="relative">
                   <input
@@ -323,9 +326,9 @@ export default function RegisterPage() {
                     value={formData.registrationNumber}
                     onChange={(e) => handleRegistrationNumberChange(e.target.value.replace(/\D/g, ""))}
                     className="w-full px-4 py-3 rounded-lg border border-input bg-background text-lg font-mono tracking-wider focus:ring-2 focus:ring-ring outline-none text-center"
-                    placeholder={formData.country === "SA" ? "1234567890" : "123456789"}
+                    placeholder={formData.country === "SA" ? "1234567890" : formData.country === "EG" ? "123456789" : "123456789"}
                     dir="ltr"
-                    maxLength={formData.country === "SA" ? 10 : 9}
+                    maxLength={formData.country === "SA" ? 10 : 15}
                   />
                   {lookingUp && (
                     <div className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -392,21 +395,28 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => {
-                  if (formData.businessName) setStep(2);
+                  if (formData.country === "EG") {
+                    if (formData.businessName) setStep(2);
+                  } else {
+                    if (formData.businessName && formData.registrationNumber) setStep(2);
+                  }
                 }}
-                disabled={!formData.businessName}
+                disabled={formData.country === "EG" ? !formData.businessName : (!formData.businessName || !formData.registrationNumber)}
                 className="w-full py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all"
               >
                 {ui.nextAccount}
               </button>
 
-              <button
-                type="button"
-                onClick={() => setStep(2)}
-                className="w-full py-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {ui.skipNoReg}
-              </button>
+              {formData.country === "EG" && (
+                <button
+                  type="button"
+                  onClick={() => { if (formData.businessName) setStep(2); }}
+                  disabled={!formData.businessName}
+                  className="w-full py-2 text-xs text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30"
+                >
+                  {ui.skipNoReg}
+                </button>
+              )}
             </div>
           )}
 
