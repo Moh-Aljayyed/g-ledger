@@ -967,9 +967,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <FloatingElement speed="delayed">
               <div className="relative">
                 <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
-                <div className="absolute -top-8 -right-8 w-48 h-48 rounded-2xl overflow-hidden opacity-30 rotate-6 img-branded">
-                  <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="محترف أعمال مع جهاز لوحي" className="w-full h-full object-cover" loading="lazy" />
-                </div>
+                <div className="absolute -top-8 -right-8 w-48 h-48 bg-[#00C9A7]/5 rounded-3xl rotate-12" />
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[#0070F2]/10 rounded-2xl -rotate-6" />
                 <svg viewBox="0 0 400 500" fill="none" className="relative w-full max-w-sm drop-shadow-2xl">
                   {/* Main invoice document */}
                   <rect x="40" y="20" width="320" height="460" rx="16" fill="white" />
