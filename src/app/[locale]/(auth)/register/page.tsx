@@ -25,6 +25,48 @@ export default function RegisterPage() {
   const isArabic = pathname.startsWith("/ar");
   const localePath = isArabic ? "/ar" : "/en";
 
+  // Inline translations for registration UI
+  const ui = {
+    step1: isArabic ? "بيانات المنشأة" : "Business Info",
+    step2: isArabic ? "الحساب والتحقق" : "Account & Verify",
+    step3: isArabic ? "القطاع" : "Sector",
+    enterRegNum: isArabic ? "{ui.enterRegNum}" : "Enter your commercial registration or tax number to auto-fetch business data",
+    country: isArabic ? "الدولة" : "Country",
+    arabCountries: isArabic ? "{ui.arabCountries}" : "Arab Countries",
+    globalCountries: isArabic ? "{ui.globalCountries}" : "Global Countries",
+    regNumLabel: isArabic ? "الرقم الضريبي" : "Tax/Registration Number",
+    businessName: isArabic ? "اسم المنشأة" : "Business Name",
+    businessNamePlaceholder: isArabic ? "اسم المنشأة" : "Business Name",
+    autoFilled: isArabic ? "{ui.autoFilled}" : "Auto-filled from commercial registration",
+    nextAccount: isArabic ? "{ui.nextAccount}" : "Next — Account Details",
+    skipNoReg: isArabic ? "{ui.skipNoReg}" : "Skip — I don't have a registration number",
+    verifyIdentity: isArabic ? "{ui.verifyIdentity}" : "Identity Verification",
+    viaEmail: isArabic ? "إيميل" : "Email",
+    viaWhatsapp: isArabic ? "واتساب" : "WhatsApp",
+    sendOtpEmail: isArabic ? "إرسال رمز التحقق للإيميل" : "Send verification code to email",
+    sendOtpWhatsapp: isArabic ? "إرسال رمز التحقق للواتساب" : "Send code via WhatsApp",
+    sending: isArabic ? "{ui.sending}" : "Sending...",
+    otpSentTo: isArabic ? "تم إرسال رمز مكون من 6 أرقام" : "6-digit code sent",
+    verify: isArabic ? "تحقق" : "Verify",
+    verifying: isArabic ? "{ui.verifying}" : "Verifying...",
+    resendAfter: isArabic ? "إعادة الإرسال بعد" : "Resend after",
+    seconds: isArabic ? "ثانية" : "seconds",
+    resend: isArabic ? "{ui.resend}" : "Resend code",
+    verified: isArabic ? "{ui.verified}" : "✓ Verified successfully",
+    back: isArabic ? "{ui.back}" : "Back",
+    nextSector: isArabic ? "{ui.nextSector}" : "Next — Choose Sector",
+    chooseSector: isArabic ? "{ui.chooseSector}" : "Choose your business sector. Chart of accounts will be set up automatically.",
+    creating: isArabic ? "{ui.creating}" : "Creating...",
+    enterPhone: isArabic ? "أدخل رقم الواتساب" : "Enter WhatsApp number",
+    passwordMismatch: isArabic ? "كلمة المرور غير متطابقة" : "Passwords don't match",
+    selectSector: isArabic ? "يرجى اختيار القطاع" : "Please select a sector",
+    termsAgree: isArabic ? "بالتسجيل، أنت توافق على" : "By registering, you agree to",
+    termsLink: isArabic ? "شروط الاستخدام" : "Terms of Service",
+    and: isArabic ? "و" : "and",
+    privacyLink: isArabic ? "سياسة الخصوصية" : "Privacy Policy",
+    slogan: isArabic ? "{ui.slogan}" : "Smart Accounting for Every Sector",
+  };
+
   const { country: detectedCountry } = useGeoLocation();
 
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -108,12 +150,12 @@ export default function RegisterPage() {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("كلمة المرور غير متطابقة");
+      setError(ui.passwordMismatch);
       return;
     }
 
     if (!formData.sector) {
-      setError("يرجى اختيار القطاع");
+      setError(ui.selectSector);
       return;
     }
 
@@ -153,15 +195,15 @@ export default function RegisterPage() {
             <LogoIcon size={30} />
           </div>
           <h1 className="text-2xl font-bold text-[#021544]">{t("register")}</h1>
-          <p className="text-xs text-muted-foreground mt-1">المحاسب الذكي لكل القطاعات</p>
+          <p className="text-xs text-muted-foreground mt-1">{ui.slogan}</p>
         </div>
 
         {/* Steps indicator */}
         <div className="flex items-center justify-center gap-3 mb-8">
           {[
-            { num: 1, label: "المنشأة" },
-            { num: 2, label: "الحساب والتحقق" },
-            { num: 3, label: "القطاع" },
+            { num: 1, label: ui.step1 },
+            { num: 2, label: ui.step2 },
+            { num: 3, label: ui.step3 },
           ].map((s, idx) => (
             <div key={s.num} className="flex items-center gap-2">
               {idx > 0 && <div className="w-8 h-0.5 bg-border" />}
@@ -188,16 +230,16 @@ export default function RegisterPage() {
           {step === 1 && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground text-center mb-4">
-                أدخل رقم السجل التجاري أو الرقم الضريبي وسيتم جلب بيانات المنشأة تلقائيًا
+                {ui.enterRegNum}
               </p>
 
               {/* Country Selection */}
               <div>
-                <label className="block text-sm font-medium mb-1.5">الدولة</label>
+                <label className="block text-sm font-medium mb-1.5">{ui.country}</label>
                 <div className="max-h-[320px] overflow-y-auto border border-border rounded-xl p-3 space-y-4">
                   {/* Arab Countries */}
                   <div>
-                    <p className="text-xs font-bold text-muted-foreground mb-2">الدول العربية</p>
+                    <p className="text-xs font-bold text-muted-foreground mb-2">{ui.arabCountries}</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {[
                         { code: "SA", flag: "🇸🇦", name: "السعودية" },
@@ -233,7 +275,7 @@ export default function RegisterPage() {
 
                   {/* Global Countries */}
                   <div>
-                    <p className="text-xs font-bold text-muted-foreground mb-2">دول عالمية</p>
+                    <p className="text-xs font-bold text-muted-foreground mb-2">{ui.globalCountries}</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {[
                         { code: "US", flag: "🇺🇸", name: "الولايات المتحدة" },
@@ -340,10 +382,10 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
                   required
                   className="w-full px-4 py-2.5 rounded-lg border border-input bg-background focus:ring-2 focus:ring-ring outline-none"
-                  placeholder="اسم المنشأة"
+                  placeholder={ui.businessNamePlaceholder}
                 />
                 {lookupResult?.found && lookupResult?.companyName && (
-                  <p className="text-[10px] text-green-600 mt-1">تم تعبئة الاسم تلقائيًا من السجل التجاري</p>
+                  <p className="text-[10px] text-green-600 mt-1">{ui.autoFilled}</p>
                 )}
               </div>
 
@@ -355,7 +397,7 @@ export default function RegisterPage() {
                 disabled={!formData.businessName}
                 className="w-full py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all"
               >
-                التالي — بيانات الحساب
+                {ui.nextAccount}
               </button>
 
               <button
@@ -363,7 +405,7 @@ export default function RegisterPage() {
                 onClick={() => setStep(2)}
                 className="w-full py-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
-                تخطي — لا أملك رقم سجل تجاري
+                {ui.skipNoReg}
               </button>
             </div>
           )}
@@ -421,17 +463,17 @@ export default function RegisterPage() {
               {/* OTP Verification */}
               {!otpVerified && formData.email && formData.name && formData.password && (
                 <div className="border border-border rounded-xl p-4 bg-muted/30">
-                  <h3 className="text-sm font-bold mb-3 text-[#021544]">التحقق من الهوية</h3>
+                  <h3 className="text-sm font-bold mb-3 text-[#021544]">{ui.verifyIdentity}</h3>
 
                   {/* Method toggle */}
                   <div className="flex gap-2 mb-3">
                     <button type="button" onClick={() => setOtpMethod("email")}
                       className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "email" ? "bg-[#0070F2] text-white" : "bg-white border border-border"}`}>
-                      📧 إيميل
+                      📧 {ui.viaEmail}
                     </button>
                     <button type="button" onClick={() => setOtpMethod("whatsapp")}
                       className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "whatsapp" ? "bg-[#25D366] text-white" : "bg-white border border-border"}`}>
-                      💬 واتساب
+                      💬 {ui.viaWhatsapp}
                     </button>
                   </div>
 
@@ -449,12 +491,12 @@ export default function RegisterPage() {
                       setError("");
                       if (otpMethod === "email") sendEmailOTP.mutate({ email: formData.email });
                       else if (formData.phone) sendWhatsAppOTP.mutate({ phone: formData.phone });
-                      else setError("أدخل رقم الواتساب");
+                      else setError(ui.enterPhone);
                     }}
                       disabled={sendEmailOTP.isPending || sendWhatsAppOTP.isPending}
                       className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005ed4] disabled:opacity-50">
-                      {sendEmailOTP.isPending || sendWhatsAppOTP.isPending ? "جاري الإرسال..." :
-                        `إرسال رمز التحقق ${otpMethod === "email" ? "للإيميل" : "للواتساب"}`}
+                      {sendEmailOTP.isPending || sendWhatsAppOTP.isPending ? "{ui.sending}" :
+                        otpMethod === "email" ? ui.sendOtpEmail : ui.sendOtpWhatsapp}
                     </button>
                   ) : (
                     <div className="space-y-3">
@@ -474,15 +516,15 @@ export default function RegisterPage() {
                       }}
                         disabled={otpCode.length !== 6 || verifyOTP.isPending}
                         className="w-full py-2.5 bg-[#0070F2] text-white rounded-lg text-sm font-medium disabled:opacity-50">
-                        {verifyOTP.isPending ? "جاري التحقق..." : "تحقق"}
+                        {verifyOTP.isPending ? "{ui.verifying}" : "تحقق"}
                       </button>
                       {otpCountdown > 0 ? (
-                        <p className="text-xs text-muted-foreground text-center">إعادة الإرسال بعد {otpCountdown} ثانية</p>
+                        <p className="text-xs text-muted-foreground text-center">{ui.resendAfter} {otpCountdown} {ui.seconds}</p>
                       ) : (
                         <button type="button" onClick={() => {
                           setOtpSent(false); setOtpCode("");
                         }} className="w-full text-xs text-[#0070F2] hover:underline text-center">
-                          إعادة إرسال الرمز
+                          {ui.resend}
                         </button>
                       )}
                     </div>
@@ -492,20 +534,20 @@ export default function RegisterPage() {
 
               {otpVerified && (
                 <div className="p-3 rounded-lg bg-green-50 text-green-700 text-sm text-center font-medium">
-                  ✓ تم التحقق بنجاح
+                  {ui.verified}
                 </div>
               )}
 
               <div className="flex gap-3 mt-4">
                 <button type="button" onClick={() => setStep(1)}
                   className="flex-1 py-3 px-4 border border-border rounded-lg font-medium hover:bg-muted transition-all">
-                  رجوع
+                  {ui.back}
                 </button>
                 <button type="button"
                   onClick={() => { if (otpVerified) setStep(3); }}
                   disabled={!otpVerified}
                   className="flex-1 py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all">
-                  التالي — اختر القطاع
+                  {ui.nextSector}
                 </button>
               </div>
             </div>
@@ -515,7 +557,7 @@ export default function RegisterPage() {
           {step === 3 && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground text-center mb-4">
-                اختر القطاع المناسب لنشاطك التجاري. سيتم إعداد شجرة الحسابات تلقائيًا.
+                {ui.chooseSector}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2">
                 {SECTORS.map((sector) => (
@@ -541,14 +583,14 @@ export default function RegisterPage() {
                   onClick={() => setStep(2)}
                   className="flex-1 py-3 px-4 border border-border rounded-lg font-medium hover:bg-muted transition-all"
                 >
-                  رجوع
+                  {ui.back}
                 </button>
                 <button
                   type="submit"
                   disabled={!formData.sector || register.isPending}
                   className="flex-1 py-3 px-4 bg-[#0070F2] text-white rounded-lg font-medium hover:bg-[#005ed4] disabled:opacity-50 transition-all"
                 >
-                  {register.isPending ? "جاري الإنشاء..." : t("register")}
+                  {register.isPending ? "{ui.creating}" : t("register")}
                 </button>
               </div>
             </div>
@@ -556,10 +598,10 @@ export default function RegisterPage() {
         </form>
 
         <p className="text-center text-[10px] text-muted-foreground mt-4">
-          بالتسجيل، أنت توافق على{" "}
-          <Link href={`${localePath}/legal/terms`} className="text-[#0070F2] hover:underline">شروط الاستخدام</Link>
-          {" "}و{" "}
-          <Link href={`${localePath}/legal/privacy`} className="text-[#0070F2] hover:underline">سياسة الخصوصية</Link>
+          {ui.termsAgree}{" "}
+          <Link href={`${localePath}/legal/terms`} className="text-[#0070F2] hover:underline">{ui.termsLink}</Link>
+          {" "}{ui.and}{" "}
+          <Link href={`${localePath}/legal/privacy`} className="text-[#0070F2] hover:underline">{ui.privacyLink}</Link>
         </p>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
