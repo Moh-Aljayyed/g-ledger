@@ -1082,33 +1082,34 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
           </AnimatedSection>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
-              { name: t.sectorNames[0], iconPath: "M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7z", color: "#0070F2" },
-              { name: t.sectorNames[1], iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z", color: "#00C9A7" },
-              { name: t.sectorNames[2], iconPath: "M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z", color: "#0070F2" },
-              { name: t.sectorNames[3], iconPath: "M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z", color: "#00C9A7" },
-              { name: t.sectorNames[4], iconPath: "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z", color: "#0070F2" },
-              { name: t.sectorNames[5], iconPath: "M1 11v10h6v-5h2v5h6V11L8 6l-7 5zm12 8h-2v-5H5v5H3v-7l5-3.5 5 3.5v7zm4-12h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm-4-16v2H7L17 1v4h4v2h-4z", color: "#00C9A7" },
-              { name: t.sectorNames[6], iconPath: "M13 2v8h8V2h-8zM3 14v8h8v-8H3zm0-12v8h8V2H3zm13.66 4.66l-5.66 5.66 2.83 2.83 5.66-5.66-2.83-2.83z", color: "#0070F2" },
-              { name: t.sectorNames[7], iconPath: "M17.12 10a6.997 6.997 0 00-2.28-3.87l.97-.97a.996.996 0 10-1.41-1.41l-.97.97A6.986 6.986 0 0010 3.51V2c0-.55-.45-1-1-1s-1 .45-1 1v1.51A6.98 6.98 0 001 10h16.12zM1 12c0 4.97 4.03 9 9 9v-9H1z", color: "#00C9A7" },
-              { name: t.sectorNames[8], iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z", color: "#0070F2" },
-              { name: t.sectorNames[9], iconPath: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", color: "#00C9A7" },
-              { name: t.sectorNames[10], iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z", color: "#0070F2" },
-              { name: t.sectorNames[11], iconPath: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z", color: "#00C9A7" },
-              { name: t.sectorNames[12], iconPath: "M6 3h12v2H6V3zm6 4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm3 7h-2v2h-2v-2H9v-2h2v-2h2v2h2v2z", color: "#0070F2" },
-              { name: t.sectorNames[13], iconPath: "M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z", color: "#00C9A7" },
-              { name: t.sectorNames[14], iconPath: "M7 2v2h1v14a4 4 0 008 0V4h1V2H7zm4 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z", color: "#0070F2" },
-            ].map((sector) => (
-              <div
-                key={sector.name}
-                className="group flex items-center gap-3 px-5 py-3 rounded-full bg-[#F8FAFC] border border-gray-200 hover:border-[#0070F2]/40 hover:shadow-lg hover:shadow-[#0070F2]/5 transition-all duration-300 hover:-translate-y-0.5 cursor-default"
-              >
-                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: `${sector.color}15` }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill={sector.color}><path d={sector.iconPath}/></svg>
+              { name: t.sectorNames[0], image: "https://images.pexels.com/photos/1108117/pexels-photo-1108117.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[1], image: "https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[2], image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[3], image: "https://images.pexels.com/photos/259027/pexels-photo-259027.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[4], image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[5], image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[6], image: "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[7], image: "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[8], image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[9], image: "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[10], image: "https://images.pexels.com/photos/3182834/pexels-photo-3182834.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[11], image: "https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[12], image: "https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+              { name: t.sectorNames[13], image: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
+              { name: t.sectorNames[14], image: "https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
+            ].map((sector, i) => (
+              <AnimatedCard delay={i * 60} key={sector.name}>
+              <div className="group rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default shadow-premium">
+                <div className="h-28 overflow-hidden img-branded">
+                  <img src={sector.image} alt={sector.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                 </div>
-                <span className="text-sm font-bold text-[#021544] whitespace-nowrap">{sector.name}</span>
+                <div className="p-3 bg-white text-center">
+                  <span className="text-sm font-bold text-[#021544]">{sector.name}</span>
+                </div>
               </div>
+              </AnimatedCard>
             ))}
           </div>
         </div>
