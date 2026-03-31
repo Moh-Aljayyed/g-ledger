@@ -972,94 +972,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
 
-            {/* Invoice SVG illustration */}
+            {/* Invoice image */}
             <div className="hidden lg:flex items-center justify-center">
               <FloatingElement speed="delayed">
               <div className="relative">
                 <div className="absolute -inset-6 bg-[#00C9A7]/10 rounded-3xl blur-2xl" />
-                <div className="absolute -top-8 -right-8 w-48 h-48 bg-[#00C9A7]/5 rounded-3xl rotate-12" />
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[#0070F2]/10 rounded-2xl -rotate-6" />
-                <svg viewBox="0 0 400 500" fill="none" className="relative w-full max-w-sm drop-shadow-2xl">
-                  {/* Main invoice document */}
-                  <rect x="40" y="20" width="320" height="460" rx="16" fill="white" />
-                  <rect x="40" y="20" width="320" height="460" rx="16" stroke="#E2E8F0" strokeWidth="1.5"/>
-                  {/* Header bar */}
-                  <rect x="40" y="20" width="320" height="60" rx="16" fill="#021544"/>
-                  <rect x="40" y="64" width="320" height="16" fill="#021544"/>
-                  {/* Logo placeholder in header */}
-                  <rect x="60" y="35" width="80" height="10" rx="3" fill="white" opacity="0.4"/>
-                  <rect x="60" y="52" width="50" height="6" rx="2" fill="#00C9A7" opacity="0.8"/>
-                  {/* Invoice number */}
-                  <rect x="280" y="35" width="60" height="8" rx="2" fill="white" opacity="0.3"/>
-                  <rect x="290" y="50" width="50" height="6" rx="2" fill="white" opacity="0.2"/>
-                  {/* Date and client section */}
-                  <rect x="60" y="100" width="100" height="6" rx="3" fill="#94A3B8" opacity="0.4"/>
-                  <rect x="60" y="114" width="140" height="8" rx="3" fill="#021544" opacity="0.6"/>
-                  <rect x="260" y="100" width="80" height="6" rx="3" fill="#94A3B8" opacity="0.4"/>
-                  <rect x="260" y="114" width="80" height="8" rx="3" fill="#021544" opacity="0.6"/>
-                  {/* Divider */}
-                  <line x1="60" y1="140" x2="340" y2="140" stroke="#E2E8F0" strokeWidth="1"/>
-                  {/* Table header */}
-                  <rect x="60" y="152" width="280" height="24" rx="6" fill="#F1F5F9"/>
-                  <rect x="70" y="160" width="40" height="5" rx="2" fill="#64748B" opacity="0.5"/>
-                  <rect x="150" y="160" width="50" height="5" rx="2" fill="#64748B" opacity="0.5"/>
-                  <rect x="240" y="160" width="30" height="5" rx="2" fill="#64748B" opacity="0.5"/>
-                  <rect x="300" y="160" width="30" height="5" rx="2" fill="#64748B" opacity="0.5"/>
-                  {/* Table rows */}
-                  <rect x="70" y="190" width="70" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
-                  <rect x="150" y="190" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
-                  <rect x="240" y="190" width="25" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
-                  <rect x="300" y="190" width="35" height="5" rx="2" fill="#0070F2" opacity="0.5"/>
-
-                  <rect x="70" y="210" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.25"/>
-                  <rect x="150" y="210" width="50" height="5" rx="2" fill="#94A3B8" opacity="0.25"/>
-                  <rect x="240" y="210" width="20" height="5" rx="2" fill="#94A3B8" opacity="0.25"/>
-                  <rect x="300" y="210" width="30" height="5" rx="2" fill="#0070F2" opacity="0.4"/>
-
-                  <rect x="70" y="230" width="80" height="5" rx="2" fill="#94A3B8" opacity="0.2"/>
-                  <rect x="150" y="230" width="45" height="5" rx="2" fill="#94A3B8" opacity="0.2"/>
-                  <rect x="240" y="230" width="28" height="5" rx="2" fill="#94A3B8" opacity="0.2"/>
-                  <rect x="300" y="230" width="32" height="5" rx="2" fill="#0070F2" opacity="0.35"/>
-
-                  <rect x="70" y="250" width="55" height="5" rx="2" fill="#94A3B8" opacity="0.15"/>
-                  <rect x="150" y="250" width="55" height="5" rx="2" fill="#94A3B8" opacity="0.15"/>
-                  <rect x="240" y="250" width="22" height="5" rx="2" fill="#94A3B8" opacity="0.15"/>
-                  <rect x="300" y="250" width="28" height="5" rx="2" fill="#0070F2" opacity="0.3"/>
-                  {/* Divider */}
-                  <line x1="60" y1="275" x2="340" y2="275" stroke="#E2E8F0" strokeWidth="1"/>
-                  {/* Totals section */}
-                  <rect x="220" y="290" width="50" height="6" rx="2" fill="#94A3B8" opacity="0.4"/>
-                  <rect x="290" y="290" width="45" height="6" rx="2" fill="#021544" opacity="0.5"/>
-                  <rect x="220" y="308" width="50" height="6" rx="2" fill="#94A3B8" opacity="0.3"/>
-                  <rect x="290" y="308" width="45" height="6" rx="2" fill="#021544" opacity="0.4"/>
-                  <rect x="220" y="326" width="50" height="8" rx="2" fill="#00C9A7" opacity="0.6"/>
-                  <rect x="290" y="326" width="45" height="8" rx="3" fill="#00C9A7"/>
-                  {/* QR Code */}
-                  <rect x="60" y="290" width="60" height="60" rx="6" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1"/>
-                  <rect x="68" y="298" width="8" height="8" rx="1" fill="#021544" opacity="0.7"/>
-                  <rect x="80" y="298" width="8" height="8" rx="1" fill="#021544" opacity="0.5"/>
-                  <rect x="92" y="298" width="8" height="8" rx="1" fill="#021544" opacity="0.7"/>
-                  <rect x="68" y="310" width="8" height="8" rx="1" fill="#021544" opacity="0.4"/>
-                  <rect x="80" y="310" width="8" height="8" rx="1" fill="#021544" opacity="0.7"/>
-                  <rect x="92" y="310" width="8" height="8" rx="1" fill="#021544" opacity="0.3"/>
-                  <rect x="68" y="322" width="8" height="8" rx="1" fill="#021544" opacity="0.6"/>
-                  <rect x="80" y="322" width="8" height="8" rx="1" fill="#021544" opacity="0.3"/>
-                  <rect x="92" y="322" width="8" height="8" rx="1" fill="#021544" opacity="0.7"/>
-                  {/* Digital signature area */}
-                  <rect x="60" y="370" width="280" height="40" rx="8" fill="#F0FDF4" stroke="#BBF7D0" strokeWidth="1"/>
-                  <rect x="75" y="382" width="16" height="16" rx="4" fill="#00C9A7" opacity="0.3"/>
-                  <path d="M80 388l2 2 4-4" stroke="#00C9A7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <rect x="100" y="384" width="100" height="5" rx="2" fill="#16A34A" opacity="0.4"/>
-                  <rect x="100" y="394" width="70" height="4" rx="2" fill="#16A34A" opacity="0.2"/>
-                  {/* Footer stamps */}
-                  <rect x="60" y="430" width="130" height="5" rx="2" fill="#94A3B8" opacity="0.15"/>
-                  <rect x="60" y="442" width="100" height="4" rx="2" fill="#94A3B8" opacity="0.1"/>
-                  <rect x="60" y="454" width="80" height="4" rx="2" fill="#94A3B8" opacity="0.08"/>
-                  {/* Stamp circle */}
-                  <circle cx="310" cy="440" r="22" fill="none" stroke="#00C9A7" strokeWidth="2" opacity="0.3" strokeDasharray="4 3"/>
-                  <circle cx="310" cy="440" r="16" fill="none" stroke="#00C9A7" strokeWidth="1" opacity="0.2"/>
-                  <rect x="296" y="436" width="28" height="5" rx="2" fill="#00C9A7" opacity="0.3"/>
-                </svg>
+                <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 img-branded">
+                  <img src="https://images.pexels.com/photos/6863183/pexels-photo-6863183.jpeg?auto=compress&cs=tinysrgb&w=500" alt={isAr ? "فاتورة إلكترونية" : "Electronic Invoice"} className="w-80 h-auto object-cover" loading="lazy" />
+                </div>
               </div>
               </FloatingElement>
             </div>
