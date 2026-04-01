@@ -149,8 +149,8 @@ export const COUNTRIES: Record<string, CountryConfig> = {
         vatRate: 14,
         vatRateLabel: "14%",
         additionalTaxes: [
-          { name: "WHT_SERVICES", rate: 3, nameAr: "خصم منبع خدمات 3%" },
-          { name: "WHT_PROFESSIONS", rate: 5, nameAr: "خصم منبع مهن حرة 5%" },
+          { name: "WHT_SERVICES", rate: 2, nameAr: "خصم منبع خدمات 2%" },
+          { name: "WHT_COMMISSIONS", rate: 5, nameAr: "خصم منبع عمولات وسمسرة 5%" },
         ],
       },
       MEDICAL_HOSPITAL: {
@@ -176,7 +176,7 @@ export const COUNTRIES: Record<string, CountryConfig> = {
         vatRateLabel: "معفاة",
         exemptions: ["الخدمات الصحية معفاة"],
         additionalTaxes: [
-          { name: "WHT_PROFESSIONS", rate: 5, nameAr: "خصم منبع مهن حرة 5%" },
+          { name: "WHT_COMMISSIONS", rate: 5, nameAr: "خصم منبع عمولات وسمسرة 5%" },
         ],
         notes: "الكشف والعلاج معفى — التعاقدات مع الأطباء تخضع لخصم منبع 5%",
       },
@@ -216,8 +216,8 @@ export const COUNTRIES: Record<string, CountryConfig> = {
         vatRate: 14,
         vatRateLabel: "14%",
         additionalTaxes: [
-          { name: "WHT_CONTRACTORS", rate: 3, nameAr: "خصم منبع مقاولات 3%" },
-          { name: "WHT_SUBCONTRACTORS", rate: 5, nameAr: "خصم منبع مقاولي باطن 5%" },
+          { name: "WHT_CONTRACTORS", rate: 0.5, nameAr: "خصم منبع مقاولات 0.5%" },
+          { name: "WHT_SUBCONTRACTORS", rate: 0.5, nameAr: "خصم منبع مقاولي باطن 0.5%" },
         ],
         notes: "المقاولات تخضع لـ 14% ض.ق.م + خصم منبع 3% (5% لمقاولي الباطن)",
       },
@@ -231,7 +231,7 @@ export const COUNTRIES: Record<string, CountryConfig> = {
         vatRate: 14,
         vatRateLabel: "14%",
         additionalTaxes: [
-          { name: "WHT_SERVICES", rate: 3, nameAr: "خصم منبع خدمات 3%" },
+          { name: "WHT_SERVICES", rate: 2, nameAr: "خصم منبع خدمات 2%" },
           { name: "WHT_ROYALTIES", rate: 20, nameAr: "خصم منبع إتاوات (لغير المقيمين) 20%" },
         ],
         notes: "خدمات التكنولوجيا 14% — الإتاوات لشركات أجنبية تخضع لخصم 20%",
@@ -246,7 +246,7 @@ export const COUNTRIES: Record<string, CountryConfig> = {
         vatRate: 14,
         vatRateLabel: "14%",
         additionalTaxes: [
-          { name: "WHT_SERVICES", rate: 3, nameAr: "خصم منبع خدمات 3%" },
+          { name: "WHT_SERVICES", rate: 2, nameAr: "خصم منبع خدمات 2%" },
         ],
       },
     },

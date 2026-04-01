@@ -44,8 +44,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       card1Stat: isAr ? "15 قطاع جاهز" : "15 Ready Sectors",
       card2Title: isAr ? "ضرائب ذكية — مش رقم واحد للكل" : "Smart Taxes — Not One Rate for All",
       card2Desc: isAr
-        ? "هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 3%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك."
-        : "Did you know Egypt's medical sector is VAT-exempt while contracting is 14% + 3% WHT? G-Ledger knows — and calculates the correct tax automatically for your country and sector.",
+        ? "هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 0.5%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك."
+        : "Did you know Egypt's medical sector is VAT-exempt while contracting is 14% + 0.5% WHT? G-Ledger knows — and calculates the correct tax automatically for your country and sector.",
       card2Stat: isAr ? "29+ دولة حول العالم" : "29+ Countries Worldwide",
       card3Title: isAr ? "كل شيء ينشئ قيد تلقائي" : "Everything Creates Auto Journal Entries",
       card3Desc: isAr
@@ -126,7 +126,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             "Digital signature & item coding support (EGS/GS1)",
             "VAT + Table Tax + Withholding Tax",
             "Pre-Production test environment + Production",
-            "Custom taxes: Medical = 0%, Contracting = 14% + 3% WHT",
+            "Custom taxes: Medical = 0%, Contracting = 14% + 0.5% WHT",
           ],
       saudiTitle: isAr ? "السعودية — هيئة الزكاة (ZATCA)" : "Saudi Arabia — ZATCA",
       saudiItems: isAr
