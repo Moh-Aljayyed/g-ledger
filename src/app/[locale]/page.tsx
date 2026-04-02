@@ -3,6 +3,7 @@ import { LogoFull } from "@/components/logo";
 import { VisitorCounter } from "@/components/visitor-counter";
 import { LangLink } from "@/components/lang-link";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animated-landing";
+import { PricingCards } from "@/components/pricing-cards";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -1112,72 +1113,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {/* Free */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-gray-500 mb-2">{t.pricing.free}</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$0</div>
-              <div className="text-xs text-gray-400 mb-6">{t.pricing.freeTrialPeriod}</div>
-              <ul className="space-y-3 text-sm mb-6">
-                {t.pricingFreeItems.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl border-2 border-[#021544] text-[#021544] font-bold hover:bg-[#021544] hover:text-white transition-all">{t.pricing.startFree}</Link>
-            </div>
+          <PricingCards />
 
-            {/* Basic */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-blue-600 mb-2">{t.pricing.basic}</div>
-              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("basic")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
-              <div className="text-xs text-gray-400 mb-6">{t.pricing.basicDesc}</div>
-              <ul className="space-y-3 text-sm mb-6">
-                {t.pricingBasicItems.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all">{t.pricing.startNow}</Link>
-            </div>
-
-            {/* Professional - POPULAR */}
-            <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-xl transition-all duration-300 relative bg-gradient-to-b from-[#EFF6FF] to-white card-3d shadow-premium-lg glow-blue">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-l from-[#021544] to-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">{t.pricing.mostPopular}</div>
-              <div className="text-sm font-bold text-[#0070F2] mb-2">{t.pricing.professional}</div>
-              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("pro")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
-              <div className="text-xs text-gray-400 mb-6">{t.pricing.professionalDesc}</div>
-              <ul className="space-y-3 text-sm mb-6">
-                {t.pricingProItems.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl bg-[#0070F2] text-white font-bold hover:bg-[#005ed4] transition-all shadow-lg">{t.pricing.startNow}</Link>
-            </div>
-
-            {/* Enterprise */}
-            <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
-              <div className="text-sm font-bold text-purple-600 mb-2">{t.pricing.enterprise}</div>
-              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("enterprise")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
-              <div className="text-xs text-gray-400 mb-6">{t.pricing.enterpriseDesc}</div>
-              <ul className="space-y-3 text-sm mb-6">
-                {t.pricingEnterpriseItems.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 12L2 7.5l1.5-1.5L6.5 9 12.5 3 14 4.5 6.5 12z" fill="#22C55E"/></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link href={`/${locale}/register`} className="block text-center py-3 rounded-xl border-2 border-purple-600 text-purple-600 font-bold hover:bg-purple-600 hover:text-white transition-all">{t.pricing.contactUs}</Link>
-            </div>
-          </div>
+          {/* Old pricing cards replaced by PricingCards component above */}
 
           {/* Add-ons */}
           <div className="bg-gradient-to-br from-[#F8FAFC] to-[#EFF6FF] rounded-2xl p-8 border border-gray-100">
