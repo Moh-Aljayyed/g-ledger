@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { useSession } from "next-auth/react";
 
@@ -28,6 +29,8 @@ export default function CRMPage() {
   const { data: session } = useSession();
   const currency = (session?.user as any)?.currency ?? "SAR";
   const utils = trpc.useUtils();
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearch] = useState("");
@@ -86,11 +89,11 @@ export default function CRMPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#021544]">العملاء المحتملين (CRM)</h1>
-          <p className="text-sm text-gray-500 mt-1">إدارة العملاء المحتملين ومتابعة المبيعات</p>
+          <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "العملاء المحتملين (CRM)" : "Leads (CRM)"}</h1>
+          <p className="text-sm text-gray-500 mt-1">{isAr ? "إدارة العملاء المحتملين ومتابعة المبيعات" : "Manage leads and track sales"}</p>
         </div>
         <button onClick={() => setShowAddModal(true)} className="px-4 py-2 bg-[#0070F2] text-white rounded-lg hover:bg-[#005bc4] text-sm font-medium transition-colors">
-          + عميل محتمل جديد
+          {isAr ? "+ عميل محتمل جديد" : "+ New Lead"}
         </button>
       </div>
 
@@ -98,19 +101,19 @@ export default function CRMPage() {
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">إجمالي العملاء المحتملين</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "إجمالي العملاء المحتملين" : "Total Leads"}</div>
             <div className="text-2xl font-bold text-[#021544]">{stats.total}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">قيمة الفرص المفتوحة</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "قيمة الفرص المفتوحة" : "Open Pipeline Value"}</div>
             <div className="text-2xl font-bold text-[#0070F2]">{formatNum(stats.pipelineValue)} {currency}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">نسبة التحويل</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "نسبة التحويل" : "Conversion Rate"}</div>
             <div className="text-2xl font-bold text-green-600">{stats.conversionRate.toFixed(1)}%</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">فاز / خسر</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "فاز / خسر" : "Won / Lost"}</div>
             <div className="text-2xl font-bold">
               <span className="text-green-600">{stats.won}</span>
               <span className="text-gray-300 mx-1">/</span>
@@ -124,7 +127,7 @@ export default function CRMPage() {
       <div className="mb-4">
         <input
           type="text"
-          placeholder="بحث بالاسم أو الشركة..."
+          placeholder={isAr ? "بحث بالاسم أو الشركة..." : "Search by name or company..."}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full max-w-md px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0070F2]/20 focus:border-[#0070F2]"
@@ -191,7 +194,7 @@ export default function CRMPage() {
                   </div>
                 ))}
                 {leads.length === 0 && (
-                  <div className="text-center text-xs text-gray-400 py-8">لا توجد بيانات</div>
+                  <div className="text-center text-xs text-gray-400 py-8">{isAr ? "لا توجد بيانات" : "No data"}</div>
                 )}
               </div>
             </div>
@@ -204,7 +207,7 @@ export default function CRMPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl border p-6 w-full max-w-lg">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[#021544]">عميل محتمل جديد</h2>
+              <h2 className="text-lg font-bold text-[#021544]">{isAr ? "عميل محتمل جديد" : "New Lead"}</h2>
               <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
             <div className="space-y-3">
@@ -246,9 +249,9 @@ export default function CRMPage() {
             </div>
             <div className="flex gap-2 mt-4">
               <button onClick={handleCreate} disabled={createMutation.isPending || !form.name.trim()} className="flex-1 px-4 py-2 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005bc4] disabled:opacity-50 transition-colors">
-                {createMutation.isPending ? "جاري الحفظ..." : "إضافة"}
+                {createMutation.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "إضافة" : "Add")}
               </button>
-              <button onClick={() => setShowAddModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">إلغاء</button>
+              <button onClick={() => setShowAddModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">{isAr ? "إلغاء" : "Cancel"}</button>
             </div>
           </div>
         </div>

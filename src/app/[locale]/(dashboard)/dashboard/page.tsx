@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -12,6 +13,8 @@ export default function DashboardPage() {
   const { data: session } = useSession();
   const { data, isLoading } = trpc.reports.dashboard.useQuery();
   const { data: usage } = trpc.subscription.getUsage.useQuery();
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const currency = (session?.user as any)?.currency ?? "SAR";
   const sector = (session?.user as any)?.sector ?? "COMMERCIAL";
@@ -32,7 +35,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold mb-1">
-              مرحبًا، {session?.user?.name}
+              {isAr ? "مرحبًا،" : "Welcome,"} {session?.user?.name}
             </h1>
             <p className="text-white/60 text-sm">
               {tenantName} — {ts(sector)}
@@ -45,11 +48,11 @@ export default function DashboardPage() {
           </div>
           <div className="text-end">
             <div className="text-xs text-white/40 mb-1">
-              {new Date().toLocaleDateString("ar-SA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              {new Date().toLocaleDateString(isAr ? "ar-SA" : "en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
             </div>
             {usage?.plan === "FREE_TRIAL" && (
               <div className="text-xs text-[#00C9A7]">
-                تجربة مجانية — متبقي {usage.daysRemaining} يوم
+                {isAr ? `تجربة مجانية — متبقي ${usage.daysRemaining} يوم` : `Free trial — ${usage.daysRemaining} days remaining`}
               </div>
             )}
           </div>
@@ -85,7 +88,7 @@ export default function DashboardPage() {
           icon="📝"
           borderColor="border-t-gray-400"
           textColor="text-[#021544]"
-          subtitle={`${data?.accountsCount ?? 0} حساب`}
+          subtitle={isAr ? `${data?.accountsCount ?? 0} حساب` : `${data?.accountsCount ?? 0} accounts`}
         />
       </div>
 
@@ -93,15 +96,15 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Quick Actions */}
         <div className="bg-card rounded-xl border border-border shadow-sm p-6">
-          <h2 className="text-lg font-bold text-[#021544] mb-4">وصول سريع</h2>
+          <h2 className="text-lg font-bold text-[#021544] mb-4">{isAr ? "وصول سريع" : "Quick Access"}</h2>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: "قيد جديد", href: "/ar/journal-entries", icon: "📝", color: "bg-blue-50 text-blue-700" },
-              { label: "فاتورة جديدة", href: "/ar/invoices/create", icon: "🧾", color: "bg-green-50 text-green-700" },
-              { label: "تحصيل دفعة", href: "/ar/payments?type=RECEIVED", icon: "💵", color: "bg-emerald-50 text-emerald-700" },
-              { label: "ميزان المراجعة", href: "/ar/trial-balance", icon: "⚖️", color: "bg-purple-50 text-purple-700" },
-              { label: "شجرة الحسابات", href: "/ar/chart-of-accounts", icon: "🌳", color: "bg-cyan-50 text-cyan-700" },
-              { label: "إضافة موظف", href: "/ar/employees", icon: "🧑‍💼", color: "bg-orange-50 text-orange-700" },
+              { label: isAr ? "قيد جديد" : "New Entry", href: isAr ? "/ar/journal-entries" : "/en/journal-entries", icon: "📝", color: "bg-blue-50 text-blue-700" },
+              { label: isAr ? "فاتورة جديدة" : "New Invoice", href: isAr ? "/ar/invoices/create" : "/en/invoices/create", icon: "🧾", color: "bg-green-50 text-green-700" },
+              { label: isAr ? "تحصيل دفعة" : "Receive Payment", href: isAr ? "/ar/payments?type=RECEIVED" : "/en/payments?type=RECEIVED", icon: "💵", color: "bg-emerald-50 text-emerald-700" },
+              { label: isAr ? "ميزان المراجعة" : "Trial Balance", href: isAr ? "/ar/trial-balance" : "/en/trial-balance", icon: "⚖️", color: "bg-purple-50 text-purple-700" },
+              { label: isAr ? "شجرة الحسابات" : "Chart of Accounts", href: isAr ? "/ar/chart-of-accounts" : "/en/chart-of-accounts", icon: "🌳", color: "bg-cyan-50 text-cyan-700" },
+              { label: isAr ? "إضافة موظف" : "Add Employee", href: isAr ? "/ar/employees" : "/en/employees", icon: "🧑‍💼", color: "bg-orange-50 text-orange-700" },
             ].map((action) => (
               <Link
                 key={action.label}
@@ -117,18 +120,18 @@ export default function DashboardPage() {
 
         {/* Subscription & Usage */}
         <div className="bg-card rounded-xl border border-border shadow-sm p-6">
-          <h2 className="text-lg font-bold text-[#021544] mb-4">الاشتراك والاستهلاك</h2>
+          <h2 className="text-lg font-bold text-[#021544] mb-4">{isAr ? "الاشتراك والاستهلاك" : "Subscription & Usage"}</h2>
           {usage && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">الباقة</span>
+                <span className="text-sm text-muted-foreground">{isAr ? "الباقة" : "Plan"}</span>
                 <span className="text-sm font-bold text-[#0070F2]">{usage.planNameAr}</span>
               </div>
 
               {/* Storage */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-muted-foreground">التخزين</span>
+                  <span className="text-xs text-muted-foreground">{isAr ? "التخزين" : "Storage"}</span>
                   <span className="text-xs font-medium">{usage.storageUsedMB} MB / {usage.storageLimitMB} MB</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-gray-100">
@@ -144,23 +147,23 @@ export default function DashboardPage() {
 
               {/* Users */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">المستخدمين</span>
+                <span className="text-sm text-muted-foreground">{isAr ? "المستخدمين" : "Users"}</span>
                 <span className="text-sm">{usage.currentUsers} / {usage.maxUsers}</span>
               </div>
 
               {/* Days */}
               {usage.plan === "FREE_TRIAL" && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">أيام متبقية</span>
+                  <span className="text-sm text-muted-foreground">{isAr ? "أيام متبقية" : "Days remaining"}</span>
                   <span className={`text-sm font-bold ${usage.daysRemaining < 30 ? "text-red-500" : "text-green-600"}`}>
-                    {usage.daysRemaining} يوم
+                    {isAr ? `${usage.daysRemaining} يوم` : `${usage.daysRemaining} days`}
                   </span>
                 </div>
               )}
 
               {/* Records */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">السجلات</span>
+                <span className="text-sm text-muted-foreground">{isAr ? "السجلات" : "Records"}</span>
                 <span className="text-sm">{usage.totalRecords}</span>
               </div>
             </div>
@@ -171,20 +174,20 @@ export default function DashboardPage() {
       {/* Recent Entries */}
       <div className="bg-card rounded-xl border border-border shadow-sm p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-[#021544]">آخر القيود</h2>
-          <Link href="/ar/journal-entries" className="text-xs text-[#0070F2] hover:underline">
-            عرض الكل
+          <h2 className="text-lg font-bold text-[#021544]">{isAr ? "آخر القيود" : "Recent Entries"}</h2>
+          <Link href={isAr ? "/ar/journal-entries" : "/en/journal-entries"} className="text-xs text-[#0070F2] hover:underline">
+            {isAr ? "عرض الكل" : "View All"}
           </Link>
         </div>
         {data?.recentEntries && data.recentEntries.length > 0 ? (
           <table className="w-full">
             <thead>
               <tr className="border-b border-border text-xs text-muted-foreground">
-                <th className="text-start pb-2 font-medium">رقم القيد</th>
-                <th className="text-start pb-2 font-medium">التاريخ</th>
-                <th className="text-start pb-2 font-medium">الوصف</th>
-                <th className="text-center pb-2 font-medium">الحالة</th>
-                <th className="text-end pb-2 font-medium">المبلغ</th>
+                <th className="text-start pb-2 font-medium">{isAr ? "رقم القيد" : "Entry No."}</th>
+                <th className="text-start pb-2 font-medium">{isAr ? "التاريخ" : "Date"}</th>
+                <th className="text-start pb-2 font-medium">{isAr ? "الوصف" : "Description"}</th>
+                <th className="text-center pb-2 font-medium">{isAr ? "الحالة" : "Status"}</th>
+                <th className="text-end pb-2 font-medium">{isAr ? "المبلغ" : "Amount"}</th>
               </tr>
             </thead>
             <tbody>
@@ -201,7 +204,7 @@ export default function DashboardPage() {
                         entry.status === "DRAFT" ? "bg-gray-100 text-gray-600" :
                         "bg-red-50 text-red-700"
                       }`}>
-                        {entry.status === "POSTED" ? "مرحّل" : entry.status === "DRAFT" ? "مسودة" : "معكوس"}
+                        {entry.status === "POSTED" ? (isAr ? "مرحّل" : "Posted") : entry.status === "DRAFT" ? (isAr ? "مسودة" : "Draft") : (isAr ? "معكوس" : "Reversed")}
                       </span>
                     </td>
                     <td className="py-2.5 text-sm text-end font-mono">
@@ -214,7 +217,7 @@ export default function DashboardPage() {
           </table>
         ) : (
           <div className="text-center py-8 text-muted-foreground text-sm">
-            لا توجد قيود بعد. ابدأ بإنشاء أول قيد يومي.
+            {isAr ? "لا توجد قيود بعد. ابدأ بإنشاء أول قيد يومي." : "No entries yet. Start by creating your first journal entry."}
           </div>
         )}
       </div>

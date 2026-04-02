@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,8 @@ interface AccountNode {
 export default function ChartOfAccountsPage() {
   const t = useTranslations("accounts");
   const tc = useTranslations("common");
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
   const { data: tree, isLoading, refetch } = trpc.accounts.getTree.useQuery();
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const [showAddForm, setShowAddForm] = useState(false);
@@ -103,13 +106,13 @@ export default function ChartOfAccountsPage() {
           onClick={expandAll}
           className="px-3 py-2 text-xs border border-border rounded-lg hover:bg-muted transition-colors"
         >
-          توسيع الكل
+          {isAr ? "توسيع الكل" : "Expand All"}
         </button>
         <button
           onClick={collapseAll}
           className="px-3 py-2 text-xs border border-border rounded-lg hover:bg-muted transition-colors"
         >
-          طي الكل
+          {isAr ? "طي الكل" : "Collapse All"}
         </button>
       </div>
 
@@ -139,6 +142,7 @@ export default function ChartOfAccountsPage() {
                   setShowAddForm(true);
                 }}
                 t={t}
+                isAr={isAr}
               />
             ))}
           </div>
@@ -151,6 +155,7 @@ export default function ChartOfAccountsPage() {
       {showAddForm && (
         <AddAccountModal
           parent={selectedParent}
+          isAr={isAr}
           onClose={() => setShowAddForm(false)}
           onSuccess={() => {
             setShowAddForm(false);
@@ -169,6 +174,7 @@ function AccountTreeNode({
   onAddChild,
   depth = 0,
   t,
+  isAr,
 }: {
   node: AccountNode;
   expandedNodes: Set<string>;
@@ -176,6 +182,7 @@ function AccountTreeNode({
   onAddChild: (parent: AccountNode) => void;
   depth?: number;
   t: any;
+  isAr: boolean;
 }) {
   const isExpanded = expandedNodes.has(node.id);
   const hasChildren = node.children && node.children.length > 0;
@@ -213,7 +220,7 @@ function AccountTreeNode({
             <span className="text-muted-foreground text-xs">({node.nameEn})</span>
             {node.isSystem && (
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
-                نظام
+                {isAr ? "نظام" : "System"}
               </span>
             )}
           </div>
@@ -235,7 +242,7 @@ function AccountTreeNode({
             onClick={() => onAddChild(node)}
             className="text-xs text-primary hover:underline"
           >
-            + فرعي
+            {isAr ? "+ فرعي" : "+ Sub"}
           </button>
         </div>
       </div>
@@ -250,6 +257,7 @@ function AccountTreeNode({
             onAddChild={onAddChild}
             depth={depth + 1}
             t={t}
+            isAr={isAr}
           />
         ))}
     </>
@@ -258,10 +266,12 @@ function AccountTreeNode({
 
 function AddAccountModal({
   parent,
+  isAr,
   onClose,
   onSuccess,
 }: {
   parent: AccountNode | null;
+  isAr: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -366,14 +376,14 @@ function AddAccountModal({
               onClick={onClose}
               className="flex-1 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
             >
-              إلغاء
+              {isAr ? "إلغاء" : "Cancel"}
             </button>
             <button
               type="submit"
               disabled={createAccount.isPending}
               className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
-              {createAccount.isPending ? "..." : "حفظ"}
+              {createAccount.isPending ? "..." : (isAr ? "حفظ" : "Save")}
             </button>
           </div>
         </form>

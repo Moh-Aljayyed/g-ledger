@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { formatCurrency } from "@/lib/utils";
 import { useSession } from "next-auth/react";
@@ -10,6 +11,8 @@ export default function CustomersPage() {
   const tc = useTranslations("common");
   const { data: session } = useSession();
   const currency = (session?.user as any)?.currency ?? "SAR";
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
@@ -22,12 +25,12 @@ export default function CustomersPage() {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[#021544]">العملاء</h1>
+        <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "العملاء" : "Customers"}</h1>
         <button
           onClick={() => setShowAddModal(true)}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
         >
-          + إضافة عميل
+          {isAr ? "+ إضافة عميل" : "+ Add Customer"}
         </button>
       </div>
 
@@ -35,7 +38,7 @@ export default function CustomersPage() {
       <div className="mb-4">
         <input
           type="text"
-          placeholder="بحث بالاسم أو الرمز..."
+          placeholder={isAr ? "بحث بالاسم أو الرمز..." : "Search by name or code..."}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="px-4 py-2 rounded-lg border border-input bg-background text-sm focus:ring-2 focus:ring-ring outline-none w-72"
@@ -47,12 +50,12 @@ export default function CustomersPage() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">الرمز</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">الاسم</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">الرقم الضريبي</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">الهاتف</th>
-              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">الحد الائتماني</th>
-              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">الرصيد</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الرمز" : "Code"}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الاسم" : "Name"}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الرقم الضريبي" : "Tax ID"}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الهاتف" : "Phone"}</th>
+              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الحد الائتماني" : "Credit Limit"}</th>
+              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الرصيد" : "Balance"}</th>
             </tr>
           </thead>
           <tbody>
@@ -91,6 +94,7 @@ export default function CustomersPage() {
       {/* Add Customer Modal */}
       {showAddModal && (
         <AddCustomerModal
+          isAr={isAr}
           onClose={() => setShowAddModal(false)}
           onSuccess={() => {
             setShowAddModal(false);
@@ -103,9 +107,11 @@ export default function CustomersPage() {
 }
 
 function AddCustomerModal({
+  isAr,
   onClose,
   onSuccess,
 }: {
+  isAr: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -146,7 +152,7 @@ function AddCustomerModal({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-card rounded-xl border border-border p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <h2 className="text-lg font-bold text-[#021544] mb-4">إضافة عميل جديد</h2>
+        <h2 className="text-lg font-bold text-[#021544] mb-4">{isAr ? "إضافة عميل جديد" : "Add New Customer"}</h2>
 
         {createCustomer.error && (
           <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
@@ -157,7 +163,7 @@ function AddCustomerModal({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">الرمز</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "الرمز" : "Code"}</label>
               <input
                 type="text"
                 value={formData.code}
@@ -168,7 +174,7 @@ function AddCustomerModal({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">الرقم الضريبي</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "الرقم الضريبي" : "Tax ID"}</label>
               <input
                 type="text"
                 value={formData.taxId}
@@ -180,7 +186,7 @@ function AddCustomerModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">الاسم بالعربية</label>
+            <label className="block text-sm font-medium mb-1">{isAr ? "الاسم بالعربية" : "Name (Arabic)"}</label>
             <input
               type="text"
               value={formData.nameAr}
@@ -191,7 +197,7 @@ function AddCustomerModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">الاسم بالإنجليزية</label>
+            <label className="block text-sm font-medium mb-1">{isAr ? "الاسم بالإنجليزية" : "Name (English)"}</label>
             <input
               type="text"
               value={formData.nameEn}
@@ -203,7 +209,7 @@ function AddCustomerModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">البريد الإلكتروني</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "البريد الإلكتروني" : "Email"}</label>
               <input
                 type="email"
                 value={formData.email}
@@ -213,7 +219,7 @@ function AddCustomerModal({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">الهاتف</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "الهاتف" : "Phone"}</label>
               <input
                 type="text"
                 value={formData.phone}
@@ -225,7 +231,7 @@ function AddCustomerModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">العنوان</label>
+            <label className="block text-sm font-medium mb-1">{isAr ? "العنوان" : "Address"}</label>
             <input
               type="text"
               value={formData.address}
@@ -236,7 +242,7 @@ function AddCustomerModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">المدينة</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "المدينة" : "City"}</label>
               <input
                 type="text"
                 value={formData.city}
@@ -245,7 +251,7 @@ function AddCustomerModal({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">الحد الائتماني</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "الحد الائتماني" : "Credit Limit"}</label>
               <input
                 type="number"
                 value={formData.creditLimit}
@@ -259,7 +265,7 @@ function AddCustomerModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">شروط الدفع (أيام)</label>
+            <label className="block text-sm font-medium mb-1">{isAr ? "شروط الدفع (أيام)" : "Payment Terms (days)"}</label>
             <input
               type="number"
               value={formData.paymentTerms}
@@ -276,14 +282,14 @@ function AddCustomerModal({
               onClick={onClose}
               className="flex-1 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
             >
-              إلغاء
+              {isAr ? "إلغاء" : "Cancel"}
             </button>
             <button
               type="submit"
               disabled={createCustomer.isPending}
               className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
-              {createCustomer.isPending ? "جاري الحفظ..." : "حفظ"}
+              {createCustomer.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "حفظ" : "Save")}
             </button>
           </div>
         </form>

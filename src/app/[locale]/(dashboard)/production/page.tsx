@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { formatCurrency } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -32,6 +33,8 @@ export default function ProductionPage() {
   const tc = useTranslations("common");
   const { data: session } = useSession();
   const currency = (session?.user as any)?.currency ?? "SAR";
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showPhaseModal, setShowPhaseModal] = useState(false);
@@ -130,40 +133,40 @@ export default function ProductionPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#021544]">الإنتاج</h1>
-          <p className="text-sm text-muted-foreground mt-1">إدارة أوامر إنتاج مصنع الملابس والنسيج</p>
+          <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "الإنتاج" : "Production"}</h1>
+          <p className="text-sm text-muted-foreground mt-1">{isAr ? "إدارة أوامر إنتاج مصنع الملابس والنسيج" : "Manage garment & textile production orders"}</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
           className="flex items-center gap-2 px-4 py-2.5 bg-[#021544] text-white rounded-xl text-sm font-medium hover:bg-[#021544]/90 transition-colors"
         >
           <span>+</span>
-          <span>أمر إنتاج جديد</span>
+          <span>{isAr ? "أمر إنتاج جديد" : "New Production Order"}</span>
         </button>
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <SummaryCard
-          title="إجمالي الأوامر"
+          title={isAr ? "إجمالي الأوامر" : "Total Orders"}
           value={summary?.totalOrders ?? 0}
           icon="📋"
           color="blue"
         />
         <SummaryCard
-          title="قيد التنفيذ"
+          title={isAr ? "قيد التنفيذ" : "In Progress"}
           value={summary?.byStatus?.IN_PROGRESS ?? 0}
           icon="🔄"
           color="amber"
         />
         <SummaryCard
-          title="مكتملة"
+          title={isAr ? "مكتملة" : "Completed"}
           value={summary?.byStatus?.COMPLETED ?? 0}
           icon="✅"
           color="green"
         />
         <SummaryCard
-          title="إجمالي تكلفة الإنتاج"
+          title={isAr ? "إجمالي تكلفة الإنتاج" : "Total Production Cost"}
           value={formatCurrency(summary?.totalProductionCost ?? 0, currency)}
           icon="💰"
           color="purple"
@@ -174,7 +177,7 @@ export default function ProductionPage() {
       {/* Phase Stats */}
       {summary && summary.phaseStats && summary.totalOrders > 0 && (
         <div className="mb-6 bg-card rounded-xl border border-border p-4">
-          <h3 className="text-sm font-bold text-[#021544] mb-3">إحصائيات المراحل</h3>
+          <h3 className="text-sm font-bold text-[#021544] mb-3">{isAr ? "إحصائيات المراحل" : "Phase Statistics"}</h3>
           <div className="grid grid-cols-5 gap-3">
             {summary.phaseStats.map((ps: any, idx: number) => {
               const config = PHASE_CONFIG[idx];
@@ -202,7 +205,7 @@ export default function ProductionPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="بحث برقم الأمر أو اسم المنتج..."
+            placeholder={isAr ? "بحث برقم الأمر أو اسم المنتج..." : "Search by order number or product..."}
             className="w-full px-4 py-2.5 pr-10 bg-card border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#021544]/20"
           />
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">🔍</span>
@@ -212,11 +215,11 @@ export default function ProductionPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="px-4 py-2.5 bg-card border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#021544]/20"
         >
-          <option value="">جميع الحالات</option>
-          <option value="PLANNING">تخطيط</option>
-          <option value="IN_PROGRESS">قيد التنفيذ</option>
-          <option value="COMPLETED">مكتمل</option>
-          <option value="CANCELLED">ملغي</option>
+          <option value="">{isAr ? "جميع الحالات" : "All Statuses"}</option>
+          <option value="PLANNING">{isAr ? "تخطيط" : "Planning"}</option>
+          <option value="IN_PROGRESS">{isAr ? "قيد التنفيذ" : "In Progress"}</option>
+          <option value="COMPLETED">{isAr ? "مكتمل" : "Completed"}</option>
+          <option value="CANCELLED">{isAr ? "ملغي" : "Cancelled"}</option>
         </select>
       </div>
 
@@ -226,14 +229,14 @@ export default function ProductionPage() {
           <thead>
             <tr className="border-b border-border bg-muted/30">
               <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground w-8"></th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">رقم الأمر</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">المنتج</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">الكمية</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">المرحلة الحالية</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">الحالة</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">التاريخ المستهدف</th>
-              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">التكلفة</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">إجراءات</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "رقم الأمر" : "Order No."}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "المنتج" : "Product"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الكمية" : "Quantity"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "المرحلة الحالية" : "Current Phase"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الحالة" : "Status"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "التاريخ المستهدف" : "Target Date"}</th>
+              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "التكلفة" : "Cost"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "إجراءات" : "Actions"}</th>
             </tr>
           </thead>
           <tbody>
@@ -246,7 +249,7 @@ export default function ProductionPage() {
             ) : orders.length === 0 ? (
               <tr>
                 <td colSpan={9} className="text-center py-12 text-muted-foreground">
-                  لا توجد أوامر إنتاج
+                  {isAr ? "لا توجد أوامر إنتاج" : "No production orders"}
                 </td>
               </tr>
             ) : (
@@ -280,10 +283,10 @@ export default function ProductionPage() {
 
       {/* Create Order Modal */}
       {showCreateModal && (
-        <Modal onClose={() => setShowCreateModal(false)} title="أمر إنتاج جديد">
+        <Modal onClose={() => setShowCreateModal(false)} title={isAr ? "أمر إنتاج جديد" : "New Production Order"}>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">اسم المنتج</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "اسم المنتج" : "Product Name"}</label>
               <input
                 type="text"
                 value={newOrder.productName}
@@ -294,7 +297,7 @@ export default function ProductionPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">الكمية</label>
+                <label className="block text-sm font-medium mb-1">{isAr ? "الكمية" : "Quantity"}</label>
                 <input
                   type="number"
                   value={newOrder.quantity || ""}
@@ -304,7 +307,7 @@ export default function ProductionPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">الوحدة</label>
+                <label className="block text-sm font-medium mb-1">{isAr ? "الوحدة" : "Unit"}</label>
                 <select
                   value={newOrder.unit}
                   onChange={(e) => setNewOrder({ ...newOrder, unit: e.target.value })}
@@ -319,7 +322,7 @@ export default function ProductionPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">التاريخ المستهدف</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "التاريخ المستهدف" : "Target Date"}</label>
               <input
                 type="date"
                 value={newOrder.targetDate}
@@ -333,13 +336,13 @@ export default function ProductionPage() {
                 disabled={createMutation.isPending || !newOrder.productName || !newOrder.quantity || !newOrder.targetDate}
                 className="flex-1 px-4 py-2.5 bg-[#021544] text-white rounded-lg text-sm font-medium hover:bg-[#021544]/90 disabled:opacity-50 transition-colors"
               >
-                {createMutation.isPending ? "جاري الإنشاء..." : "إنشاء أمر الإنتاج"}
+                {createMutation.isPending ? (isAr ? "جاري الإنشاء..." : "Creating...") : (isAr ? "إنشاء أمر الإنتاج" : "Create Order")}
               </button>
               <button
                 onClick={() => setShowCreateModal(false)}
                 className="px-4 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
               >
-                إلغاء
+                {isAr ? "إلغاء" : "Cancel"}
               </button>
             </div>
             {createMutation.error && (
@@ -357,19 +360,19 @@ export default function ProductionPage() {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">الحالة</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "الحالة" : "Status"}</label>
               <select
                 value={phaseUpdate.status}
                 onChange={(e) => setPhaseUpdate({ ...phaseUpdate, status: e.target.value })}
                 className="w-full px-3 py-2.5 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#021544]/20"
               >
-                <option value="PENDING">معلق</option>
-                <option value="IN_PROGRESS">قيد التنفيذ</option>
-                <option value="COMPLETED">مكتمل</option>
+                <option value="PENDING">{isAr ? "معلق" : "Pending"}</option>
+                <option value="IN_PROGRESS">{isAr ? "قيد التنفيذ" : "In Progress"}</option>
+                <option value="COMPLETED">{isAr ? "مكتمل" : "Completed"}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">التكلفة</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "التكلفة" : "Cost"}</label>
               <input
                 type="number"
                 value={phaseUpdate.cost || ""}
@@ -379,7 +382,7 @@ export default function ProductionPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">ملاحظات</label>
+              <label className="block text-sm font-medium mb-1">{isAr ? "ملاحظات" : "Notes"}</label>
               <textarea
                 value={phaseUpdate.notes}
                 onChange={(e) => setPhaseUpdate({ ...phaseUpdate, notes: e.target.value })}
@@ -394,13 +397,13 @@ export default function ProductionPage() {
                 disabled={updatePhaseMutation.isPending}
                 className="flex-1 px-4 py-2.5 bg-[#021544] text-white rounded-lg text-sm font-medium hover:bg-[#021544]/90 disabled:opacity-50 transition-colors"
               >
-                {updatePhaseMutation.isPending ? "جاري التحديث..." : "تحديث المرحلة"}
+                {updatePhaseMutation.isPending ? (isAr ? "جاري التحديث..." : "Updating...") : (isAr ? "تحديث المرحلة" : "Update Phase")}
               </button>
               <button
                 onClick={() => { setShowPhaseModal(false); setSelectedPhase(null); }}
                 className="px-4 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
               >
-                إلغاء
+                {isAr ? "إلغاء" : "Cancel"}
               </button>
             </div>
             {updatePhaseMutation.error && (

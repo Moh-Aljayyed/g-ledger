@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 
 const LEAVE_TYPE_CONFIG: Record<string, { label: string; color: string }> = {
@@ -25,6 +26,8 @@ type LeaveStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
 export default function LeavesPage() {
   const utils = trpc.useUtils();
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState<LeaveStatus | "">("");
@@ -104,11 +107,11 @@ export default function LeavesPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#021544]">الإجازات</h1>
-          <p className="text-sm text-gray-500 mt-1">إدارة طلبات الإجازات والأرصدة</p>
+          <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "الإجازات" : "Leaves"}</h1>
+          <p className="text-sm text-gray-500 mt-1">{isAr ? "إدارة طلبات الإجازات والأرصدة" : "Manage leave requests and balances"}</p>
         </div>
         <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-[#0070F2] text-white rounded-lg hover:bg-[#005bc4] text-sm font-medium transition-colors">
-          + طلب إجازة
+          {isAr ? "+ طلب إجازة" : "+ Leave Request"}
         </button>
       </div>
 
@@ -116,19 +119,19 @@ export default function LeavesPage() {
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">بانتظار الموافقة</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "بانتظار الموافقة" : "Pending Approval"}</div>
             <div className="text-2xl font-bold text-amber-600">{stats.pendingCount}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">في إجازة اليوم</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "في إجازة اليوم" : "On Leave Today"}</div>
             <div className="text-2xl font-bold text-blue-600">{stats.onLeaveToday}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">موافق عليها هذا الشهر</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "موافق عليها هذا الشهر" : "Approved This Month"}</div>
             <div className="text-2xl font-bold text-green-600">{stats.approvedThisMonth}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">إجمالي الأيام هذا العام</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "إجمالي الأيام هذا العام" : "Total Days This Year"}</div>
             <div className="text-2xl font-bold text-[#021544]">{stats.totalDaysUsed}</div>
           </div>
         </div>
@@ -137,11 +140,11 @@ export default function LeavesPage() {
       {/* Filters */}
       <div className="flex gap-3 mb-4">
         <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as any)} className="px-3 py-2 border rounded-lg text-sm bg-white">
-          <option value="">كل الحالات</option>
+          <option value="">{isAr ? "كل الحالات" : "All Statuses"}</option>
           {Object.entries(STATUS_CONFIG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
         </select>
         <select value={filterType} onChange={(e) => setFilterType(e.target.value as any)} className="px-3 py-2 border rounded-lg text-sm bg-white">
-          <option value="">كل الأنواع</option>
+          <option value="">{isAr ? "كل الأنواع" : "All Types"}</option>
           {Object.entries(LEAVE_TYPE_CONFIG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
         </select>
       </div>
@@ -152,14 +155,14 @@ export default function LeavesPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b">
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">الموظف</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">نوع الإجازة</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">من</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">إلى</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">الأيام</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">السبب</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">الحالة</th>
-                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">إجراءات</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "الموظف" : "Employee"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "نوع الإجازة" : "Leave Type"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "من" : "From"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "إلى" : "To"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "الأيام" : "Days"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "السبب" : "Reason"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "الحالة" : "Status"}</th>
+                <th className="text-right px-4 py-3 text-xs font-bold text-gray-500">{isAr ? "إجراءات" : "Actions"}</th>
               </tr>
             </thead>
             <tbody>
@@ -183,12 +186,12 @@ export default function LeavesPage() {
                       <div className="flex gap-1">
                         {req.status === "PENDING" && (
                           <>
-                            <button onClick={() => approveMutation.mutate({ id: req.id })} className="text-[10px] px-2 py-1 rounded bg-green-50 text-green-600 hover:bg-green-100">موافقة</button>
-                            <button onClick={() => setRejectId(req.id)} className="text-[10px] px-2 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100">رفض</button>
+                            <button onClick={() => approveMutation.mutate({ id: req.id })} className="text-[10px] px-2 py-1 rounded bg-green-50 text-green-600 hover:bg-green-100">{isAr ? "موافقة" : "Approve"}</button>
+                            <button onClick={() => setRejectId(req.id)} className="text-[10px] px-2 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100">{isAr ? "رفض" : "Reject"}</button>
                           </>
                         )}
                         {(req.status === "PENDING" || req.status === "APPROVED") && (
-                          <button onClick={() => cancelMutation.mutate({ id: req.id })} className="text-[10px] px-2 py-1 rounded bg-gray-50 text-gray-600 hover:bg-gray-100">إلغاء</button>
+                          <button onClick={() => cancelMutation.mutate({ id: req.id })} className="text-[10px] px-2 py-1 rounded bg-gray-50 text-gray-600 hover:bg-gray-100">{isAr ? "إلغاء" : "Cancel"}</button>
                         )}
                       </div>
                     </td>
@@ -196,7 +199,7 @@ export default function LeavesPage() {
                 );
               })}
               {(!data?.requests || data.requests.length === 0) && (
-                <tr><td colSpan={8} className="text-center py-12 text-sm text-gray-400">لا توجد طلبات إجازة</td></tr>
+                <tr><td colSpan={8} className="text-center py-12 text-sm text-gray-400">{isAr ? "لا توجد طلبات إجازة" : "No leave requests"}</td></tr>
               )}
             </tbody>
           </table>
@@ -207,7 +210,7 @@ export default function LeavesPage() {
       {rejectId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl border p-6 w-full max-w-sm">
-            <h2 className="text-lg font-bold text-[#021544] mb-4">سبب الرفض</h2>
+            <h2 className="text-lg font-bold text-[#021544] mb-4">{isAr ? "سبب الرفض" : "Rejection Reason"}</h2>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
@@ -220,9 +223,9 @@ export default function LeavesPage() {
                 onClick={() => rejectMutation.mutate({ id: rejectId, reason: rejectReason || undefined })}
                 className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700"
               >
-                رفض
+                {isAr ? "رفض" : "Reject"}
               </button>
-              <button onClick={() => { setRejectId(null); setRejectReason(""); }} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50">إلغاء</button>
+              <button onClick={() => { setRejectId(null); setRejectReason(""); }} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50">{isAr ? "إلغاء" : "Cancel"}</button>
             </div>
           </div>
         </div>
@@ -233,7 +236,7 @@ export default function LeavesPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl border p-6 w-full max-w-lg">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[#021544]">طلب إجازة جديد</h2>
+              <h2 className="text-lg font-bold text-[#021544]">{isAr ? "طلب إجازة جديد" : "New Leave Request"}</h2>
               <button onClick={() => { setShowCreateModal(false); resetForm(); setSelectedEmployeeId(""); }} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
             <div className="space-y-3">
@@ -257,7 +260,7 @@ export default function LeavesPage() {
               {/* Leave Balance */}
               {selectedEmployeeId && balance && (
                 <div className="bg-gray-50 rounded-lg p-3">
-                  <div className="text-xs font-bold text-gray-600 mb-2">رصيد الإجازات</div>
+                  <div className="text-xs font-bold text-gray-600 mb-2">{isAr ? "رصيد الإجازات" : "Leave Balance"}</div>
                   <div className="grid grid-cols-3 gap-2">
                     {balance.map((b) => {
                       const conf = LEAVE_TYPE_CONFIG[b.type];
@@ -291,7 +294,7 @@ export default function LeavesPage() {
               </div>
               {form.startDate && form.endDate && (
                 <div className="text-xs text-gray-500 bg-blue-50 rounded-lg px-3 py-2">
-                  عدد أيام العمل: <span className="font-bold text-[#021544]">{calcDays()} يوم</span>
+                  {isAr ? "عدد أيام العمل:" : "Working days:"} <span className="font-bold text-[#021544]">{calcDays()} {isAr ? "يوم" : "days"}</span>
                 </div>
               )}
               <div>
@@ -305,9 +308,9 @@ export default function LeavesPage() {
                 disabled={createMutation.isPending || !form.employeeId || !form.type || !form.startDate || !form.endDate}
                 className="flex-1 px-4 py-2 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005bc4] disabled:opacity-50 transition-colors"
               >
-                {createMutation.isPending ? "جاري الحفظ..." : "تقديم الطلب"}
+                {createMutation.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "تقديم الطلب" : "Submit Request")}
               </button>
-              <button onClick={() => { setShowCreateModal(false); resetForm(); setSelectedEmployeeId(""); }} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">إلغاء</button>
+              <button onClick={() => { setShowCreateModal(false); resetForm(); setSelectedEmployeeId(""); }} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">{isAr ? "إلغاء" : "Cancel"}</button>
             </div>
           </div>
         </div>

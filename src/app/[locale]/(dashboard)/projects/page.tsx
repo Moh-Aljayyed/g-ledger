@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { useSession } from "next-auth/react";
 
@@ -32,6 +33,8 @@ export default function ProjectsPage() {
   const { data: session } = useSession();
   const currency = (session?.user as any)?.currency ?? "SAR";
   const utils = trpc.useUtils();
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
@@ -103,11 +106,11 @@ export default function ProjectsPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#021544]">المشاريع والمهام</h1>
-          <p className="text-sm text-gray-500 mt-1">إدارة المشاريع ومتابعة المهام</p>
+          <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "المشاريع والمهام" : "Projects & Tasks"}</h1>
+          <p className="text-sm text-gray-500 mt-1">{isAr ? "إدارة المشاريع ومتابعة المهام" : "Manage projects and track tasks"}</p>
         </div>
         <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-[#0070F2] text-white rounded-lg hover:bg-[#005bc4] text-sm font-medium transition-colors">
-          + مشروع جديد
+          {isAr ? "+ مشروع جديد" : "+ New Project"}
         </button>
       </div>
 
@@ -115,23 +118,23 @@ export default function ProjectsPage() {
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">إجمالي المشاريع</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "إجمالي المشاريع" : "Total Projects"}</div>
             <div className="text-2xl font-bold text-[#021544]">{stats.total}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">نشط</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "نشط" : "Active"}</div>
             <div className="text-2xl font-bold text-blue-600">{stats.active}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">مكتمل</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "مكتمل" : "Completed"}</div>
             <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">إجمالي الميزانية</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "إجمالي الميزانية" : "Total Budget"}</div>
             <div className="text-2xl font-bold text-[#0070F2]">{formatNum(stats.totalBudget)} <span className="text-xs text-gray-400">{currency}</span></div>
           </div>
           <div className="bg-white rounded-xl border p-4">
-            <div className="text-xs text-gray-500 mb-1">المنصرف</div>
+            <div className="text-xs text-gray-500 mb-1">{isAr ? "المنصرف" : "Spent"}</div>
             <div className="text-2xl font-bold text-amber-600">{formatNum(stats.totalSpent)} <span className="text-xs text-gray-400">{currency}</span></div>
           </div>
         </div>
@@ -165,8 +168,8 @@ export default function ProjectsPage() {
                     {/* Progress */}
                     <div className="w-32">
                       <div className="flex items-center justify-between text-[10px] text-gray-500 mb-1">
-                        <span>التقدم</span>
-                        <span>{doneTasks}/{totalTasks} مهام</span>
+                        <span>{isAr ? "التقدم" : "Progress"}</span>
+                        <span>{doneTasks}/{totalTasks} {isAr ? "مهام" : "tasks"}</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                         <div className="h-full bg-[#00C9A7] rounded-full transition-all" style={{ width: `${progress}%` }} />
@@ -175,7 +178,7 @@ export default function ProjectsPage() {
                     {/* Budget */}
                     {Number(project.budget) > 0 && (
                       <div className="text-end">
-                        <div className="text-xs text-gray-500">الميزانية</div>
+                        <div className="text-xs text-gray-500">{isAr ? "الميزانية" : "Budget"}</div>
                         <div className="text-sm font-bold text-[#021544]">{formatNum(Number(project.budget))} {currency}</div>
                       </div>
                     )}
@@ -190,7 +193,7 @@ export default function ProjectsPage() {
               {isExpanded && projectDetail && (
                 <div className="border-t p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-bold text-gray-700">المهام</h4>
+                    <h4 className="text-sm font-bold text-gray-700">{isAr ? "المهام" : "Tasks"}</h4>
                     <div className="flex gap-2">
                       <select
                         value={project.status}
@@ -203,7 +206,7 @@ export default function ProjectsPage() {
                         onClick={() => { setTaskProjectId(project.id); setShowTaskModal(true); }}
                         className="text-xs px-3 py-1 bg-[#0070F2] text-white rounded hover:bg-[#005bc4] transition-colors"
                       >
-                        + مهمة
+                        {isAr ? "+ مهمة" : "+ Task"}
                       </button>
                     </div>
                   </div>
@@ -263,7 +266,7 @@ export default function ProjectsPage() {
                               );
                             })}
                             {tasks.length === 0 && (
-                              <div className="text-center text-[10px] text-gray-400 py-4">لا توجد مهام</div>
+                              <div className="text-center text-[10px] text-gray-400 py-4">{isAr ? "لا توجد مهام" : "No tasks"}</div>
                             )}
                           </div>
                         </div>
@@ -278,7 +281,7 @@ export default function ProjectsPage() {
 
         {(!data?.projects || data.projects.length === 0) && (
           <div className="bg-white rounded-xl border p-12 text-center">
-            <p className="text-gray-400">لا توجد مشاريع بعد. ابدأ بإنشاء مشروع جديد.</p>
+            <p className="text-gray-400">{isAr ? "لا توجد مشاريع بعد. ابدأ بإنشاء مشروع جديد." : "No projects yet. Start by creating a new project."}</p>
           </div>
         )}
       </div>
@@ -288,7 +291,7 @@ export default function ProjectsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl border p-6 w-full max-w-lg">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[#021544]">مشروع جديد</h2>
+              <h2 className="text-lg font-bold text-[#021544]">{isAr ? "مشروع جديد" : "New Project"}</h2>
               <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
             <div className="space-y-3">
@@ -317,9 +320,9 @@ export default function ProjectsPage() {
             </div>
             <div className="flex gap-2 mt-4">
               <button onClick={handleCreateProject} disabled={createMutation.isPending || !projectForm.name.trim()} className="flex-1 px-4 py-2 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005bc4] disabled:opacity-50 transition-colors">
-                {createMutation.isPending ? "جاري الحفظ..." : "إنشاء المشروع"}
+                {createMutation.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "إنشاء المشروع" : "Create Project")}
               </button>
-              <button onClick={() => setShowCreateModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">إلغاء</button>
+              <button onClick={() => setShowCreateModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">{isAr ? "إلغاء" : "Cancel"}</button>
             </div>
           </div>
         </div>
@@ -330,7 +333,7 @@ export default function ProjectsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl border p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[#021544]">مهمة جديدة</h2>
+              <h2 className="text-lg font-bold text-[#021544]">{isAr ? "مهمة جديدة" : "New Task"}</h2>
               <button onClick={() => setShowTaskModal(false)} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
             <div className="space-y-3">
@@ -357,9 +360,9 @@ export default function ProjectsPage() {
             </div>
             <div className="flex gap-2 mt-4">
               <button onClick={handleAddTask} disabled={addTaskMutation.isPending || !taskForm.title.trim()} className="flex-1 px-4 py-2 bg-[#0070F2] text-white rounded-lg text-sm font-medium hover:bg-[#005bc4] disabled:opacity-50 transition-colors">
-                {addTaskMutation.isPending ? "جاري الحفظ..." : "إضافة المهمة"}
+                {addTaskMutation.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "إضافة المهمة" : "Add Task")}
               </button>
-              <button onClick={() => setShowTaskModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">إلغاء</button>
+              <button onClick={() => setShowTaskModal(false)} className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">{isAr ? "إلغاء" : "Cancel"}</button>
             </div>
           </div>
         </div>

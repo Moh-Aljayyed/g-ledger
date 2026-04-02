@@ -97,8 +97,8 @@ const navGroups: NavGroup[] = [
     label: "النظام",
     items: [
       { key: "users", href: "/users", icon: "👤" },
+      { key: "branding", href: "/branding", icon: "🎨" },
       { key: "referral", href: "/referral", icon: "🎁" },
-      { key: "apiDocs", href: "/api-docs", icon: "🔗" },
     ],
   },
   {

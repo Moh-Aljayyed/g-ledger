@@ -67,7 +67,14 @@ model Tenant {
   vatRate         Decimal  @default(15) @db.Decimal(5, 2)
   registrationNumber String? // السجل التجاري / الرقم الضريبي
   referralCode    String?  @unique
-  referredBy      String?  // the referral code that referred this tenant
+  referredBy      String?
+  logoUrl         String?  // Company logo (base64 or URL)
+  documentColor   String?  @default("#021544") // Brand color for documents
+  documentFooter  String?  // Custom footer text for invoices/quotes
+  phone           String?
+  website         String?
+  addressLine1    String?
+  addressLine2    String?
   fiscalYearStart Int      @default(1)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

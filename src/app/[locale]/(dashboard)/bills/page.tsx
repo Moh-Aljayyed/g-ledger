@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { useSession } from "next-auth/react";
@@ -10,6 +11,8 @@ export default function BillsPage() {
   const tc = useTranslations("common");
   const { data: session } = useSession();
   const currency = (session?.user as any)?.currency ?? "SAR";
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
 
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -30,7 +33,7 @@ export default function BillsPage() {
     CANCELLED: "bg-red-50 text-red-700",
   };
 
-  const statusLabels: Record<string, string> = {
+  const statusLabelsAr: Record<string, string> = {
     DRAFT: "مسودة",
     APPROVED: "معتمد",
     PARTIALLY_PAID: "مدفوع جزئياً",
@@ -38,16 +41,26 @@ export default function BillsPage() {
     CANCELLED: "ملغي",
   };
 
+  const statusLabelsEn: Record<string, string> = {
+    DRAFT: "Draft",
+    APPROVED: "Approved",
+    PARTIALLY_PAID: "Partially Paid",
+    PAID: "Paid",
+    CANCELLED: "Cancelled",
+  };
+
+  const statusLabels = isAr ? statusLabelsAr : statusLabelsEn;
+
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[#021544]">الفواتير الواردة</h1>
+        <h1 className="text-2xl font-bold text-[#021544]">{isAr ? "الفواتير الواردة" : "Bills"}</h1>
         <button
           onClick={() => setShowCreateModal(true)}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
         >
-          + إنشاء فاتورة
+          {isAr ? "+ إنشاء فاتورة" : "+ Create Bill"}
         </button>
       </div>
 
@@ -63,7 +76,7 @@ export default function BillsPage() {
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
           >
-            {status === "" ? "الكل" : statusLabels[status]}
+            {status === "" ? (isAr ? "الكل" : "All") : statusLabels[status]}
           </button>
         ))}
       </div>
@@ -73,13 +86,13 @@ export default function BillsPage() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">رقم الفاتورة</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">المورد</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">التاريخ</th>
-              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">تاريخ الاستحقاق</th>
-              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">الإجمالي</th>
-              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">المدفوع</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">الحالة</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "رقم الفاتورة" : "Bill No."}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "المورد" : "Vendor"}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "التاريخ" : "Date"}</th>
+              <th className="text-start px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "تاريخ الاستحقاق" : "Due Date"}</th>
+              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الإجمالي" : "Total"}</th>
+              <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "المدفوع" : "Paid"}</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-muted-foreground">{isAr ? "الحالة" : "Status"}</th>
               <th className="text-end px-4 py-3 text-xs font-medium text-muted-foreground">{tc("actions")}</th>
             </tr>
           </thead>
@@ -119,7 +132,7 @@ export default function BillsPage() {
                         disabled={approveBill.isPending}
                         className="text-xs text-primary hover:underline font-medium"
                       >
-                        اعتماد
+                        {isAr ? "اعتماد" : "Approve"}
                       </button>
                     )}
                   </td>
@@ -140,6 +153,7 @@ export default function BillsPage() {
       {showCreateModal && (
         <CreateBillModal
           currency={currency}
+          isAr={isAr}
           onClose={() => setShowCreateModal(false)}
           onSuccess={() => {
             setShowCreateModal(false);
@@ -153,10 +167,12 @@ export default function BillsPage() {
 
 function CreateBillModal({
   currency,
+  isAr,
   onClose,
   onSuccess,
 }: {
   currency: string;
+  isAr: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -184,7 +200,7 @@ function CreateBillModal({
       notes: formData.notes || undefined,
       items: [
         {
-          description: formData.description || "فاتورة وارد",
+          description: formData.description || (isAr ? "فاتورة وارد" : "Incoming bill"),
           quantity: 1,
           unitPrice: parseFloat(formData.amount) || 0,
         },
@@ -199,7 +215,7 @@ function CreateBillModal({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-card rounded-xl border border-border p-6 w-full max-w-lg">
-        <h2 className="text-lg font-bold text-[#021544] mb-4">إنشاء فاتورة واردة</h2>
+        <h2 className="text-lg font-bold text-[#021544] mb-4">{isAr ? "إنشاء فاتورة واردة" : "Create Incoming Bill"}</h2>
 
         {createBill.error && (
           <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
@@ -209,96 +225,47 @@ function CreateBillModal({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">المورد</label>
-            <select
-              value={formData.vendorId}
-              onChange={(e) => updateField("vendorId", e.target.value)}
-              required
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-            >
-              <option value="">اختر المورد...</option>
+            <label className="block text-sm font-medium mb-1">{isAr ? "المورد" : "Vendor"}</label>
+            <select value={formData.vendorId} onChange={(e) => updateField("vendorId", e.target.value)} required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring">
+              <option value="">{isAr ? "اختر المورد..." : "Select vendor..."}</option>
               {vendors?.vendors?.map((v: any) => (
-                <option key={v.id} value={v.id}>
-                  {v.nameAr || v.nameEn}
-                </option>
+                <option key={v.id} value={v.id}>{v.nameAr || v.nameEn}</option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">الوصف</label>
-            <input
-              type="text"
-              value={formData.description}
-              onChange={(e) => updateField("description", e.target.value)}
-              required
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-            />
+            <label className="block text-sm font-medium mb-1">{isAr ? "الوصف" : "Description"}</label>
+            <input type="text" value={formData.description} onChange={(e) => updateField("description", e.target.value)} required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">التاريخ</label>
-              <input
-                type="date"
-                value={formData.date}
-                onChange={(e) => updateField("date", e.target.value)}
-                required
-                className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-                dir="ltr"
-              />
+              <label className="block text-sm font-medium mb-1">{isAr ? "التاريخ" : "Date"}</label>
+              <input type="date" value={formData.date} onChange={(e) => updateField("date", e.target.value)} required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">تاريخ الاستحقاق</label>
-              <input
-                type="date"
-                value={formData.dueDate}
-                onChange={(e) => updateField("dueDate", e.target.value)}
-                required
-                className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-                dir="ltr"
-              />
+              <label className="block text-sm font-medium mb-1">{isAr ? "تاريخ الاستحقاق" : "Due Date"}</label>
+              <input type="date" value={formData.dueDate} onChange={(e) => updateField("dueDate", e.target.value)} required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">الإجمالي</label>
-            <input
-              type="number"
-              value={formData.amount}
-              onChange={(e) => updateField("amount", e.target.value)}
-              required
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-              dir="ltr"
-              min="0"
-              step="0.01"
-            />
+            <label className="block text-sm font-medium mb-1">{isAr ? "الإجمالي" : "Total"}</label>
+            <input type="number" value={formData.amount} onChange={(e) => updateField("amount", e.target.value)} required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring" dir="ltr" min="0" step="0.01" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">ملاحظات</label>
-            <textarea
-              value={formData.notes}
-              onChange={(e) => updateField("notes", e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring"
-              rows={2}
-            />
+            <label className="block text-sm font-medium mb-1">{isAr ? "ملاحظات" : "Notes"}</label>
+            <textarea value={formData.notes} onChange={(e) => updateField("notes", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm outline-none focus:ring-2 focus:ring-ring" rows={2} />
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
-            >
-              إلغاء
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors">
+              {isAr ? "إلغاء" : "Cancel"}
             </button>
-            <button
-              type="submit"
-              disabled={createBill.isPending}
-              className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
-            >
-              {createBill.isPending ? "جاري الحفظ..." : "حفظ"}
+            <button type="submit" disabled={createBill.isPending} className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors">
+              {createBill.isPending ? (isAr ? "جاري الحفظ..." : "Saving...") : (isAr ? "حفظ" : "Save")}
             </button>
           </div>
         </form>
