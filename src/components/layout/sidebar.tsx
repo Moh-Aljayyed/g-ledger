@@ -116,6 +116,7 @@ export function Sidebar() {
   const isArabic = pathname.startsWith("/ar");
   const basePath = isArabic ? "/ar" : "/en";
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleGroup = (label: string) => {
     setCollapsed((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -134,7 +135,15 @@ export function Sidebar() {
   const warningMessage = usage?.warningMessage ?? "";
 
   return (
-    <aside className="w-60 min-h-screen flex flex-col" style={{ background: "linear-gradient(180deg, #0a1628 0%, #121e38 100%)" }}>
+    <>
+    {/* Mobile hamburger */}
+    <button onClick={() => setMobileOpen(!mobileOpen)} className="fixed top-4 right-4 z-50 lg:hidden w-10 h-10 rounded-lg bg-[#021544] flex items-center justify-center shadow-lg">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+        {mobileOpen ? <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/> : <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>}
+      </svg>
+    </button>
+    {mobileOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileOpen(false)} />}
+    <aside className={`w-60 min-h-screen flex flex-col fixed lg:static z-40 transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`} style={{ background: "linear-gradient(180deg, #0a1628 0%, #121e38 100%)" }}>
       {/* Logo */}
       <div className="px-4 py-5 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -288,5 +297,6 @@ export function Sidebar() {
         </div>
       )}
     </aside>
+    </>
   );
 }

@@ -141,6 +141,40 @@ export const authRouter = router({
       return verifyOTP(key, input.code);
     }),
 
+  // Forgot password - send OTP
+  forgotPassword: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      const user = await db.user.findUnique({ where: { email: input.email } });
+      if (!user) return { success: true }; // Don't reveal if email exists
+      await sendEmailOTP(input.email);
+      return { success: true };
+    }),
+
+  // Reset password with OTP
+  resetPassword: publicProcedure
+    .input(z.object({ email: z.string().email(), code: z.string().length(6), newPassword: z.string().min(8) }))
+    .mutation(async ({ input }) => {
+      const result = verifyOTP(`email:${input.email}`, input.code);
+      if (!result.valid) throw new TRPCError({ code: "BAD_REQUEST", message: result.error || "رمز غير صحيح" });
+      const passwordHash = await bcrypt.hash(input.newPassword, 12);
+      await db.user.update({ where: { email: input.email }, data: { passwordHash } });
+      return { success: true };
+    }),
+
+  // Change password (logged in)
+  changePassword: protectedProcedure
+    .input(z.object({ currentPassword: z.string().min(1), newPassword: z.string().min(8) }))
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findFirst({ where: { id: ctx.session?.user?.id } });
+      if (!user) throw new TRPCError({ code: "NOT_FOUND" });
+      const isValid = await bcrypt.compare(input.currentPassword, user.passwordHash);
+      if (!isValid) throw new TRPCError({ code: "BAD_REQUEST", message: "كلمة المرور الحالية غير صحيحة" });
+      const passwordHash = await bcrypt.hash(input.newPassword, 12);
+      await ctx.db.user.update({ where: { id: user.id }, data: { passwordHash } });
+      return { success: true };
+    }),
+
   // Change sector (only if no data exists)
   changeSector: protectedProcedure
     .input(z.object({
