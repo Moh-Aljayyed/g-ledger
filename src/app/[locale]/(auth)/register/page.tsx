@@ -392,6 +392,17 @@ export default function RegisterPage() {
                 )}
               </div>
 
+              {/* ZATCA warning for Saudi Arabia */}
+              {formData.country === "SA" && (
+                <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-xs text-green-800">
+                  <p className="font-bold mb-1">{isArabic ? "⚠️ متطلبات ZATCA (هيئة الزكاة والضريبة والجمارك)" : "⚠️ ZATCA Requirements"}</p>
+                  <p>{isArabic
+                    ? "للامتثال لنظام الفوترة الإلكترونية في المملكة العربية السعودية، يجب أن يكون لديك حساب مفعّل على بوابة فاتورة (fatoora.zatca.gov.sa) وشهادة CSID. النظام يتكامل مباشرة مع ZATCA."
+                    : "To comply with Saudi e-invoicing regulations, you must have an active account on FATOORA portal (fatoora.zatca.gov.sa) and a CSID certificate. The system integrates directly with ZATCA."
+                  }</p>
+                </div>
+              )}
+
               <button
                 type="button"
                 onClick={() => {

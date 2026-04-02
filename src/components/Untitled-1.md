@@ -1,1 +1,0 @@
-https://www.microsoft.com/en-us/dynamics-365/pricing-overviewhttps://www.microsoft.com/en-us/dynamics-365/pricing-overview
