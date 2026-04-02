@@ -7,6 +7,7 @@ import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { LogoIcon } from "@/components/logo";
+import { NotificationBell } from "@/components/notification-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LangLink } from "@/components/lang-link";
 import { useState } from "react";
@@ -159,7 +160,7 @@ export function Sidebar() {
               </span>
             )}
           </div>
-          <div className="mr-auto"><ThemeToggle /></div>
+          <div className="mr-auto flex items-center gap-2"><ThemeToggle /><NotificationBell /></div>
         </div>
       </div>
 
