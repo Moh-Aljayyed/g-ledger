@@ -54,13 +54,13 @@ export function LogoFull({ size = "md", variant = "dark" }: { size?: "sm" | "md"
       </div>
       <div>
         <h1 className={`font-bold ${s.text} ${textColor} leading-tight`}>G-Ledger</h1>
-        <span className={`${s.sub} ${subColor} leading-none`}>المحاسب الذكي لكل القطاعات</span>
+        <span className={`${s.sub} ${subColor} leading-none`}>حساب الأستاذ — لكل القطاعات</span>
       </div>
     </div>
   );
 }
 
 export const SLOGAN = {
-  ar: "المحاسب الذكي لكل القطاعات",
+  ar: "حساب الأستاذ — لكل القطاعات",
   en: "Smart Accounting for Every Sector",
 };

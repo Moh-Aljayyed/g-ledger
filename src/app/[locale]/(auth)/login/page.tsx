@@ -74,7 +74,7 @@ export default function LoginPage() {
             <LogoIcon size={30} />
           </div>
           <h1 className="text-2xl font-bold text-[#021544]">{t("login")}</h1>
-          <p className="text-xs text-muted-foreground mt-1">المحاسب الذكي لكل القطاعات</p>
+          <p className="text-xs text-muted-foreground mt-1">حساب الأستاذ — لكل القطاعات</p>
         </div>
 
         {error && (

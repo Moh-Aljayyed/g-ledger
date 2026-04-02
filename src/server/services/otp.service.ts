@@ -98,7 +98,7 @@ export async function sendEmailOTP(email: string): Promise<{ success: boolean; e
             <br/>إذا لم تطلب هذا الرمز، تجاهل هذه الرسالة.
           </p>
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-            <span style="color: #ccc; font-size: 11px;">G-Ledger — المحاسب الذكي لكل القطاعات</span>
+            <span style="color: #ccc; font-size: 11px;">G-Ledger — حساب الأستاذ</span>
           </div>
         </div>
       `,

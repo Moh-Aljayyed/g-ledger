@@ -309,11 +309,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       sla: isAr ? "اتفاقية الخدمة" : "SLA",
       contact: isAr ? "تواصل معنا" : "Contact Us",
       messenger: isAr ? "ماسنجر" : "Messenger",
-      smartAccountant: isAr ? "المحاسب الذكي" : "Smart Accounting",
+      smartAccountant: isAr ? "حساب الأستاذ" : "General Ledger",
       brandDesc: isAr
         ? "نظام محاسبي سحابي متعدد القطاعات مع شجرة حسابات جاهزة وضرائب مخصصة لكل دولة وقطاع."
         : "Multi-sector cloud accounting system with ready chart of accounts and custom taxes for every country and sector.",
-      copyright: isAr ? "© 2026 G-Ledger — المحاسب الذكي. جميع الحقوق محفوظة." : "© 2026 G-Ledger — Smart Accounting. All rights reserved.",
+      copyright: isAr ? "© 2026 G-Ledger — حساب الأستاذ. جميع الحقوق محفوظة." : "© 2026 G-Ledger — General Ledger. All rights reserved.",
     },
   };
 
@@ -373,7 +373,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             name: "G-Ledger",
             url: "https://g-ledger.com",
             logo: "https://g-ledger.com/logo.svg",
-            description: "المحاسب الذكي لكل القطاعات — Smart Accounting for Every Sector",
+            description: "حساب الأستاذ — لكل القطاعات — Smart Accounting for Every Sector",
             contactPoint: {
               "@type": "ContactPoint",
               contactType: "customer service",

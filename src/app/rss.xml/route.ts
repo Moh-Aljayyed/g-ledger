@@ -22,7 +22,7 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>G-Ledger — المحاسب الذكي لكل القطاعات</title>
+    <title>G-Ledger — حساب الأستاذ</title>
     <link>https://g-ledger.com</link>
     <description>أخبار محاسبية، نصائح مالية، وتحديثات النظام — G-Ledger</description>
     <language>ar</language>

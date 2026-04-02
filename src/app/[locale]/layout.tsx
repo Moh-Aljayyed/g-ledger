@@ -8,7 +8,7 @@ import { AntiCopy } from "@/components/security/anti-copy";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "G-Ledger — المحاسب الذكي لكل القطاعات | Smart Accounting ERP",
+  title: "G-Ledger — حساب الأستاذ | General Ledger ERP",
   description: "نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف — صناعي، تجاري، طبي، مقاولات. فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية. ابدأ مجاناً!",
   keywords: [
     "برنامج محاسبة", "نظام محاسبي", "محاسبة سحابية", "ERP",
@@ -30,20 +30,20 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     url: "https://g-ledger.com",
     siteName: "G-Ledger",
-    title: "G-Ledger — المحاسب الذكي لكل القطاعات",
+    title: "G-Ledger — حساب الأستاذ — لكل القطاعات",
     description: "نظام ERP محاسبي سحابي متكامل يدعم 15 قطاع. فوترة إلكترونية ETA + ZATCA. ابدأ مجاناً!",
     images: [
       {
         url: "https://g-ledger.com/logo-with-text.svg",
         width: 1200,
         height: 630,
-        alt: "G-Ledger — المحاسب الذكي لكل القطاعات",
+        alt: "G-Ledger — حساب الأستاذ — لكل القطاعات",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "G-Ledger — المحاسب الذكي لكل القطاعات",
+    title: "G-Ledger — حساب الأستاذ — لكل القطاعات",
     description: "نظام ERP محاسبي سحابي. 15 قطاع. فوترة إلكترونية. ابدأ مجاناً!",
     images: ["https://g-ledger.com/logo-with-text.svg"],
   },

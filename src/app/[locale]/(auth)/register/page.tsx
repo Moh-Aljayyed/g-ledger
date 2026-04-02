@@ -64,7 +64,7 @@ export default function RegisterPage() {
     termsLink: isArabic ? "شروط الاستخدام" : "Terms of Service",
     and: isArabic ? "و" : "and",
     privacyLink: isArabic ? "سياسة الخصوصية" : "Privacy Policy",
-    slogan: isArabic ? "المحاسب الذكي لكل القطاعات" : "Smart Accounting for Every Sector",
+    slogan: isArabic ? "حساب الأستاذ — لكل القطاعات" : "General Ledger — For Every Sector",
   };
 
   const { country: detectedCountry } = useGeoLocation();
