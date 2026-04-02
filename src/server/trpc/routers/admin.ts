@@ -285,4 +285,22 @@ export const adminRouter = router({
 
     return { recentSignups, recentEntries, recentInvoices };
   }),
+
+  // All email logs across system
+  getAllEmailLogs: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.emailLog.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 100,
+      include: { tenant: { select: { name: true } } },
+    });
+  }),
+
+  // All audit logs across system
+  getAllAuditLogs: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.auditLog.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 100,
+      include: { tenant: { select: { name: true } } },
+    });
+  }),
 });

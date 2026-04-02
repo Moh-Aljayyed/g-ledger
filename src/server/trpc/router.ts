@@ -28,6 +28,7 @@ import { apiKeysRouter } from "./routers/api-keys";
 import { usersRouter } from "./routers/users";
 import { notificationsRouter } from "./routers/notifications";
 import { companyRouter } from "./routers/company";
+import { auditRouter } from "./routers/audit";
 
 export const appRouter = router({
   auth: authRouter,
@@ -59,6 +60,7 @@ export const appRouter = router({
   users: usersRouter,
   notifications: notificationsRouter,
   company: companyRouter,
+  audit: auditRouter,
 });
 
 export type AppRouter = typeof appRouter;

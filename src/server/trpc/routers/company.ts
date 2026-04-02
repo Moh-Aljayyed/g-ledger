@@ -77,6 +77,20 @@ export const companyRouter = router({
           }),
         });
 
+        // Log the email
+        await ctx.db.emailLog.create({
+          data: {
+            to: input.to,
+            subject: input.subject,
+            body: input.body,
+            documentType: input.documentType,
+            documentId: input.documentId,
+            sentBy: ctx.session?.user?.id || "system",
+            sentByName: ctx.session?.user?.name || "System",
+            tenantId: ctx.tenantId,
+          },
+        });
+
         return { success: true, message: `تم إرسال المستند إلى ${input.to}` };
       } catch (error: any) {
         throw new Error(`فشل إرسال الإيميل: ${error.message}`);
