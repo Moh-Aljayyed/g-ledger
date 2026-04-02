@@ -8,6 +8,29 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isAr = locale === "ar";
 
+  // Geo-based pricing: Egypt=EGP, Gulf=SAR, Rest=USD
+  // Rate: $1 = 50 EGP = 5 SAR
+  const gulfCountries = ["SA", "AE", "KW", "BH", "OM", "QA"];
+  // Detect from locale (Arabic=likely MENA, default USD)
+  // Server can't detect IP, so we use locale + show all currencies
+  const prices = {
+    free: { usd: 0, egp: 0, sar: 0 },
+    basic: { usd: 8, egp: 400, sar: 40 },
+    pro: { usd: 15, egp: 750, sar: 75 },
+    enterprise: { usd: 25, egp: 1250, sar: 125 },
+  };
+  // Show EGP for Arabic (Egypt market), SAR, and USD
+  const priceDisplay = (tier: keyof typeof prices) =>
+    isAr
+      ? `${prices[tier].egp} ج.م / ${prices[tier].sar} ر.س`
+      : `$${prices[tier].usd}`;
+
+  // Free trial: 6 months until end of April 2026, then 14 days
+  const isPromoActive = new Date() <= new Date("2026-04-30");
+  const trialText = isPromoActive
+    ? (isAr ? "6 أشهر مجاناً (حتى نهاية أبريل)" : "6 months free (until end of April)")
+    : (isAr ? "14 يوم تجربة مجانية" : "14-day free trial");
+
   const t = {
     nav: {
       features: isAr ? "المميزات" : "Features",
@@ -169,14 +192,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       { feature: isAr ? "موديول إنتاج (5 مراحل)" : "Production module (5 phases)", gl: { text: isAr ? "متكامل" : "Integrated", status: "green" }, other: { text: isAr ? "غير متوفر" : "Not available", status: "red" } },
       { feature: isAr ? "مساعد ذكي (AI Chatbot)" : "AI Chatbot", gl: { text: isAr ? "45+ سؤال" : "45+ Questions", status: "green" }, other: { text: isAr ? "لا يوجد" : "None", status: "red" } },
       { feature: isAr ? "2FA + OTP عند كل دخول" : "2FA + OTP on every login", gl: { text: isAr ? "إلزامي" : "Mandatory", status: "green" }, other: { text: isAr ? "اختياري" : "Optional", status: "yellow" } },
-      { feature: isAr ? "تجربة مجانية بدون بطاقة" : "Free trial without card", gl: { text: isAr ? "6 أشهر" : "6 Months", status: "green" }, other: { text: isAr ? "14 يوم فقط" : "14 days only", status: "yellow" } },
+      { feature: isAr ? "تجربة مجانية بدون بطاقة" : "Free trial without card", gl: { text: trialText, status: "green" }, other: { text: isAr ? "14 يوم فقط" : "14 days only", status: "yellow" } },
     ],
     pricing: {
       badge: isAr ? "الأسعار" : "Pricing",
       title: isAr ? "أسعار بسيطة وشفافة" : "Simple & Transparent Pricing",
       subtitle: isAr ? "ادفع فقط على ما تحتاجه — ابدأ مجاناً وكبّر حسب نموك" : "Pay only for what you need — start free and scale as you grow",
       free: isAr ? "مجاني" : "Free",
-      freeTrialPeriod: isAr ? "6 أشهر تجربة" : "6-month trial",
+      freeTrialPeriod: trialText,
       basic: isAr ? "أساسي" : "Basic",
       basicDesc: isAr ? "للشركات الصغيرة" : "For small businesses",
       professional: isAr ? "احترافي" : "Professional",
@@ -1109,7 +1132,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {/* Basic */}
             <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
               <div className="text-sm font-bold text-blue-600 mb-2">{t.pricing.basic}</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$8<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("basic")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
               <div className="text-xs text-gray-400 mb-6">{t.pricing.basicDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
                 {t.pricingBasicItems.map((item, i) => (
@@ -1126,7 +1149,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="rounded-2xl border-2 border-[#0070F2] p-6 hover:shadow-xl transition-all duration-300 relative bg-gradient-to-b from-[#EFF6FF] to-white card-3d shadow-premium-lg glow-blue">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-l from-[#021544] to-[#0070F2] text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">{t.pricing.mostPopular}</div>
               <div className="text-sm font-bold text-[#0070F2] mb-2">{t.pricing.professional}</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$15<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("pro")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
               <div className="text-xs text-gray-400 mb-6">{t.pricing.professionalDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
                 {t.pricingProItems.map((item, i) => (
@@ -1142,7 +1165,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {/* Enterprise */}
             <div className="rounded-2xl border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 bg-white card-3d shadow-premium-lg">
               <div className="text-sm font-bold text-purple-600 mb-2">{t.pricing.enterprise}</div>
-              <div className="text-4xl font-bold text-[#021544] mb-1">$25<span className="text-lg font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
+              <div className="text-3xl font-bold text-[#021544] mb-1">{priceDisplay("enterprise")}<span className="text-sm font-normal text-gray-400">{t.pricing.perUserMonth}</span></div>
               <div className="text-xs text-gray-400 mb-6">{t.pricing.enterpriseDesc}</div>
               <ul className="space-y-3 text-sm mb-6">
                 {t.pricingEnterpriseItems.map((item, i) => (

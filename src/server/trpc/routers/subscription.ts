@@ -20,7 +20,9 @@ import { router, protectedProcedure } from "../trpc";
  */
 
 const FREE_TRIAL_KB = 100000; // 100,000 KB
-const FREE_TRIAL_DAYS = 180; // 6 months
+// Promo: 6 months free until end of April 2026, then 14 days
+const PROMO_END = new Date("2026-04-30");
+const FREE_TRIAL_DAYS = new Date() <= PROMO_END ? 180 : 14;
 const BASE_PRICE_PER_GB = 10; // $10/GB/month
 const MAX_USERS_FREE = 3;
 const MAX_USERS_PAID = 999;
