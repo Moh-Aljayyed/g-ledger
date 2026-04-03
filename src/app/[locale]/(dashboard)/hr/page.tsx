@@ -32,6 +32,22 @@ export default function HRDashboardPage() {
   const isAr = pathname.startsWith("/ar");
   const basePath = isAr ? "/ar" : "/en";
 
+  // HR Dashboard is Enterprise-only (Professional gets basic employees/payroll/leaves)
+  const { data: usage } = trpc.subscription.getUsage.useQuery();
+  if (usage && usage.plan !== "ENTERPRISE" && usage.plan !== "FREE_TRIAL") {
+    return (
+      <div className="max-w-lg mx-auto text-center py-20">
+        <div className="text-6xl mb-4">🏢</div>
+        <h1 className="text-2xl font-bold text-[#021544] mb-2">{isAr ? "الموارد البشرية المتقدمة" : "Advanced HR"}</h1>
+        <p className="text-muted-foreground mb-6">{isAr ? "لوحة الموارد البشرية المتقدمة (حضور، شهادات، سلف، مستندات) متاحة حصرياً في الباقة المؤسسية." : "Advanced HR dashboard (attendance, certificates, advances, documents) is exclusively available on the Enterprise plan."}</p>
+        <p className="text-sm text-muted-foreground mb-4">{isAr ? "يمكنك استخدام الموظفين والرواتب والإجازات من الباقة الحالية." : "You can use Employees, Payroll, and Leaves from your current plan."}</p>
+        <Link href={`${basePath}/settings`} className="inline-block px-8 py-3 bg-[#0070F2] text-white rounded-xl font-bold hover:bg-[#005ed4]">
+          {isAr ? "ترقية للمؤسسي" : "Upgrade to Enterprise"}
+        </Link>
+      </div>
+    );
+  }
+
   // State
   const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const [showCertModal, setShowCertModal] = useState(false);

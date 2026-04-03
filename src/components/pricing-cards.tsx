@@ -35,11 +35,11 @@ export function PricingCards() {
       ? ["محاسبة + فواتير + مخزون", "تقارير مالية", "1 GB تخزين", "فوترة إلكترونية", "استيراد Excel"]
       : ["Accounting + Invoices + Inventory", "Financial reports", "1 GB storage", "E-invoicing", "Excel import"],
     proItems: isAr
-      ? ["كل الموديولات", "CRM + مشاريع + مصروفات", "2 GB تخزين", "موديول الإنتاج", "منشئ التقارير", "دعم أولوية"]
-      : ["All modules", "CRM + Projects + Expenses", "2 GB storage", "Production module", "Report Builder", "Priority support"],
+      ? ["كل الموديولات", "CRM + مشاريع + مصروفات", "2 مستخدمين", "2 GB تخزين", "موظفون + رواتب + إجازات", "دعم أولوية"]
+      : ["All modules", "CRM + Projects + Expenses", "2 users", "2 GB storage", "Employees + Payroll + Leaves", "Priority support"],
     enterpriseItems: isAr
-      ? ["كل شيء في الاحترافي", "3 مستخدمين", "نقاط البيع POS احترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7"]
-      : ["Everything in Professional", "3 users", "Professional POS System", "External API", "5 GB storage", "White Label", "24/7 dedicated support"],
+      ? ["كل شيء في الاحترافي", "3 مستخدمين", "HR متقدم (حضور، شهادات، سلف)", "نقاط البيع POS احترافي", "API خارجي", "5 GB تخزين", "White Label"]
+      : ["Everything in Professional", "3 users", "Advanced HR (attendance, certificates, advances)", "Professional POS", "External API", "5 GB storage", "White Label"],
   };
 
   if (!detected) return <div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;

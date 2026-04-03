@@ -229,11 +229,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       ? ["كل شيء في الاحترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7", "مستخدمين غير محدود"]
       : ["Everything in Professional", "External API", "5 GB storage", "White Label", "Dedicated 24/7 support", "Unlimited users"],
     addonItems: [
-      { name: "CRM", price: isAr ? "+$3/مستخدم" : "+$3/user", desc: isAr ? "إدارة العملاء المحتملين" : "Lead management" },
-      { name: "eCommerce", price: isAr ? "+$5/مستخدم" : "+$5/user", desc: isAr ? "متجر إلكتروني" : "Online store" },
-      { name: isAr ? "موظفين" : "Employees", price: isAr ? "$2/موظف" : "$2/employee", desc: isAr ? "HR + رواتب + إجازات" : "HR + payroll + leave" },
-      { name: "POS", price: isAr ? "+$3/جهاز" : "+$3/device", desc: isAr ? "نقطة بيع" : "Point of sale" },
-      { name: isAr ? "تخزين" : "Storage", price: "$10/GB", desc: isAr ? "مساحة إضافية" : "Extra space" },
+      { name: "CRM", price: isAr ? "+150 ج.م / +15 ر.س" : "+$3/user", desc: isAr ? "إدارة العملاء المحتملين" : "Lead management" },
+      { name: "eCommerce", price: isAr ? "+250 ج.م / +25 ر.س" : "+$5/user", desc: isAr ? "متجر إلكتروني" : "Online store" },
+      { name: isAr ? "موظفين (احترافي)" : "Employees (Pro)", price: isAr ? "250 ج.م/موظف" : "$5/emp", desc: isAr ? "أول 10 ثم تنازلي" : "First 10 then tiered" },
+      { name: isAr ? "موظفين (مؤسسي)" : "Employees (Enterprise)", price: isAr ? "500 ج.م/موظف" : "$10/emp", desc: isAr ? "HR متقدم + أول 10 ثم تنازلي" : "Advanced HR + tiered" },
+      { name: "POS", price: isAr ? "+150 ج.م / +15 ر.س" : "+$3/device", desc: isAr ? "نقطة بيع (مؤسسي)" : "POS (Enterprise)" },
+      { name: isAr ? "تخزين" : "Storage", price: isAr ? "500 ج.م / 50 ر.س" : "$10/GB", desc: isAr ? "مساحة إضافية" : "Extra space" },
     ],
     tips: {
       badge: isAr ? "نصائح محاسبية" : "Accounting Tips",
