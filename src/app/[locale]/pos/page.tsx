@@ -61,9 +61,37 @@ export default function POSPage() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const isRTL = pathname?.startsWith("/ar");
+  const locale = isRTL ? "/ar" : "/en";
   const currency = (session?.user as any)?.currency ?? "SAR";
   const cashierName = (session?.user as any)?.name ?? "كاشير";
   const storeName = (session?.user as any)?.tenantName ?? "G-Ledger POS";
+
+  // Check subscription — POS is Enterprise only
+  const { data: usage } = trpc.subscription.getUsage.useQuery();
+  const isPOSAllowed = usage?.plan === "BASIC" || usage?.plan === "PROFESSIONAL" || usage?.plan === "ENTERPRISE" || usage?.plan === "FREE_TRIAL";
+  // Enterprise-only features
+  const isEnterprise = usage?.plan === "ENTERPRISE";
+
+  // If not subscribed at all (blocked), show upgrade message
+  if (usage && usage.isBlocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#1a1a2e" }}>
+        <div className="text-center text-white max-w-md p-8">
+          <div className="text-6xl mb-4">🔒</div>
+          <h1 className="text-2xl font-bold mb-2">{isRTL ? "نقاط البيع — باقة مؤسسي" : "POS — Enterprise Plan"}</h1>
+          <p className="text-white/60 mb-6">{isRTL ? "نظام نقاط البيع الاحترافي متاح حصرياً للباقة المؤسسية. قم بالترقية للوصول لكل المميزات المتقدمة." : "The professional POS system is exclusively available on the Enterprise plan. Upgrade to access all advanced features."}</p>
+          <div className="space-y-3">
+            <Link href={`${locale}/settings`} className="block w-full py-3 bg-[#0070F2] text-white rounded-xl font-bold hover:bg-[#005ed4] transition-all">
+              {isRTL ? "ترقية الآن" : "Upgrade Now"}
+            </Link>
+            <Link href={`${locale}/dashboard`} className="block w-full py-3 border border-white/20 text-white/60 rounded-xl hover:bg-white/5 transition-all">
+              {isRTL ? "العودة للداشبورد" : "Back to Dashboard"}
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // ---- State ----
   const [cart, setCart] = useState<CartItem[]>([]);

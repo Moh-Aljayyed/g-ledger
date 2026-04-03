@@ -9,8 +9,8 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <main className="flex-1 bg-background">
-        <div className="p-6 max-w-7xl mx-auto">{children}</div>
+      <main className="flex-1 bg-background lg:mr-0 min-w-0">
+        <div className="p-4 md:p-6 max-w-7xl mx-auto pt-16 lg:pt-6">{children}</div>
       </main>
       <ChatWidget />
     </div>
