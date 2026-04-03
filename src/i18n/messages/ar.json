@@ -107,7 +107,9 @@
     "users": "المستخدمين",
     "branding": "العلامة التجارية",
     "referral": "برنامج الإحالة",
-    "apiDocs": "API المطورين"
+    "apiDocs": "API المطورين",
+    "auditLog": "سجل العمليات",
+    "reportBuilder": "منشئ التقارير"
   },
   "invoices": {
     "title": "الفواتير الإلكترونية",

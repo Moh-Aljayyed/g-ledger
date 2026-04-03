@@ -107,7 +107,9 @@
     "users": "Users",
     "branding": "Branding",
     "referral": "Referral Program",
-    "apiDocs": "Developer API"
+    "apiDocs": "Developer API",
+    "auditLog": "Audit Log",
+    "reportBuilder": "Report Builder"
   },
   "invoices": {
     "title": "Electronic Invoices",

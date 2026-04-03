@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -11,10 +12,18 @@ export default function InvoicesPage() {
   const t = useTranslations("invoices");
   const tc = useTranslations("common");
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const isAr = pathname.startsWith("/ar");
   const currency = (session?.user as any)?.currency ?? "EGP";
 
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [typeFilter, setTypeFilter] = useState<string>("");
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [sendEmail, setSendEmail] = useState({ to: "", invoiceId: "", invoiceNumber: "" });
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailBody, setEmailBody] = useState("");
+  const [emailSuccess, setEmailSuccess] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const { data, isLoading, refetch } = trpc.invoices.list.useQuery(
     {
@@ -25,6 +34,19 @@ export default function InvoicesPage() {
 
   const submitInvoice = trpc.invoices.submit.useMutation({
     onSuccess: () => refetch(),
+  });
+
+  const sendDoc = trpc.company.sendDocument.useMutation({
+    onSuccess: () => {
+      setShowEmailModal(false);
+      setEmailSuccess(isAr ? "تم إرسال الفاتورة بالبريد الإلكتروني بنجاح" : "Invoice sent by email successfully");
+      setEmailError(null);
+      setTimeout(() => setEmailSuccess(null), 4000);
+    },
+    onError: (err) => {
+      setEmailError(err.message);
+      setTimeout(() => setEmailError(null), 4000);
+    },
   });
 
   const statusColors: Record<string, string> = {
@@ -114,6 +136,24 @@ export default function InvoicesPage() {
                         {t("submitToAuthority")}
                       </button>
                     )}
+                    <button
+                      onClick={() => {
+                        const subject = isAr
+                          ? `فاتورة رقم ${inv.invoiceNumber}`
+                          : `Invoice #${inv.invoiceNumber}`;
+                        const body = isAr
+                          ? `مرفق لكم فاتورة رقم ${inv.invoiceNumber} بمبلغ ${formatCurrency(Number(inv.grandTotal), currency)}.\n\nشكراً لتعاملكم معنا.`
+                          : `Please find attached Invoice #${inv.invoiceNumber} for ${formatCurrency(Number(inv.grandTotal), currency)}.\n\nThank you for your business.`;
+                        setSendEmail({ to: (inv as any).buyerEmail || "", invoiceId: inv.id, invoiceNumber: inv.invoiceNumber });
+                        setEmailSubject(subject);
+                        setEmailBody(body);
+                        setShowEmailModal(true);
+                      }}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                      title={isAr ? "إرسال بالإيميل" : "Send by Email"}
+                    >
+                      📧
+                    </button>
                   </td>
                 </tr>
               ))
@@ -132,6 +172,90 @@ export default function InvoicesPage() {
           submitInvoice.data.success ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
         }`}>
           {submitInvoice.data.success ? t("submitSuccess") : `${t("submitFailed")}: ${submitInvoice.data.error}`}
+        </div>
+      )}
+
+      {/* Email success/error notification */}
+      {emailSuccess && (
+        <div className="mt-4 p-3 rounded-lg text-sm bg-green-50 text-green-700">{emailSuccess}</div>
+      )}
+      {emailError && (
+        <div className="mt-4 p-3 rounded-lg text-sm bg-red-50 text-red-700">{emailError}</div>
+      )}
+
+      {/* Send Email Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowEmailModal(false)}>
+          <div className="bg-card rounded-xl border border-border w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold mb-4">
+              {isAr ? `إرسال الفاتورة ${sendEmail.invoiceNumber} بالإيميل` : `Email Invoice ${sendEmail.invoiceNumber}`}
+            </h3>
+
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                  {isAr ? "البريد الإلكتروني للمستلم" : "Recipient Email"}
+                </label>
+                <input
+                  type="email"
+                  value={sendEmail.to}
+                  onChange={(e) => setSendEmail({ ...sendEmail, to: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm"
+                  placeholder="email@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                  {isAr ? "الموضوع" : "Subject"}
+                </label>
+                <input
+                  type="text"
+                  value={emailSubject}
+                  onChange={(e) => setEmailSubject(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                  {isAr ? "نص الرسالة" : "Message Body"}
+                </label>
+                <textarea
+                  value={emailBody}
+                  onChange={(e) => setEmailBody(e.target.value)}
+                  rows={4}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-5">
+              <button
+                onClick={() => {
+                  sendDoc.mutate({
+                    to: sendEmail.to,
+                    subject: emailSubject,
+                    body: emailBody,
+                    documentType: "INVOICE",
+                    documentId: sendEmail.invoiceId,
+                  });
+                }}
+                disabled={sendDoc.isPending || !sendEmail.to}
+                className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+              >
+                {sendDoc.isPending
+                  ? (isAr ? "جاري الإرسال..." : "Sending...")
+                  : (isAr ? "إرسال" : "Send")}
+              </button>
+              <button
+                onClick={() => setShowEmailModal(false)}
+                className="px-4 py-2 bg-muted text-muted-foreground rounded-lg text-sm font-medium hover:bg-muted/80 transition-colors"
+              >
+                {tc("cancel")}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

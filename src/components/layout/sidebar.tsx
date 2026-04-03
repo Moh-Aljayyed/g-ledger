@@ -85,6 +85,7 @@ const navGroups: NavGroup[] = [
       { key: "trialBalance", href: "/trial-balance", icon: "⚖️" },
       { key: "incomeStatement", href: "/financial-statements/income-statement", icon: "📈" },
       { key: "balanceSheet", href: "/financial-statements/balance-sheet", icon: "📋" },
+      { key: "reportBuilder", href: "/report-builder", icon: "📊" },
     ],
   },
   {
@@ -99,6 +100,7 @@ const navGroups: NavGroup[] = [
       { key: "users", href: "/users", icon: "👤" },
       { key: "branding", href: "/branding", icon: "🎨" },
       { key: "referral", href: "/referral", icon: "🎁" },
+      { key: "auditLog", href: "/audit-log", icon: "📋" },
     ],
   },
   {

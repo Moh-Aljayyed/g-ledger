@@ -8,6 +8,7 @@ const adminNav = [
   { label: "لوحة التحكم", href: "/ar/admin", icon: "📊" },
   { label: "المنشآت", href: "/ar/admin/tenants", icon: "🏢" },
   { label: "المستخدمون", href: "/ar/admin/users", icon: "👥" },
+  { label: "سجل الإيميلات", href: "/ar/admin/emails", icon: "📧" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
