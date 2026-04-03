@@ -5,6 +5,7 @@ import { Providers } from "@/components/providers";
 import { ChatWidget } from "@/components/chatbot/chat-widget";
 import { PWAInstallPrompt } from "@/components/pwa-install";
 import { MessengerButton } from "@/components/messenger-button";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { AntiCopy } from "@/components/security/anti-copy";
 import "@/app/globals.css";
 
@@ -88,6 +89,10 @@ export default async function RootLayout({
         />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#021544" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="icon" href="/logo.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/logo.svg" />
       </head>
@@ -98,6 +103,7 @@ export default async function RootLayout({
             <ChatWidget />
             <PWAInstallPrompt />
             <MessengerButton />
+            <WhatsAppButton />
             <AntiCopy />
           </Providers>
         </NextIntlClientProvider>
