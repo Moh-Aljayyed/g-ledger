@@ -113,7 +113,8 @@
     "apiDocs": "API المطورين",
     "auditLog": "سجل العمليات",
     "reportBuilder": "منشئ التقارير",
-    "reports": "مركز التقارير"
+    "reports": "مركز التقارير",
+    "budget": "الموازنة"
   },
   "invoices": {
     "title": "الفواتير الإلكترونية",

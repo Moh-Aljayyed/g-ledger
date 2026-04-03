@@ -113,7 +113,8 @@
     "apiDocs": "Developer API",
     "auditLog": "Audit Log",
     "reportBuilder": "Report Builder",
-    "reports": "Reports Center"
+    "reports": "Reports Center",
+    "budget": "Budget"
   },
   "invoices": {
     "title": "Electronic Invoices",

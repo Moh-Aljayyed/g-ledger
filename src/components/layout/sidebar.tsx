@@ -87,6 +87,8 @@ const navGroups: NavGroup[] = [
       { key: "trialBalance", href: "/trial-balance", icon: "⚖️" },
       { key: "incomeStatement", href: "/financial-statements/income-statement", icon: "📈" },
       { key: "balanceSheet", href: "/financial-statements/balance-sheet", icon: "📋" },
+      { key: "cashFlow", href: "/financial-statements/cash-flow", icon: "💧" },
+      { key: "budget", href: "/budget", icon: "📝" },
       { key: "reportBuilder", href: "/report-builder", icon: "🔧" },
     ],
   },

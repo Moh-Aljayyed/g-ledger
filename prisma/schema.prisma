@@ -76,6 +76,8 @@ model Tenant {
   website         String?
   addressLine1    String?
   addressLine2    String?
+  branchName      String?  // If this is a branch, its name
+  parentTenantId  String?  // If branch, link to main tenant
   fiscalYearStart Int      @default(1)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
