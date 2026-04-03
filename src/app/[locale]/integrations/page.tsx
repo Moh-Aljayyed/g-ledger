@@ -42,8 +42,43 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ l
     { category: t.ecommerce, items: [
       { name: "Salla سلة", desc: isAr ? "ربط المتجر + المخزون + الطلبات" : "Store + inventory + orders sync", status: "ready", color: "#5B3EB5" },
       { name: "Zid زد", desc: isAr ? "منصة تجارة إلكترونية سعودية" : "Saudi e-commerce platform", status: "ready", color: "#FF6B35" },
-      { name: "Shopify", desc: isAr ? "ربط المتاجر العالمية" : "Global store integration", status: "coming", color: "#96BF48" },
-      { name: "WooCommerce", desc: isAr ? "ربط متاجر WordPress" : "WordPress store integration", status: "coming", color: "#96588A" },
+      { name: "Shopify", desc: isAr ? "ربط المتاجر العالمية" : "Global store integration", status: "ready", color: "#96BF48" },
+      { name: "WooCommerce", desc: isAr ? "ربط متاجر WordPress" : "WordPress store sync", status: "ready", color: "#96588A" },
+      { name: "PrestaShop", desc: isAr ? "منصة تجارة مفتوحة المصدر" : "Open-source e-commerce", status: "ready", color: "#DF0067" },
+      { name: "OpenCart", desc: isAr ? "منصة تجارة إلكترونية مجانية" : "Free e-commerce platform", status: "ready", color: "#2AC1D8" },
+      { name: "Magento", desc: isAr ? "منصة Adobe التجارية" : "Adobe commerce platform", status: "ready", color: "#F46F25" },
+      { name: "Medusa.js", desc: isAr ? "تجارة إلكترونية headless" : "Headless e-commerce", status: "ready", color: "#7C3AED" },
+    ]},
+    // CRM
+    { category: isAr ? "أنظمة CRM" : "CRM Systems", items: [
+      { name: "SuiteCRM", desc: isAr ? "CRM مفتوح المصدر — بديل Salesforce" : "Open-source Salesforce alternative", status: "ready", color: "#C62127" },
+      { name: "EspoCRM", desc: isAr ? "CRM سحابي مفتوح المصدر" : "Open-source cloud CRM", status: "ready", color: "#2F9BDD" },
+      { name: "Vtiger CE", desc: isAr ? "CRM + مبيعات + تسويق" : "CRM + sales + marketing", status: "ready", color: "#354A5F" },
+      { name: "Twenty CRM", desc: isAr ? "CRM حديث مفتوح المصدر" : "Modern open-source CRM", status: "ready", color: "#000" },
+      { name: "Odoo CRM", desc: isAr ? "CRM من منظومة Odoo" : "CRM from Odoo ecosystem", status: "ready", color: "#714B67" },
+    ]},
+    // HR Systems
+    { category: isAr ? "أنظمة الموارد البشرية" : "HR Systems", items: [
+      { name: "OrangeHRM", desc: isAr ? "أشهر نظام HR مفتوح المصدر" : "Most popular open-source HR", status: "ready", color: "#FF6B00" },
+      { name: "TimeTrex", desc: isAr ? "إدارة الوقت والحضور والرواتب" : "Time, attendance & payroll", status: "ready", color: "#0070F2" },
+      { name: "IceHrm", desc: isAr ? "نظام HR سحابي مجاني" : "Free cloud HR system", status: "ready", color: "#00BCD4" },
+      { name: "Bayzat", desc: isAr ? "HR إماراتي/سعودي" : "UAE/Saudi HR", status: "ready", color: "#FF5722" },
+      { name: "MenaITech", desc: isAr ? "HR خليجي شامل" : "Comprehensive GCC HR", status: "coming", color: "#0070F2" },
+    ]},
+    // Inventory Systems
+    { category: isAr ? "أنظمة المخزون" : "Inventory Systems", items: [
+      { name: "InvenTree", desc: isAr ? "إدارة مخزون مفتوحة المصدر" : "Open-source inventory management", status: "ready", color: "#4CAF50" },
+      { name: "Snipe-IT", desc: isAr ? "تتبع الأصول والمخزون" : "Asset & inventory tracking", status: "ready", color: "#02A8EE" },
+      { name: "Grocy", desc: isAr ? "إدارة مخزون منزلي/صغير" : "Home/small inventory management", status: "ready", color: "#4CAF50" },
+      { name: "ERPNext Stock", desc: isAr ? "مخزون من منظومة ERPNext" : "Stock from ERPNext ecosystem", status: "ready", color: "#0089FF" },
+      { name: "Odoo Inventory", desc: isAr ? "مخزون من منظومة Odoo" : "Inventory from Odoo ecosystem", status: "ready", color: "#714B67" },
+    ]},
+    // POS Systems
+    { category: isAr ? "أنظمة نقاط البيع" : "POS Systems", items: [
+      { name: "Odoo POS", desc: isAr ? "نقاط بيع من Odoo" : "POS from Odoo", status: "ready", color: "#714B67" },
+      { name: "ERPNext POS", desc: isAr ? "نقاط بيع من ERPNext" : "POS from ERPNext", status: "ready", color: "#0089FF" },
+      { name: "Floreant POS", desc: isAr ? "POS مفتوح للمطاعم" : "Open-source restaurant POS", status: "ready", color: "#FF5722" },
+      { name: "uniCenta", desc: isAr ? "POS مفتوح متعدد المنصات" : "Multi-platform open POS", status: "ready", color: "#2196F3" },
     ]},
     // Government
     { category: t.government, items: [

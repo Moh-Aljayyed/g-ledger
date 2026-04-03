@@ -18,6 +18,8 @@ const endpoints = [
   { method: "GET", path: "/api/v1/invoices", desc: { ar: "قائمة الفواتير", en: "List invoices" } },
   { method: "POST", path: "/api/v1/invoices", desc: { ar: "إنشاء فاتورة", en: "Create invoice" } },
   { method: "GET", path: "/api/v1/employees", desc: { ar: "قائمة الموظفين", en: "List employees" } },
+  { method: "GET", path: "/api/v1/webhooks", desc: { ar: "قائمة أحداث Webhook المتاحة", en: "List available webhook events" } },
+  { method: "POST", path: "/api/v1/webhooks", desc: { ar: "تسجيل Webhook لتلقي الأحداث", en: "Register webhook to receive events" } },
 ];
 
 export default function ApiDocsPage() {
