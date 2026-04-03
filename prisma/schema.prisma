@@ -106,6 +106,10 @@ model Tenant {
   apiKeys       ApiKey[]
   auditLogs     AuditLog[]
   emailLogs     EmailLog[]
+  attendances     Attendance[]
+  employeeDocuments EmployeeDocument[]
+  salaryAdvances  SalaryAdvance[]
+  employeeCertificates EmployeeCertificate[]
 }
 
 model User {
@@ -626,11 +630,27 @@ model Employee {
   bankAccountNo  String?
   iban           String?
 
+  // Attendance
+  checkInTime     DateTime?
+  checkOutTime    DateTime?
+
+  // Documents
+  contractUrl     String?
+  contractExpiry  DateTime?
+  passportNumber  String?
+  passportExpiry  DateTime?
+  iqamaNumber     String?    // Saudi residency permit
+  iqamaExpiry     DateTime?
+
   tenantId       String
   tenant         Tenant         @relation(fields: [tenantId], references: [id])
   payrollItems   PayrollItem[]
   expenses       Expense[]
   leaveRequests  LeaveRequest[]
+  attendances     Attendance[]
+  documents       EmployeeDocument[]
+  salaryAdvances  SalaryAdvance[]
+  certificates    EmployeeCertificate[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
@@ -1221,4 +1241,79 @@ model EmailLog {
 
   @@index([tenantId, createdAt])
   @@index([tenantId, to])
+}
+
+// ============ HR ATTENDANCE ============
+
+model Attendance {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  date        DateTime
+  checkIn     DateTime?
+  checkOut    DateTime?
+  hoursWorked Decimal? @db.Decimal(5, 2)
+  status      String   @default("PRESENT") // PRESENT, ABSENT, LATE, HALF_DAY, HOLIDAY
+  notes       String?
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@unique([employeeId, date])
+  @@index([tenantId, date])
+}
+
+// ============ HR DOCUMENTS ============
+
+model EmployeeDocument {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  type        String   // CONTRACT, CERTIFICATE, ID, PASSPORT, IQAMA, INSURANCE, OTHER
+  name        String
+  fileUrl     String?
+  expiryDate  DateTime?
+  notes       String?
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([tenantId, employeeId])
+}
+
+// ============ SALARY ADVANCE ============
+
+model SalaryAdvance {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  amount      Decimal  @db.Decimal(18, 4)
+  reason      String?
+  status      String   @default("PENDING") // PENDING, APPROVED, REJECTED, DEDUCTED
+  approvedBy  String?
+  approvedAt  DateTime?
+  deductMonth String?  // "2026-04" — month to deduct from salary
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([tenantId, employeeId])
+  @@index([tenantId, status])
+}
+
+// ============ EMPLOYEE CERTIFICATE ============
+
+model EmployeeCertificate {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  type        String   // EXPERIENCE, SALARY, EMPLOYMENT, CUSTOM
+  content     String?  // Generated content
+  requestedAt DateTime @default(now())
+  issuedAt    DateTime?
+  status      String   @default("REQUESTED") // REQUESTED, ISSUED
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, employeeId])
 }

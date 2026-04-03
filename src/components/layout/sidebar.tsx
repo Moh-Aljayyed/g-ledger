@@ -52,8 +52,9 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "الرواتب",
+    label: "الموارد البشرية",
     items: [
+      { key: "hr", href: "/hr", icon: "🏠" },
       { key: "employees", href: "/employees", icon: "🧑‍💼" },
       { key: "payroll", href: "/payroll", icon: "💰" },
       { key: "leaves", href: "/leaves", icon: "🏖️" },
