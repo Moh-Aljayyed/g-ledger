@@ -83,10 +83,11 @@ const navGroups: NavGroup[] = [
   {
     label: "التقارير",
     items: [
+      { key: "reports", href: "/reports", icon: "📊" },
       { key: "trialBalance", href: "/trial-balance", icon: "⚖️" },
       { key: "incomeStatement", href: "/financial-statements/income-statement", icon: "📈" },
       { key: "balanceSheet", href: "/financial-statements/balance-sheet", icon: "📋" },
-      { key: "reportBuilder", href: "/report-builder", icon: "📊" },
+      { key: "reportBuilder", href: "/report-builder", icon: "🔧" },
     ],
   },
   {

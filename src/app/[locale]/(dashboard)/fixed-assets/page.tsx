@@ -86,6 +86,37 @@ export default function FixedAssetsPage() {
         </div>
       </div>
 
+      {/* Category Breakdown */}
+      {summary?.byCategory && Object.keys(summary.byCategory).length > 0 && (
+        <div className="mt-2 mb-6 bg-card rounded-xl border border-border p-6">
+          <h2 className="font-bold text-[#021544] mb-4">{isAr ? "توزيع الأصول حسب الفئة" : "Assets by Category"}</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="border-b bg-muted/30">
+                <tr>
+                  <th className="px-4 py-2 text-start">{isAr ? "الفئة" : "Category"}</th>
+                  <th className="px-4 py-2 text-start">{isAr ? "العدد" : "Count"}</th>
+                  <th className="px-4 py-2 text-start">{isAr ? "التكلفة" : "Cost"}</th>
+                  <th className="px-4 py-2 text-start">{isAr ? "مجمع الإهلاك" : "Acc. Dep."}</th>
+                  <th className="px-4 py-2 text-start">{isAr ? "صافي القيمة" : "NBV"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(summary.byCategory).map(([cat, data]: [string, any]) => (
+                  <tr key={cat} className="border-b border-border/30">
+                    <td className="px-4 py-2 font-medium">{cat || (isAr ? "غير مصنف" : "Uncategorized")}</td>
+                    <td className="px-4 py-2">{data.count}</td>
+                    <td className="px-4 py-2">{formatCurrency(data.totalCost, currency)}</td>
+                    <td className="px-4 py-2 text-red-600">{formatCurrency(data.totalAccDep, currency)}</td>
+                    <td className="px-4 py-2 font-bold text-[#0070F2]">{formatCurrency(data.totalNBV, currency)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* Assets Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         <table className="w-full">

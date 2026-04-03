@@ -110,7 +110,8 @@
     "referral": "برنامج الإحالة",
     "apiDocs": "API المطورين",
     "auditLog": "سجل العمليات",
-    "reportBuilder": "منشئ التقارير"
+    "reportBuilder": "منشئ التقارير",
+    "reports": "مركز التقارير"
   },
   "invoices": {
     "title": "الفواتير الإلكترونية",

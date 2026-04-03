@@ -110,7 +110,8 @@
     "referral": "Referral Program",
     "apiDocs": "Developer API",
     "auditLog": "Audit Log",
-    "reportBuilder": "Report Builder"
+    "reportBuilder": "Report Builder",
+    "reports": "Reports Center"
   },
   "invoices": {
     "title": "Electronic Invoices",
