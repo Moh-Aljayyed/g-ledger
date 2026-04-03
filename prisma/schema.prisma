@@ -109,6 +109,8 @@ model Tenant {
   apiKeys       ApiKey[]
   auditLogs     AuditLog[]
   emailLogs     EmailLog[]
+  recurringInvoices RecurringInvoice[]
+  contracts     Contract[]
   attendances     Attendance[]
   employeeDocuments EmployeeDocument[]
   salaryAdvances  SalaryAdvance[]
@@ -1319,4 +1321,47 @@ model EmployeeCertificate {
   tenant      Tenant   @relation(fields: [tenantId], references: [id])
 
   @@index([tenantId, employeeId])
+}
+
+// ============ RECURRING INVOICES ============
+
+model RecurringInvoice {
+  id            String   @id @default(cuid())
+  customerId    String
+  frequency     String
+  nextDate      DateTime
+  amount        Decimal  @db.Decimal(18, 4)
+  description   String
+  isActive      Boolean  @default(true)
+  lastGenerated DateTime?
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt     DateTime @default(now())
+
+  @@index([tenantId, isActive])
+}
+
+// ============ CONTRACTS ============
+
+model Contract {
+  id             String   @id @default(cuid())
+  contractNumber String
+  title          String
+  customerId     String?
+  vendorId       String?
+  type           String
+  startDate      DateTime
+  endDate        DateTime
+  value          Decimal  @db.Decimal(18, 4)
+  status         String   @default("ACTIVE")
+  terms          String?
+  attachmentUrl  String?
+  autoRenew      Boolean  @default(false)
+  tenantId       String
+  tenant         Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([tenantId, contractNumber])
+  @@index([tenantId, status])
 }
