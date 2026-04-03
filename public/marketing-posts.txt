@@ -1,143 +1,413 @@
 ============================================
-REDDIT - r/accounting, r/smallbusiness, r/SaaS, r/startups, r/arab
+G-Ledger — 100 بوست تسويقي (عربي + إنجليزي)
+آخر تحديث: أبريل 2026
+g-ledger.com — حساب الأستاذ — لكل القطاعات
 ============================================
 
-Title: G-Ledger — Free Cloud Accounting ERP for 15 Industries (Arabic/English)
-
-Hey everyone! I built G-Ledger, a cloud-based accounting system designed specifically for the Arab market.
-
-What makes it different:
-- 15 industry-specific chart of accounts (manufacturing, medical, contracting, banking, etc.)
-- Auto tax rates for 14 Arab countries (Egypt 14% VAT, Saudi 15%, UAE 5%, etc.)
-- Egypt ETA + Saudi ZATCA e-invoice compliance built-in
-- Every module auto-generates journal entries (invoices, payroll, inventory, assets)
-- 5-phase production tracking (for manufacturing)
-- AI chatbot with 45+ FAQ categories
-- 2FA on every login
-
-Free trial: 6 months, no credit card needed.
-
-Try it: https://g-ledger.com
-
-============================================
-HACKER NEWS - Show HN
-============================================
-
-Show HN: G-Ledger – Open-source-inspired cloud ERP for 15 industries
-
-Built a cloud accounting system targeting the Arabic-speaking market. Key differentiators:
-- Pre-configured chart of accounts for 15 sectors (not empty templates)
-- Smart tax engine: knows that Egyptian medical = 0% VAT, contracting = 14% + 3% WHT
-- Full e-invoice compliance (Egypt ETA + Saudi ZATCA)
-- Auto journal entries from every module
-- 5-phase production tracking for manufacturing
-
-Tech stack: Next.js 16, tRPC, Prisma, PostgreSQL (Neon), Vercel
-
-https://g-ledger.com
-
-============================================
-PRODUCT HUNT
-============================================
-
-Name: G-Ledger
-Tagline: Smart Accounting for Every Sector — Choose your industry, your system is ready
-Description: G-Ledger is a cloud ERP accounting system supporting 15 different industries with pre-configured chart of accounts, smart tax calculations for 14 Arab countries, and full e-invoice compliance (Egypt ETA + Saudi ZATCA). Free for 6 months.
-
-============================================
-LINKEDIN POST
-============================================
-
-🚀 Excited to announce G-Ledger — a cloud accounting ERP built for the Arab market!
-
-What makes it unique:
-✅ 15 industry-specific chart of accounts — ready, not empty
-✅ Smart taxes for 14 Arab countries (auto-calculated per sector)
-✅ Egypt ETA + Saudi ZATCA e-invoice compliance
-✅ AI chatbot with 45+ FAQ categories
-✅ 2FA security on every login
-✅ 5-phase production tracking for manufacturing
-
-Free trial: 6 months, no credit card.
-
-Try it → g-ledger.com
-
-#accounting #ERP #SaaS #fintech #startup #ZATCA #einvoice #cloudaccounting
-
-============================================
-TWITTER/X THREAD
-============================================
-
-1/ 🚀 Launched G-Ledger — cloud accounting for the Arab market
-
-What's different? Choose your industry, and the entire system configures itself: chart of accounts, tax rates, everything.
-
-15 sectors × 14 countries = your accounting ready in seconds.
-
-g-ledger.com
-
-2/ 🧮 Smart tax engine:
-- Egypt medical = 0% VAT (exempt)
-- Egypt contracting = 14% + 3% withholding
-- Saudi = 15% standard
-- UAE = 5% + 9% corporate
-
-The system knows ALL of this automatically.
-
-3/ 🧾 Full e-invoice compliance:
-- 🇪🇬 Egypt ETA (electronic invoice + receipt)
-- 🇸🇦 Saudi ZATCA Phase 1 & 2
-- Digital signature, QR Code, item coding
-
-4/ 💰 Free for 6 months. No credit card.
-After that: $10/GB/month with volume discounts.
-
-Try it: g-ledger.com
-
-============================================
-ARABIC FORUMS (حسوب، مستقل، خمسات)
-============================================
-
-🚀 G-Ledger — أول نظام محاسبي عربي بشجرة حسابات جاهزة لكل قطاع
-
-السلام عليكم،
-
-أحب أشارككم نظام محاسبي سحابي جديد صممناه خصيصًا للسوق العربي:
-
-✅ 15 قطاع بشجرة حسابات جاهزة ومخصصة
-✅ 14 دولة عربية مع ضرائب مختلفة لكل قطاع
-✅ فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية
-✅ كل عملية تنشئ قيد محاسبي تلقائي
-✅ موديول إنتاج وتصنيع (5 مراحل)
-✅ مساعد ذكي يجاوب أسئلتك 24/7
-✅ حماية 2FA عند كل دخول
-
-تجربة مجانية 6 أشهر بدون بطاقة ائتمان
-
-جربوه: g-ledger.com
-
-============================================
-FACEBOOK POST (Arabic)
-============================================
-
+=== 1 ===
 🚀 G-Ledger — اختر قطاعك... ونظامك جاهز
+نظام ERP محاسبي سحابي يدعم 16 قطاع. شجرة حسابات جاهزة + فوترة إلكترونية ETA + ZATCA. تجربة مجانية 6 أشهر: g-ledger.com
+🇬🇧 Cloud ERP for 16 sectors. Pre-configured charts + e-invoicing. Free 6mo: g-ledger.com
 
-نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف:
-🏭 صناعي | 🛒 تجاري | 💼 خدمي | 🏥 طبي
-🏗️ مقاولات | 🏦 بنوك | 🛡️ تأمين | 🌾 زراعي
-💻 تقني | 💊 صيدليات | 🩺 عيادات | 🔬 معامل
+=== 2 ===
+🧾 هل نظامك متوافق مع الفوترة الإلكترونية؟ G-Ledger يدعم ETA مصر + ZATCA السعودية. توقيع إلكتروني + QR Code + تكويد أصناف. g-ledger.com
+🇬🇧 E-invoice compliant: Egypt ETA + Saudi ZATCA. Digital signature & QR. g-ledger.com
 
-ليه G-Ledger مختلف عن أي برنامج ثاني؟
+=== 3 ===
+💡 الضريبة تختلف حسب القطاع! مصر: طبي=0% مقاولات=14%. السعودية: عقارات=5% باقي=15%. G-Ledger يحسب تلقائيًا! g-ledger.com
+🇬🇧 Tax rates vary by sector! G-Ledger auto-calculates. g-ledger.com
 
-1️⃣ شجرة حسابات جاهزة — مش فاضية
-2️⃣ ضرائب ذكية حسب دولتك وقطاعك
-3️⃣ كل عملية تنشئ قيد محاسبي تلقائي
-4️⃣ فوترة إلكترونية ETA + ZATCA
-5️⃣ مساعد ذكي يجاوبك 24/7
-6️⃣ حماية 2FA عند كل دخول
+=== 4 ===
+📦 إدارة مخزون: باركود + باتش + صلاحية + تنبيه نقص + قيد تلقائي. مناسب لصيدليات ومصانع ومتاجر. g-ledger.com
+🇬🇧 Inventory: barcode, batch, expiry, low stock alerts, auto entries. g-ledger.com
 
-تجربة مجانية 6 أشهر — بدون بطاقة ائتمان ❤️
+=== 5 ===
+💰 مسير رواتب تلقائي: الراتب + البدلات + GOSI (9.75%+11.75%) + قيد محاسبي. 3 خطوات فقط! g-ledger.com
+🇬🇧 Auto payroll with GOSI. 3 steps: Generate → Approve → Pay. g-ledger.com
 
-ابدأ الآن: g-ledger.com
+=== 6 ===
+🖥️ POS احترافي: Dark theme + باركود سكانر + Split payment + Hold orders + إيصال 80mm. g-ledger.com/ar/pos
+🇬🇧 Professional POS: dark theme, barcode, split payment, receipts. g-ledger.com/ar/pos
 
-#محاسبة #برنامج_محاسبة #فوترة_إلكترونية #ERP #ZATCA #مصر #السعودية
+=== 7 ===
+🔐 أمان بنكي: 2FA + SSL + عزل كامل + نسخ احتياطي يومي + حماية من النسخ. g-ledger.com
+🇬🇧 Bank-level security: 2FA, SSL, isolation, daily backup. g-ledger.com
+
+=== 8 ===
+🎁 برنامج إحالة: شارك كودك → صديقك يسجل → تحصل 10,000 KB مجاناً! واتساب/إيميل/SMS/تلجرام. g-ledger.com/ar/referral
+🇬🇧 Referral: share code, get 10K KB free per signup! g-ledger.com/ar/referral
+
+=== 9 ===
+🌍 29+ دولة مدعومة! لكل دولة: العملة + الضريبة + النظام الضريبي تلقائيًا. g-ledger.com
+🇬🇧 29+ countries with auto currency & tax rates. g-ledger.com
+
+=== 10 ===
+🏭 إنتاج 5 مراحل: شراء خامات → نسيج → صباغة → تصنيع → بيع. تتبع التكلفة + قيود تلقائية. g-ledger.com
+🇬🇧 5-phase production: raw materials → weaving → dyeing → manufacturing → sales. g-ledger.com
+
+=== 11 ===
+🎯 CRM Pipeline: جديد → تواصل → مؤهل → عرض سعر → فاز! تحويل لعميل بضغطة. g-ledger.com
+🇬🇧 CRM: track leads from new to won. Convert to customer in one click. g-ledger.com
+
+=== 12 ===
+📊 مركز التقارير: 9 مجموعات — محاسبة، مبيعات، مشتريات، مخزون، أصول، HR، بنوك، CRM، مصروفات. g-ledger.com
+🇬🇧 Reports Center: 9 groups covering all modules. g-ledger.com
+
+=== 13 ===
+📋 سجل العمليات: مين عمل إيه ومتى؟ كل عملية مسجلة + تصفية حسب الموديول. g-ledger.com
+🇬🇧 Audit log: who did what and when. Full traceability. g-ledger.com
+
+=== 14 ===
+📧 أرسل فواتيرك بالإيميل مباشرة! زر إرسال + إيميل بلوجو شركتك + سجل إيميلات. g-ledger.com
+🇬🇧 Send invoices by email with your branding. g-ledger.com
+
+=== 15 ===
+🎨 خصّص علامتك: لوجو + لون + ذيل مستند + بيانات الشركة. كل المستندات باسمك! g-ledger.com
+🇬🇧 Brand customization: logo, color, footer, company details. g-ledger.com
+
+=== 16 ===
+📥 استيراد Excel: حمّل القالب → املأ البيانات → ارفع. منتجات/عملاء/موردين/موظفين/حسابات. g-ledger.com
+🇬🇧 Excel import: download template, fill, upload. g-ledger.com
+
+=== 17 ===
+🏖️ إدارة إجازات: 7 أنواع + رصيد تلقائي + اعتماد/رفض + من في إجازة اليوم. g-ledger.com
+🇬🇧 Leave management: 7 types, auto balance, approval workflow. g-ledger.com
+
+=== 18 ===
+🎫 تذاكر دعم: فتح تذكرة + أولوية + تتبع حالة + متوسط وقت الحل. g-ledger.com
+🇬🇧 Helpdesk tickets with priority & status tracking. g-ledger.com
+
+=== 19 ===
+📋 مشاريع ومهام: مشاريع بميزانية + مهام Kanban + تتبع إنجاز. g-ledger.com
+🇬🇧 Projects with budget & task Kanban board. g-ledger.com
+
+=== 20 ===
+🧾 مصروفات: تسجيل + إرفاق إيصال + تقديم + اعتماد = قيد تلقائي. g-ledger.com
+🇬🇧 Expenses: submit with receipt → approve → auto journal entry. g-ledger.com
+
+=== 21 ===
+🏦 بنوك: حسابات متعددة + إيداع/سحب/تحويل + مطابقة + استيراد CSV. g-ledger.com
+🇬🇧 Banking: multi-accounts, transfers, reconciliation, CSV import. g-ledger.com
+
+=== 22 ===
+🏗️ أصول ثابتة: سجل + إهلاك تلقائي + استبعاد + توزيع حسب الفئة. g-ledger.com
+🇬🇧 Fixed assets: register, auto depreciation, disposal, category breakdown. g-ledger.com
+
+=== 23 ===
+👥 HR متقدم: حضور + مستندات + سلف + شهادات تلقائية + كشف راتب. باقة مؤسسي. g-ledger.com
+🇬🇧 Advanced HR: attendance, documents, advances, certificates, payslips. Enterprise. g-ledger.com
+
+=== 24 ===
+📊 منشئ تقارير: اختر حقول + رتّب + صدّر PDF/Excel. من أي موديول! g-ledger.com
+🇬🇧 Report builder: pick fields, reorder, export PDF/Excel. g-ledger.com
+
+=== 25 ===
+🍽️ قطاع المطاعم: مبيعات داين إن/تيك أواي/توصيل + مشروبات + عمولات توصيل + 22 منتج جاهز! g-ledger.com
+🇬🇧 Restaurant sector: dine-in/takeaway/delivery sales + 22 default products! g-ledger.com
+
+=== 26 ===
+💧 التدفقات النقدية: تشغيلية + استثمارية + تمويلية = صافي التغير في النقدية. g-ledger.com
+🇬🇧 Cash flow statement: operating + investing + financing. g-ledger.com
+
+=== 27 ===
+📝 الموازنة: حدد الميزانية → قارن بالفعلي → نسبة إنجاز بالألوان. g-ledger.com
+🇬🇧 Budget vs Actual with color-coded progress bars. g-ledger.com
+
+=== 28 ===
+🔗 50+ تكامل: Stripe/Paymob/مدى/سلة/زد/تمارا/تابي/ZATCA/ETA/OrangeHRM. g-ledger.com/ar/integrations
+🇬🇧 50+ integrations with top platforms. g-ledger.com/ar/integrations
+
+=== 29 ===
+🔗 API للمطورين: 21 endpoint + Bearer Token + Webhooks + توثيق AR/EN. g-ledger.com/ar/api-docs
+🇬🇧 Developer API: 21 endpoints, auth, webhooks, docs. g-ledger.com/en/api-docs
+
+=== 30 ===
+📱 يعمل على كل الأجهزة + يمكن تثبيته كتطبيق PWA! g-ledger.com
+🇬🇧 All devices + installable as PWA app. g-ledger.com
+
+=== 31 ===
+للمحاسبين: هل تبني الشجرة من الصفر؟ G-Ledger يعطيك 16 شجرة جاهزة! g-ledger.com
+🇬🇧 Accountants: 16 ready chart of accounts templates! g-ledger.com
+
+=== 32 ===
+كل عملية = قيد تلقائي. فاتورة/تحصيل/مخزون/راتب/إهلاك = صفر إدخال يدوي! g-ledger.com
+🇬🇧 Every operation = auto journal entry. Zero manual input! g-ledger.com
+
+=== 33 ===
+لا تؤجل المحاسبة! مع G-Ledger كل شيء يتسجل تلقائي من أول يوم. g-ledger.com
+🇬🇧 Don't delay accounting! G-Ledger auto-records from day 1. g-ledger.com
+
+=== 34 ===
+🏥 القطاع الطبي: 4 شجرات (مستشفيات/صيدليات/عيادات/معامل). g-ledger.com
+🇬🇧 Medical: 4 specialized charts for hospitals, pharmacies, clinics, labs. g-ledger.com
+
+=== 35 ===
+💼 خدمي: لا مخزون — فواتير استشارات + تتبع ساعات + مشاريع. g-ledger.com
+🇬🇧 Services: no inventory, bill by hours, track projects. g-ledger.com
+
+=== 36 ===
+🔨 مقاولات: عقود طويلة + مستخلصات + محتجزات + مقاولي باطن. g-ledger.com
+🇬🇧 Contracting: long-term contracts, progress billing, retention. g-ledger.com
+
+=== 37 ===
+🌾 زراعي: أصول بيولوجية + محاصيل + تكاليف موسمية + 8 منتجات. g-ledger.com
+🇬🇧 Agricultural: biological assets, crops, seasonal costs. g-ledger.com
+
+=== 38 ===
+💻 تقني/SaaS: اشتراكات + تطوير + استضافة + 8 منتجات. g-ledger.com
+🇬🇧 Tech/SaaS: subscriptions, development, hosting. g-ledger.com
+
+=== 39 ===
+🏦 بنوك: محافظ قروض + ودائع + مخصصات + احتياطيات. g-ledger.com
+🇬🇧 Banking: loan portfolios, deposits, provisions, reserves. g-ledger.com
+
+=== 40 ===
+🛡️ تأمين: أقساط + احتياطيات + تعويضات + إعادة تأمين + 6 منتجات. g-ledger.com
+🇬🇧 Insurance: premiums, reserves, claims, reinsurance. g-ledger.com
+
+=== 41 ===
+🏗️ عقاري: عقارات استثمارية + إيجارات + تقييم + 6 منتجات. g-ledger.com
+🇬🇧 Real estate: properties, rent, revaluation. g-ledger.com
+
+=== 42 ===
+❤️ غير ربحي: تبرعات + منح + أصول مقيدة + كفالات. g-ledger.com
+🇬🇧 Non-profit: donations, grants, restricted assets. g-ledger.com
+
+=== 43 ===
+🤝 تمويل جماعي: أمانات + عمولات + مخصصات تعثر. g-ledger.com
+🇬🇧 Crowdfunding: escrow, fees, default provisions. g-ledger.com
+
+=== 44 ===
+أسعار شفافة: مجاني $0 | أساسي $8 | احترافي $15 | مؤسسي $25. بعملتك المحلية! g-ledger.com
+🇬🇧 Pricing: Free, Basic $8, Pro $15, Enterprise $25/user/mo. g-ledger.com
+
+=== 45 ===
+🤖 شات بوت 24/7: 45+ فئة سؤال بالعربي. قيود/فواتير/رواتب/مخزون/ضرائب. g-ledger.com
+🇬🇧 AI chatbot: 45+ FAQ categories, instant Arabic answers. g-ledger.com
+
+=== 46 ===
+👤 مستخدمين: مالك/مدير/محاسب/مشاهد — صلاحيات مختلفة. g-ledger.com
+🇬🇧 User roles: Owner, Admin, Accountant, Viewer. g-ledger.com
+
+=== 47 ===
+📜 شهادات تلقائية: خبرة + راتب + تعريف بالعمل — تتولّد بالعربي! g-ledger.com
+🇬🇧 Auto Arabic certificates: experience, salary, employment letter. g-ledger.com
+
+=== 48 ===
+📋 حضور وانصراف: تسجيل يومي + ساعات عمل + حاضر/غائب/متأخر. g-ledger.com
+🇬🇧 Attendance: daily check-in/out, auto hours, status tracking. g-ledger.com
+
+=== 49 ===
+💰 سلف موظفين: طلب → اعتماد/رفض → خصم من الراتب. g-ledger.com
+🇬🇧 Salary advances: request → approve → deduct from payroll. g-ledger.com
+
+=== 50 ===
+⚠️ تنبيهات ذكية: فواتير متأخرة + نقص مخزون + إجازات + مصروفات + تخزين. g-ledger.com
+🇬🇧 Smart alerts: overdue invoices, low stock, pending leaves, storage. g-ledger.com
+
+=== 51 ===
+🌙 Dark Mode: تبديل بضغطة واحدة — مريح للعيون. g-ledger.com
+🇬🇧 Dark mode: toggle with one click. g-ledger.com
+
+=== 52 ===
+🌐 ثنائي اللغة: عربي RTL + English LTR. كل الصفحات + الشات بوت + التقارير. g-ledger.com
+🇬🇧 Fully bilingual: Arabic RTL + English LTR. g-ledger.com
+
+=== 53 ===
+📍 يحدد موقعك تلقائيًا: مصر=جنيه، سعودية=ريال، أوروبا=دولار. g-ledger.com
+🇬🇧 Auto-detects country: sets language, currency, tax. g-ledger.com
+
+=== 54 ===
+🔄 فواتير متكررة: أسبوعي/شهري/ربع سنوي/سنوي — تتولّد تلقائيًا. g-ledger.com
+🇬🇧 Recurring invoices: auto-generated weekly/monthly/quarterly/yearly. g-ledger.com
+
+=== 55 ===
+📜 إدارة عقود: بيع/شراء/خدمة/توظيف/إيجار + تنبيه انتهاء. g-ledger.com
+🇬🇧 Contracts: sales, purchase, service, employment, rental + expiry alerts. g-ledger.com
+
+=== 56 ===
+🏦 استيراد كشف بنكي CSV: ارفع الملف → اختر الحساب → استيراد تلقائي. g-ledger.com
+🇬🇧 Bank CSV import: upload, select account, auto-import. g-ledger.com
+
+=== 57 ===
+تحدي: كم تاخد إعداد نظام محاسبي لعميل جديد؟ مع G-Ledger: ثوانٍ فقط ⚡ g-ledger.com
+🇬🇧 Challenge: setup time? With G-Ledger: seconds! g-ledger.com
+
+=== 58 ===
+5 أخطاء محاسبية: فصل مصروفات/تأخير قيود/إهمال تسوية/تقادم ديون/نسيان إهلاك. G-Ledger يحلها! g-ledger.com
+🇬🇧 5 accounting mistakes G-Ledger solves automatically. g-ledger.com
+
+=== 59 ===
+Excel vs G-Ledger: أخطاء←تلقائي | ملف←متعدد | لا نسخ←يومي | لا فوترة←ETA+ZATCA. g-ledger.com
+🇬🇧 Excel vs G-Ledger: auto, multi-user, backup, e-invoicing. g-ledger.com
+
+=== 60 ===
+51 صفحة | 21 API | 150+ منتج | 45+ سؤال شات بوت | 30 مقال مدونة. كله مجاناً 6 أشهر! g-ledger.com
+🇬🇧 51 pages, 21 APIs, 150+ products, 45+ chatbot FAQs. Free 6mo! g-ledger.com
+
+=== 61 ===
+💊 لأصحاب الصيدليات: تتبع صلاحية + مخزون بالباتش + 12 منتج جاهز. g-ledger.com
+🇬🇧 Pharmacy: expiry tracking, batch, 12 default products. g-ledger.com
+
+=== 62 ===
+🍽️ لأصحاب المطاعم: مبيعات حسب النوع + مشروبات + عمولات توصيل + 22 منتج. g-ledger.com
+🇬🇧 Restaurants: sales by type, beverages, delivery commissions, 22 items. g-ledger.com
+
+=== 63 ===
+🏭 لأصحاب المصانع: مخزون متعدد المراحل + مقاولي باطن + تكلفة كل مرحلة + 10 منتجات. g-ledger.com
+🇬🇧 Manufacturers: multi-stage inventory, subcontractors, 10 products. g-ledger.com
+
+=== 64 ===
+لمسؤولي HR: GOSI تلقائي (9.75%+11.75%) + سقف 45K + قيد شهري. g-ledger.com
+🇬🇧 HR: auto GOSI (9.75%+11.75%), capped at 45K SAR. g-ledger.com
+
+=== 65 ===
+التسوية البنكية: اكتشاف أخطاء + حركات مفقودة + تأكيد أرصدة. في G-Ledger: ضع ✓! g-ledger.com
+🇬🇧 Bank reconciliation: catch errors, verify balances. g-ledger.com
+
+=== 66 ===
+3 تقارير شهرية: ميزان مراجعة + تقادم ديون + تدفقات نقدية. g-ledger.com
+🇬🇧 3 monthly reports: trial balance, aging, cash flow. g-ledger.com
+
+=== 67 ===
+ميزانية عمومية: الأصول = الخصوم + حقوق الملكية. G-Ledger يعرضها لحظياً. g-ledger.com
+🇬🇧 Balance sheet: Assets = Liabilities + Equity. Real-time. g-ledger.com
+
+=== 68 ===
+القيد المركب: أكثر من مدين/دائن في نفس القيد. المهم: المجموع يتساوى! g-ledger.com
+🇬🇧 Compound entries: multiple debits/credits in one entry. g-ledger.com
+
+=== 69 ===
+عكس القيد: القيد المرحّل لا يُحذف — يُعكس بقيد معاكس. بضغطة زر! g-ledger.com
+🇬🇧 Reversing entries: posted entries reversed with counter entry. g-ledger.com
+
+=== 70 ===
+أصول متداولة vs غير متداولة: نقدية/عملاء/مخزون ← مباني/معدات/سيارات. تصنيف تلقائي! g-ledger.com
+🇬🇧 Current vs non-current assets: auto-classified. g-ledger.com
+
+=== 71 ===
+نسيت الباسورد؟ إيميل → OTP → باسورد جديد. 4 خطوات! g-ledger.com/ar/forgot-password
+🇬🇧 Forgot password? Email → OTP → new password. g-ledger.com
+
+=== 72 ===
+تغيير القطاع ممكن! (بشرط ما فيه قيود أو فواتير). الإعدادات → اختر القطاع الجديد. g-ledger.com
+🇬🇧 Change sector from Settings — only if no entries exist. g-ledger.com
+
+=== 73 ===
+مفاتيح API: إنشاء + تسمية + إلغاء + تتبع آخر استخدام. من الإعدادات! g-ledger.com
+🇬🇧 API keys: create, name, revoke, track — from Settings. g-ledger.com
+
+=== 74 ===
+إهلاك: قسط ثابت (التكلفة-التخريد÷العمر) vs متناقص (نسبة من القيمة الدفترية). g-ledger.com
+🇬🇧 Depreciation: straight-line vs declining balance. g-ledger.com
+
+=== 75 ===
+مكافأة نهاية الخدمة: أول 5 سنوات=نصف راتب/سنة. بعدها=راتب كامل/سنة. g-ledger.com
+🇬🇧 End of service: half month per year (first 5), full month after. g-ledger.com
+
+=== 76 ===
+للشركات الناشئة: لا تؤجل! G-Ledger يسجل كل شيء تلقائي. 6 أشهر مجاناً بدون بطاقة! g-ledger.com
+🇬🇧 Startups: auto-records from day 1. Free 6 months, no card! g-ledger.com
+
+=== 77 ===
+شروط + خصوصية + SLA: 99.5% وقت تشغيل + نسخ يومي + لا نشارك بياناتك. g-ledger.com/ar/legal/terms
+🇬🇧 Terms, Privacy, SLA: 99.5% uptime, daily backup, no data sharing. g-ledger.com
+
+=== 78 ===
+3 طرق تواصل: واتساب + ماسنجر + شات بوت 24/7. g-ledger.com
+🇬🇧 Contact: WhatsApp, Messenger, AI Chatbot 24/7. g-ledger.com
+
+=== 79 ===
+G-Ledger vs المنافسين: شجرة جاهزة✅ ضرائب ذكية✅ قيود تلقائية✅ 6 أشهر مجاناً✅ g-ledger.com
+🇬🇧 G-Ledger vs competitors: ready charts, smart taxes, auto entries, 6mo free. g-ledger.com
+
+=== 80 ===
+مدونة G-Ledger: مقال جديد كل يوم! نصائح محاسبية + أخبار ضريبية. g-ledger.com/ar/blog
+🇬🇧 Daily blog: accounting tips & tax news. g-ledger.com/ar/blog
+
+=== 81 ===
+ض.ق.م vs خصم منبع: ض.ق.م على القيمة المضافة، الخصم من المورد عند الدفع. G-Ledger يحسب الاثنين! g-ledger.com
+🇬🇧 VAT vs WHT: G-Ledger calculates both automatically. g-ledger.com
+
+=== 82 ===
+تسعير موظفين تنازلي: أول 10=$5 ثم $4 ثم $3 (احترافي). g-ledger.com
+🇬🇧 Tiered employee pricing: volume discounts! g-ledger.com
+
+=== 83 ===
+POS: Dark theme + تابلت + 4 طرق دفع + إيصال 80mm + اختصارات F1-F5. مؤسسي حصرياً! g-ledger.com/ar/pos
+🇬🇧 POS: dark theme, tablet, 4 payments, shortcuts. Enterprise! g-ledger.com/ar/pos
+
+=== 84 ===
+نصيحة: فهم الشجرة → قيد مزدوج → تسوية بنكية → ميزان مراجعة → نظام سحابي! g-ledger.com
+🇬🇧 5 tips: chart → double-entry → reconciliation → trial balance → cloud! g-ledger.com
+
+=== 85 ===
+150+ منتج افتراضي! كل قطاع بمنتجاته: مطاعم 22 + صيدليات 12 + مقاولات 8 + تقني 8. g-ledger.com
+🇬🇧 150+ default products across all 16 sectors! g-ledger.com
+
+=== 86 ===
+ميزان المراجعة: مدين=دائن. لو مش متساوي ← ابحث عن الخطأ! g-ledger.com
+🇬🇧 Trial balance: debits must equal credits. g-ledger.com
+
+=== 87 ===
+قائمة الدخل: إيرادات - مصروفات = ربح/خسارة. G-Ledger يحسبها تلقائيًا! g-ledger.com
+🇬🇧 Income: Revenue - Expenses = Profit/Loss. Auto-calculated. g-ledger.com
+
+=== 88 ===
+التسجيل 3 خطوات: بيانات المنشأة → حساب + OTP → اختر القطاع. g-ledger.com/ar/register
+🇬🇧 Register: business info → account + OTP → sector. g-ledger.com
+
+=== 89 ===
+تقادم الديون: حالي/30/60/90/120+ يوم. تابع مستحقاتك! g-ledger.com
+🇬🇧 Aging: current, 30, 60, 90, 120+ days. g-ledger.com
+
+=== 90 ===
+نسخ احتياطي: يومي + مشفر + سحابي + 30 نسخة. بدون تدخلك! g-ledger.com
+🇬🇧 Backup: daily, encrypted, cloud, 30 copies. Zero effort! g-ledger.com
+
+=== 91 ===
+متى تحتاج ERP؟ 5+ موظفين + مخزون + فوترة + تقارير + تتبع تكاليف = G-Ledger! g-ledger.com
+🇬🇧 Need ERP? 5+ employees, inventory, e-invoicing = G-Ledger! g-ledger.com
+
+=== 92 ===
+G-Ledger = محاسبة + فواتير + مخزون + HR + رواتب + CRM + POS + إنتاج + مشاريع + أصول + عقود + دعم. g-ledger.com
+🇬🇧 Complete ERP: accounting, invoices, inventory, HR, CRM, POS, production & more! g-ledger.com
+
+=== 93 ===
+29+ عملة: جنيه/ريال/درهم/دينار/دولار/يورو/جنيه إسترليني + 20 عملة أخرى! g-ledger.com
+🇬🇧 29+ currencies supported. g-ledger.com
+
+=== 94 ===
+لماذا G-Ledger؟ شجرة جاهزة + ضرائب ذكية + قيود تلقائية + 16 قطاع + API مفتوح. g-ledger.com
+🇬🇧 Why G-Ledger? Ready charts, smart taxes, auto entries, 16 sectors, open API. g-ledger.com
+
+=== 95 ===
+🚗 عمولات تطبيقات التوصيل: Hungerstation/Jahez/Talabat — تُتتبع كمصروف منفصل! g-ledger.com
+🇬🇧 Delivery commissions tracked as separate expenses. g-ledger.com
+
+=== 96 ===
+كشف حساب عميل: فواتير + مدفوعات + رصيد. أرسله بالإيميل! g-ledger.com
+🇬🇧 Customer statement: invoices, payments, balance — email directly! g-ledger.com
+
+=== 97 ===
+تقارير لحظية + بيانات دقيقة + تتبع النمو = قرارات أفضل! g-ledger.com
+🇬🇧 Real-time reports, accurate data, growth tracking = better decisions! g-ledger.com
+
+=== 98 ===
+G-Ledger + تمارا + تابي: قريباً — تقسيط بدون فوائد! g-ledger.com/ar/integrations
+🇬🇧 Coming: Tamara & Tabby BNPL integration! g-ledger.com
+
+=== 99 ===
+كن شريكاً! اربط منصتك مع G-Ledger API. 50+ تكامل وعددهم يزيد! g-ledger.com/ar/integrations
+🇬🇧 Become a partner! Connect via API. 50+ integrations growing! g-ledger.com
+
+=== 100 ===
+🎯 G-Ledger — حساب الأستاذ — لكل القطاعات
+16 قطاع | 29+ دولة | 51 صفحة | 150+ منتج | 50+ تكامل | عربي+إنجليزي | 2FA | شات بوت | 6 أشهر مجاناً
+ابدأ الآن: g-ledger.com/ar/register
+🇬🇧 G-Ledger: 16 sectors, 29+ countries, 150+ products, 50+ integrations. Start free: g-ledger.com
+
+============================================
+نهاية الـ 100 بوست
+g-ledger.com — حساب الأستاذ — لكل القطاعات
+============================================
