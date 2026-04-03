@@ -39,6 +39,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       einvoice: isAr ? "الفوترة الإلكترونية" : "E-Invoicing",
       pricing: isAr ? "الأسعار" : "Pricing",
       blog: isAr ? "المدونة" : "Blog",
+      integrations: isAr ? "التكاملات" : "Integrations",
       api: isAr ? "API المطورين" : "Developer API",
       login: isAr ? "تسجيل الدخول" : "Login",
       register: isAr ? "ابدأ تجربتك المجانية" : "Start Free Trial",
@@ -473,6 +474,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <a href="#einvoice" className="hover:text-[#0070F2] transition-colors">{t.nav.einvoice}</a>
             <a href="#pricing" className="hover:text-[#0070F2] transition-colors">{t.nav.pricing}</a>
             <Link href={`/${locale}/blog`} className="hover:text-[#0070F2] transition-colors">{t.nav.blog}</Link>
+            <Link href={`/${locale}/integrations`} className="hover:text-[#0070F2] transition-colors">{t.nav.integrations}</Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -1272,6 +1274,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <div className="text-sm text-white/60 mt-2">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PARTNERS ============ */}
+      <section className="py-16 bg-[#F8FAFC] border-t border-border/30">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-sm text-muted-foreground mb-8">{isAr ? "نتكامل مع أفضل المنصات" : "We integrate with the best platforms"}</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+            {["ZATCA", "ETA", "Stripe", "Paymob", "Tamara", "Tabby", "Salla", "Zid", "Mada"].map((name) => (
+              <div key={name} className="text-lg font-bold text-[#021544]">{name}</div>
+            ))}
+          </div>
+          <div className="text-center mt-6">
+            <Link href={`/${locale}/integrations`} className="text-sm text-[#0070F2] hover:underline font-medium">
+              {isAr ? "عرض جميع التكاملات →" : "View all integrations →"}
+            </Link>
           </div>
         </div>
       </section>
