@@ -19,6 +19,7 @@ const sectorConfigMap: Record<Sector, () => Promise<SectorConfig>> = {
   MEDICAL_PHARMACY: async () => (await import("./medical-pharmacy")).medicalPharmacyConfig,
   MEDICAL_CLINIC: async () => (await import("./medical-clinic")).medicalClinicConfig,
   MEDICAL_LAB: async () => (await import("./medical-lab")).medicalLabConfig,
+  RESTAURANT: async () => (await import("./restaurant")).restaurantConfig,
 };
 
 export async function getSectorConfig(sector: Sector): Promise<SectorConfig> {
@@ -45,4 +46,5 @@ export const ALL_SECTORS: Sector[] = [
   "MEDICAL_PHARMACY",
   "MEDICAL_CLINIC",
   "MEDICAL_LAB",
+  "RESTAURANT",
 ];

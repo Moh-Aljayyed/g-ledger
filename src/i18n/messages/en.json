@@ -54,7 +54,8 @@
     "MEDICAL_HOSPITAL": "Medical - Hospitals",
     "MEDICAL_PHARMACY": "Medical - Pharmacies",
     "MEDICAL_CLINIC": "Medical - Clinics",
-    "MEDICAL_LAB": "Medical - Labs"
+    "MEDICAL_LAB": "Medical - Labs",
+    "RESTAURANT": "Restaurants & Cafes"
   },
   "sectorDescriptions": {
     "INDUSTRIAL": "Multi-stage inventory, production costs, machine depreciation",
@@ -71,7 +72,8 @@
     "MEDICAL_HOSPITAL": "Department-based revenue, medical inventory",
     "MEDICAL_PHARMACY": "Batch/expiry tracking, regulated margins",
     "MEDICAL_CLINIC": "Consultation revenue, doctor revenue sharing",
-    "MEDICAL_LAB": "Test-based revenue, reagent inventory"
+    "MEDICAL_LAB": "Test-based revenue, reagent inventory",
+    "RESTAURANT": "Food & beverage sales, table management, delivery, catering"
   },
   "nav": {
     "dashboard": "Dashboard",

@@ -25,6 +25,7 @@ enum Sector {
   MEDICAL_PHARMACY
   MEDICAL_CLINIC
   MEDICAL_LAB
+  RESTAURANT    // مطاعم وكافيهات
 }
 
 enum UserRole {
