@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description: "نظام ERP محاسبي سحابي متكامل يدعم 15 قطاع. فوترة إلكترونية ETA + ZATCA. ابدأ مجاناً!",
     images: [
       {
-        url: "https://g-ledger.com/logo-with-text.svg",
+        url: "https://g-ledger.com/og-image.svg",
         width: 1200,
         height: 630,
         alt: "G-Ledger — حساب الأستاذ — لكل القطاعات",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "G-Ledger — حساب الأستاذ — لكل القطاعات",
     description: "نظام ERP محاسبي سحابي. 15 قطاع. فوترة إلكترونية. ابدأ مجاناً!",
-    images: ["https://g-ledger.com/logo-with-text.svg"],
+    images: ["https://g-ledger.com/og-image.svg"],
   },
   robots: {
     index: true,

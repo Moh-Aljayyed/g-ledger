@@ -1,0 +1,49 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#021544"/>
+      <stop offset="0.5" stop-color="#0a2a6e"/>
+      <stop offset="1" stop-color="#0070F2"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+
+  <!-- Dot pattern -->
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="white" opacity="0.05"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Logo icon -->
+  <rect x="520" y="120" width="160" height="160" rx="32" fill="white" fill-opacity="0.1"/>
+  <rect x="530" y="130" width="140" height="140" rx="26" stroke="white" stroke-width="3" stroke-opacity="0.3"/>
+  <line x1="600" y1="130" x2="600" y2="270" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <line x1="555" y1="165" x2="590" y2="165" stroke="white" stroke-width="3" stroke-opacity="0.5"/>
+  <line x1="555" y1="185" x2="590" y2="185" stroke="white" stroke-width="3" stroke-opacity="0.4"/>
+  <line x1="555" y1="205" x2="590" y2="205" stroke="white" stroke-width="3" stroke-opacity="0.3"/>
+  <path d="M612 165l6 6 12-12" stroke="#00C9A7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M612 187l6 6 12-12" stroke="#00C9A7" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Title -->
+  <text x="600" y="350" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="64" font-weight="bold">G-Ledger</text>
+
+  <!-- Arabic subtitle -->
+  <text x="600" y="410" text-anchor="middle" fill="#00C9A7" font-family="Arial, sans-serif" font-size="28" font-weight="600">حساب الأستاذ — لكل القطاعات</text>
+
+  <!-- English subtitle -->
+  <text x="600" y="450" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" opacity="0.5">General Ledger — For Every Sector</text>
+
+  <!-- Stats -->
+  <text x="300" y="540" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="36" font-weight="bold">29+</text>
+  <text x="300" y="570" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" opacity="0.5">Countries</text>
+
+  <text x="500" y="540" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="36" font-weight="bold">15</text>
+  <text x="500" y="570" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" opacity="0.5">Sectors</text>
+
+  <text x="700" y="540" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="36" font-weight="bold">47+</text>
+  <text x="700" y="570" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" opacity="0.5">Modules</text>
+
+  <text x="900" y="540" text-anchor="middle" fill="#00C9A7" font-family="Arial, sans-serif" font-size="18" font-weight="bold">g-ledger.com</text>
+  <text x="900" y="570" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" opacity="0.5">Start Free</text>
+</svg>
