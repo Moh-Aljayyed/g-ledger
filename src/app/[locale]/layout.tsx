@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Providers } from "@/components/providers";
 import { ChatWidget } from "@/components/chatbot/chat-widget";
+import { PWAInstallPrompt } from "@/components/pwa-install";
 import { MessengerButton } from "@/components/messenger-button";
 import { AntiCopy } from "@/components/security/anti-copy";
 import "@/app/globals.css";
@@ -95,6 +96,7 @@ export default async function RootLayout({
           <Providers>
             {children}
             <ChatWidget />
+            <PWAInstallPrompt />
             <MessengerButton />
             <AntiCopy />
           </Providers>
