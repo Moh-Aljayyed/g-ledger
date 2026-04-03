@@ -24,8 +24,10 @@ const FREE_TRIAL_KB = 100000; // 100,000 KB
 const PROMO_END = new Date("2026-04-30");
 const FREE_TRIAL_DAYS = new Date() <= PROMO_END ? 180 : 14;
 const BASE_PRICE_PER_GB = 10; // $10/GB/month
-const MAX_USERS_FREE = 3;
-const MAX_USERS_PAID = 999;
+const MAX_USERS_FREE = 1;     // مجاني: 1 مستخدم
+const MAX_USERS_BASIC = 1;    // أساسي: 1 مستخدم
+const MAX_USERS_PRO = 2;      // احترافي: 2 مستخدمين
+const MAX_USERS_ENTERPRISE = 3; // مؤسسي: 3 مستخدمين
 
 // Calculate price per GB with tiered discounts
 function calculateGBPrice(gbNumber: number): number {
@@ -300,7 +302,7 @@ export const subscriptionRouter = router({
           plan: "BASIC", // Upgrade from FREE_TRIAL
           status: "ACTIVE",
           storageLimit: newLimitBytes,
-          maxUsers: MAX_USERS_PAID,
+          maxUsers: MAX_USERS_ENTERPRISE,
           maxInvoices: 999999,
           monthlyPriceUsd: pricing.totalCost,
           pricePerGbUsd: pricing.perGBPrice,

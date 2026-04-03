@@ -486,15 +486,11 @@ export default function RegisterPage() {
                 <div className="border border-border rounded-xl p-4 bg-muted/30">
                   <h3 className="text-sm font-bold mb-3 text-[#021544]">{ui.verifyIdentity}</h3>
 
-                  {/* Method toggle */}
+                  {/* Method — Email only (WhatsApp requires API key) */}
                   <div className="flex gap-2 mb-3">
                     <button type="button" onClick={() => setOtpMethod("email")}
-                      className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "email" ? "bg-[#0070F2] text-white" : "bg-white border border-border"}`}>
+                      className="flex-1 py-2 rounded-lg text-xs font-medium bg-[#0070F2] text-white">
                       📧 {ui.viaEmail}
-                    </button>
-                    <button type="button" onClick={() => setOtpMethod("whatsapp")}
-                      className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${otpMethod === "whatsapp" ? "bg-[#25D366] text-white" : "bg-white border border-border"}`}>
-                      💬 {ui.viaWhatsapp}
                     </button>
                   </div>
 

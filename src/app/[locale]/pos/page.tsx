@@ -545,7 +545,7 @@ export default function POSPage() {
   };
 
   // ---- Locale link helper ----
-  const locale = isRTL ? "ar" : "en";
+  const localePath = isRTL ? "/ar" : "/en";
 
   return (
     <div
@@ -706,7 +706,7 @@ export default function POSPage() {
 
           {/* Back to dashboard */}
           <Link
-            href={`/${locale}/dashboard`}
+            href={`${localePath}/dashboard`}
             className="p-2 rounded-lg transition-colors"
             style={{ background: "#1e293b" }}
             title="لوحة التحكم"

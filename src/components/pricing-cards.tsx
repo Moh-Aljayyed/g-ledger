@@ -29,8 +29,8 @@ export function PricingCards() {
     forLarge: isAr ? "للشركات الكبيرة" : "For large businesses",
     perUser: prices.perUser,
     freeItems: isAr
-      ? ["موديول واحد", "3 مستخدمين", "100,000 KB تخزين", "شجرة حسابات جاهزة", "مساعد ذكي"]
-      : ["One module", "3 users", "100,000 KB storage", "Ready chart of accounts", "AI chatbot"],
+      ? ["موديول واحد", "مستخدم واحد", "100,000 KB تخزين", "شجرة حسابات جاهزة", "مساعد ذكي"]
+      : ["One module", "1 user", "100,000 KB storage", "Ready chart of accounts", "AI chatbot"],
     basicItems: isAr
       ? ["محاسبة + فواتير + مخزون", "تقارير مالية", "1 GB تخزين", "فوترة إلكترونية", "استيراد Excel"]
       : ["Accounting + Invoices + Inventory", "Financial reports", "1 GB storage", "E-invoicing", "Excel import"],
@@ -38,8 +38,8 @@ export function PricingCards() {
       ? ["كل الموديولات", "CRM + مشاريع + مصروفات", "2 GB تخزين", "موديول الإنتاج", "منشئ التقارير", "دعم أولوية"]
       : ["All modules", "CRM + Projects + Expenses", "2 GB storage", "Production module", "Report Builder", "Priority support"],
     enterpriseItems: isAr
-      ? ["كل شيء في الاحترافي", "نقاط البيع POS احترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7", "مستخدمين غير محدود"]
-      : ["Everything in Professional", "Professional POS System", "External API", "5 GB storage", "White Label", "24/7 dedicated support", "Unlimited users"],
+      ? ["كل شيء في الاحترافي", "3 مستخدمين", "نقاط البيع POS احترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7"]
+      : ["Everything in Professional", "3 users", "Professional POS System", "External API", "5 GB storage", "White Label", "24/7 dedicated support"],
   };
 
   if (!detected) return <div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;
