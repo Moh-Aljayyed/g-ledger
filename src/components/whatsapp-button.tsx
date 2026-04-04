@@ -1,7 +1,12 @@
 "use client";
 
+import { useGeoPricing } from "./geo-pricing";
+
 export function WhatsAppButton() {
-  const phone = "201507522155";
+  const { currency } = useGeoPricing();
+
+  // Gulf countries → Saudi number, Egypt & rest → Egypt number
+  const phone = currency === "SAR" ? "966570620570" : "201507522155";
   const message = encodeURIComponent("مرحباً، أريد الاستفسار عن نظام G-Ledger");
 
   return (
