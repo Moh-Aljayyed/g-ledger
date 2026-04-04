@@ -1,7 +1,7 @@
 "use client";
 
 export function WhatsAppButton() {
-  const phone = "966594544533"; // Saudi number without +
+  const phone = "201507522155";
   const message = encodeURIComponent("مرحباً، أريد الاستفسار عن نظام G-Ledger");
 
   return (
