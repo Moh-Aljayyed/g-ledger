@@ -101,6 +101,7 @@ const navGroups: NavGroup[] = [
   {
     label: "النظام",
     items: [
+      { key: "whatsapp", href: "/whatsapp", icon: "💬" },
       { key: "users", href: "/users", icon: "👤" },
       { key: "branding", href: "/branding", icon: "🎨" },
       { key: "referral", href: "/referral", icon: "🎁" },
