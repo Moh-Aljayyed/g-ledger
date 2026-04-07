@@ -1365,3 +1365,36 @@ model Contract {
   @@unique([tenantId, contractNumber])
   @@index([tenantId, status])
 }
+
+// ============ RAQYY INTEGRATION ============
+// Ingested data from raqyy.com — see /api/v1/integrations/raqyy/*
+// Auth + tenant routing reuse the existing ApiKey model.
+
+model RaqyySalesInvoice {
+  id          String   @id @default(cuid())
+  tenantId    String
+  externalId  String   // Raqyy order number, e.g. "RQ-20260407-A1B2C3"
+  scope       String?  // "admin" | "seller"
+  total       Decimal? @db.Decimal(18, 2)
+  payload     Json
+  receivedAt  DateTime @default(now())
+
+  @@unique([tenantId, externalId])
+  @@index([tenantId, receivedAt])
+}
+
+model RaqyyStockMovement {
+  id           String   @id @default(cuid())
+  tenantId     String
+  externalId   String   // e.g. "product-42-init" or "product-42-{ts}"
+  productId    Int?
+  sku          String?
+  change       Int?
+  newQuantity  Int?
+  reason       String?  // "created" | "sale" | "restock" | "adjustment"
+  payload      Json
+  receivedAt   DateTime @default(now())
+
+  @@unique([tenantId, externalId])
+  @@index([tenantId, receivedAt])
+}

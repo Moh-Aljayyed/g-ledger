@@ -40,6 +40,7 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ l
     ]},
     // E-Commerce
     { category: t.ecommerce, items: [
+      { name: "Raqyy رقي", desc: isAr ? "مزامنة فواتير المبيعات والمخزون تلقائياً من raqyy.com" : "Auto-sync sales invoices & inventory from raqyy.com", status: "integrated", color: "#0070F2" },
       { name: "Salla سلة", desc: isAr ? "ربط المتجر + المخزون + الطلبات" : "Store + inventory + orders sync", status: "ready", color: "#5B3EB5" },
       { name: "Zid زد", desc: isAr ? "منصة تجارة إلكترونية سعودية" : "Saudi e-commerce platform", status: "ready", color: "#FF6B35" },
       { name: "Shopify", desc: isAr ? "ربط المتاجر العالمية" : "Global store integration", status: "ready", color: "#96BF48" },
