@@ -167,6 +167,79 @@ export default function SuperAdminDashboard() {
         </div>
       </div>
 
+      {/* Pending TODOs — deferred Raqyy integration items */}
+      <div className="mb-8 bg-card rounded-xl border border-border p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-[#021544]">📋 المهام المؤجلة — تكامل رقي (Raqyy)</h2>
+            <p className="text-xs text-muted-foreground mt-1">بنود تم تأجيلها بقصد بعد إطلاق Phases 1–3 يوم 2026-04-07</p>
+          </div>
+          <span className="text-xs px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">5 بنود</span>
+        </div>
+
+        <div className="space-y-3">
+          {[
+            {
+              id: 1,
+              title: "التحقق من توقيع HMAC على الـ webhooks الواردة",
+              desc: "إضافة فحص X-Raqyy-Signature في raqyy-auth.ts — يحتاج shared secret يتم الاتفاق عليه مع رقي أولاً",
+              priority: "متوسطة",
+              priorityColor: "bg-yellow-100 text-yellow-700",
+            },
+            {
+              id: 2,
+              title: "تنبيهات Email عند فشل المزامنة المتكرر",
+              desc: "Cron job يفحص RaqyySyncLog، عند N محاولات فاشلة متتالية يبعت Email لمالك الحساب عبر Resend",
+              priority: "عالية",
+              priorityColor: "bg-red-100 text-red-700",
+            },
+            {
+              id: 3,
+              title: "Phase 4 — مزامنة ثنائية الاتجاه (G-Ledger ⇄ Raqyy)",
+              desc: "دفع تصحيحات السعر/المخزون من G-Ledger إلى رقي + تقارير المطابقة. يحتاج رقي يفتح webhooks وارد عندهم أولاً",
+              priority: "منخفضة",
+              priorityColor: "bg-gray-100 text-gray-700",
+            },
+            {
+              id: 4,
+              title: "Endpoint إعادة المحاولة للمابينج الفاشل",
+              desc: "POST /api/v1/integrations/raqyy/retry — يبحث عن السجلات بحالة mappingStatus='FAILED' ويعيد تشغيل المابر",
+              priority: "عالية",
+              priorityColor: "bg-red-100 text-red-700",
+            },
+            {
+              id: 5,
+              title: "لوحة Admin لعرض كل حسابات رقي المربوطة",
+              desc: "للسوبر أدمن فقط — تعرض جميع الـ tenants المربوطة برقي مع آخر مزامنة وعدد الفواتير وحالة الاشتراك",
+              priority: "متوسطة",
+              priorityColor: "bg-yellow-100 text-yellow-700",
+            },
+          ].map((todo) => (
+            <div
+              key={todo.id}
+              className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors"
+            >
+              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#021544] text-white text-xs font-bold flex items-center justify-center">
+                {todo.id}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h3 className="text-sm font-semibold text-[#021544]">{todo.title}</h3>
+                  <span className={cn("text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap", todo.priorityColor)}>
+                    {todo.priority}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{todo.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-border/50 text-xs text-muted-foreground">
+          المرحلة الحالية: <span className="font-semibold text-green-700">Phases 1–3 مكتملة</span> · آخر تحديث: 2026-04-07 · commit <code className="text-[10px] bg-muted px-1.5 py-0.5 rounded">9e9cc53</code>
+        </div>
+      </div>
+
       {/* Tenants Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
