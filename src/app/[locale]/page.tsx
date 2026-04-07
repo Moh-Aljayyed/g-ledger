@@ -485,12 +485,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             >
               {t.nav.login}
             </Link>
-            <Link
-              href={`/${locale}/register`}
+            <a
+              href="#pricing"
               className={`px-6 py-2.5 text-sm font-semibold bg-gradient-to-l from-[#021544] to-[#0070F2] text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all`}
             >
               {t.nav.register}
-            </Link>
+            </a>
           </div>
         </div>
       </header>
@@ -531,12 +531,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                <Link
-                  href={`/${locale}/register`}
+                <a
+                  href="#pricing"
                   className="px-10 py-4 text-base font-bold bg-white text-[#021544] rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
                 >
                   {t.hero.cta1}
-                </Link>
+                </a>
                 <a
                   href="#why-different"
                   className="px-10 py-4 text-base font-semibold bg-white/10 text-white rounded-xl border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm text-center"
@@ -1254,12 +1254,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {t.cta.subtitle}
           </p>
 
-          <Link
-            href={`/${locale}/register`}
+          <a
+            href="#pricing"
             className="inline-block px-14 py-5 text-lg font-bold bg-white text-[#021544] rounded-xl hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
           >
             {t.cta.cta}
-          </Link>
+          </a>
 
           {/* Stats */}
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
