@@ -495,6 +495,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </header>
 
+      {/* ============ ANNOUNCEMENT BANNER — RAQYY INTEGRATION ============ */}
+      <a
+        href="https://raqyy.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-full bg-gradient-to-r from-[#0d4d35] via-[#0f5f3e] to-[#0d4d35] border-b border-[#c9a14a]/40 hover:brightness-110 transition-all"
+      >
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-center gap-3 text-center text-white text-sm md:text-base font-medium">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#c9a14a] text-[#0d4d35] text-[10px] md:text-xs font-bold uppercase tracking-wide">
+            {isAr ? "جديد" : "New"}
+          </span>
+          <span className="text-[#f5e6b8]">
+            {isAr
+              ? "تم التكامل مع رقي (Raqyy) — مزامنة فواتير المبيعات والمخزون تلقائياً من raqyy.com"
+              : "Now integrated with Raqyy — auto-sync your sales invoices and inventory from raqyy.com"}
+          </span>
+          <span className="hidden md:inline text-[#c9a14a]">→</span>
+        </div>
+      </a>
+
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #021544 0%, #0a2a6e 50%, #0070F2 100%)" }}>
         {/* Background pattern */}

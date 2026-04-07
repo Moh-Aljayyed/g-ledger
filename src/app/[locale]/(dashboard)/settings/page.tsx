@@ -54,6 +54,9 @@ export default function SettingsPage() {
   // Subscription
   const { data: usage } = trpc.subscription.getUsage.useQuery();
 
+  // Raqyy integration stats
+  const { data: raqyyStats } = trpc.raqyy.getStats.useQuery(undefined, { refetchInterval: 30000 });
+
   const ui = {
     title: isAr ? "الإعدادات" : "Settings",
     companyInfo: isAr ? "معلومات المنشأة" : "Company Info",
@@ -169,6 +172,68 @@ export default function SettingsPage() {
                   </button>
                 </div>
               ))}
+            </div>
+          )}
+        </div>
+
+        {/* Raqyy Integration */}
+        <div className="bg-card rounded-xl border border-border p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#0d4d35] flex items-center justify-center text-[#c9a14a] font-bold">R</div>
+              <div>
+                <h2 className="text-lg font-semibold text-[#021544]">Raqyy {isAr ? "رقي" : ""}</h2>
+                <p className="text-xs text-muted-foreground">{isAr ? "مزامنة فواتير المبيعات والمخزون من raqyy.com" : "Sync sales invoices & inventory from raqyy.com"}</p>
+              </div>
+            </div>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-700 font-medium">{isAr ? "متصل" : "Connected"}</span>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+              <p className="text-xs text-muted-foreground">{isAr ? "فواتير مستلمة" : "Invoices ingested"}</p>
+              <p className="text-xl font-bold text-[#021544]">{raqyyStats?.invoices.total ?? 0}</p>
+              <p className="text-[10px] text-green-600">{raqyyStats?.invoices.mapped ?? 0} {isAr ? "تمت المعالجة" : "mapped"}</p>
+            </div>
+            <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+              <p className="text-xs text-muted-foreground">{isAr ? "حركات مخزون" : "Stock movements"}</p>
+              <p className="text-xl font-bold text-[#021544]">{raqyyStats?.stockMovements.total ?? 0}</p>
+              <p className="text-[10px] text-green-600">{raqyyStats?.stockMovements.mapped ?? 0} {isAr ? "تمت المعالجة" : "mapped"}</p>
+            </div>
+          </div>
+
+          {raqyyStats?.lastSuccessAt && (
+            <p className="text-xs text-muted-foreground mb-3">
+              {isAr ? "آخر مزامنة ناجحة:" : "Last successful sync:"} {new Date(raqyyStats.lastSuccessAt).toLocaleString(isAr ? "ar-EG" : "en-US")}
+            </p>
+          )}
+
+          {/* Setup instructions */}
+          <details className="mt-4 border-t border-border/50 pt-4">
+            <summary className="cursor-pointer text-sm font-medium text-[#0070F2]">{isAr ? "إعدادات الربط في raqyy.com" : "Setup in raqyy.com"}</summary>
+            <div className="mt-3 space-y-2 text-xs text-muted-foreground">
+              <p>{isAr ? "1. أنشئ مفتاح API من القسم أعلاه (مفاتيح API)" : "1. Create an API key in the API Keys section above"}</p>
+              <p>{isAr ? "2. افتح raqyy.com → الإعدادات → التكاملات" : "2. Open raqyy.com → Settings → Integrations"}</p>
+              <p>{isAr ? "3. أدخل البيانات التالية:" : "3. Enter the following:"}</p>
+              <div className="bg-muted/50 p-2 rounded font-mono text-[11px] space-y-1 mt-1">
+                <div><span className="text-muted-foreground">API URL:</span> https://www.g-ledger.com/api/v1/integrations/raqyy</div>
+                <div><span className="text-muted-foreground">{isAr ? "المفتاح:" : "API Key:"}</span> {isAr ? "(من القسم أعلاه)" : "(from API Keys section above)"}</div>
+              </div>
+              <p className="text-amber-600">{isAr ? "⚠️ الربط يعمل فقط للحسابات المشتركة فعلياً" : "⚠️ Sync only works for active subscriptions"}</p>
+            </div>
+          </details>
+
+          {raqyyStats && raqyyStats.recentFailures.length > 0 && (
+            <div className="mt-4 border-t border-border/50 pt-4">
+              <p className="text-xs font-semibold text-red-600 mb-2">{isAr ? "آخر أخطاء المزامنة" : "Recent sync errors"}</p>
+              <div className="space-y-1">
+                {raqyyStats.recentFailures.map((f, idx) => (
+                  <div key={idx} className="text-[11px] text-red-600 bg-red-50 px-2 py-1 rounded">
+                    <span className="font-mono">{f.endpoint}</span> — {f.errorMessage || "Unknown error"}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

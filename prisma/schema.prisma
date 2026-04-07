@@ -1379,6 +1379,12 @@ model RaqyySalesInvoice {
   payload     Json
   receivedAt  DateTime @default(now())
 
+  // Mapping into G-Ledger native records
+  glInvoiceId   String?  // FK to Invoice.id once mapped
+  glCustomerId  String?  // FK to Customer.id once mapped
+  mappingStatus String?  @default("PENDING") // PENDING, MAPPED, FAILED
+  mappingError  String?
+
   @@unique([tenantId, externalId])
   @@index([tenantId, receivedAt])
 }
@@ -1395,6 +1401,29 @@ model RaqyyStockMovement {
   payload      Json
   receivedAt   DateTime @default(now())
 
+  // Mapping into G-Ledger native records
+  glStockMovementId String?  // FK to StockMovement.id once mapped
+  glProductId       String?  // FK to Product.id once mapped
+  mappingStatus     String?  @default("PENDING") // PENDING, MAPPED, FAILED
+  mappingError      String?
+
   @@unique([tenantId, externalId])
   @@index([tenantId, receivedAt])
+}
+
+// Log every Raqyy webhook attempt for observability + retry
+model RaqyySyncLog {
+  id          String   @id @default(cuid())
+  tenantId    String?
+  endpoint    String   // "ping" | "sales-invoices" | "stock-movements"
+  externalId  String?
+  status      String   // "SUCCESS" | "DUPLICATE" | "FAILED" | "UNAUTHORIZED" | "SUBSCRIPTION_REQUIRED" | "RATE_LIMITED"
+  httpCode    Int
+  errorMessage String?
+  payloadSize  Int?
+  ipAddress   String?
+  receivedAt  DateTime @default(now())
+
+  @@index([tenantId, receivedAt])
+  @@index([tenantId, status])
 }
