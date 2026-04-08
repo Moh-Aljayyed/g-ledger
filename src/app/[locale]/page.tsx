@@ -468,6 +468,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <a href="#pricing" className="hover:text-[#0070F2] transition-colors">{t.nav.pricing}</a>
             <Link href={`/${locale}/blog`} className="hover:text-[#0070F2] transition-colors">{t.nav.blog}</Link>
             <Link href={`/${locale}/integrations`} className="hover:text-[#0070F2] transition-colors">{t.nav.integrations}</Link>
+            <Link href={`/${locale}/contact`} className="hover:text-[#0070F2] transition-colors">{isAr ? "تواصل معنا" : "Contact"}</Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -1303,6 +1304,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <li><a href="#features" className="hover:text-white transition-colors">{t.footer.features}</a></li>
                 <li><a href="#pricing" className="hover:text-white transition-colors">{t.footer.pricing}</a></li>
                 <li><a href="#sectors" className="hover:text-white transition-colors">{t.footer.sectors}</a></li>
+                <li><Link href={`/${locale}/contact`} className="hover:text-white transition-colors">{isAr ? "تواصل معنا" : "Contact Us"}</Link></li>
+                <li><Link href={`/${locale}/contact`} className="hover:text-white transition-colors">{isAr ? "اعمل معنا" : "Careers"}</Link></li>
               </ul>
             </div>
 
