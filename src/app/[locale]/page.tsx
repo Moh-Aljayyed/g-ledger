@@ -4,6 +4,7 @@ import { VisitorCounter } from "@/components/visitor-counter";
 import { LangLink } from "@/components/lang-link";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animated-landing";
 import { PricingCards } from "@/components/pricing-cards";
+import { AddonsCards } from "@/components/addons-cards";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -229,14 +230,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     pricingEnterpriseItems: isAr
       ? ["كل شيء في الاحترافي", "API خارجي", "5 GB تخزين", "White Label", "دعم مخصص 24/7", "مستخدمين غير محدود"]
       : ["Everything in Professional", "External API", "5 GB storage", "White Label", "Dedicated 24/7 support", "Unlimited users"],
-    addonItems: [
-      { name: "CRM", price: isAr ? "+150 ج.م / +15 ر.س" : "+$3/user", desc: isAr ? "إدارة العملاء المحتملين" : "Lead management" },
-      { name: "eCommerce", price: isAr ? "+250 ج.م / +25 ر.س" : "+$5/user", desc: isAr ? "متجر إلكتروني" : "Online store" },
-      { name: isAr ? "موظفين (احترافي)" : "Employees (Pro)", price: isAr ? "250 ج.م/موظف" : "$5/emp", desc: isAr ? "أول 10 ثم تنازلي" : "First 10 then tiered" },
-      { name: isAr ? "موظفين (مؤسسي)" : "Employees (Enterprise)", price: isAr ? "500 ج.م/موظف" : "$10/emp", desc: isAr ? "HR متقدم + أول 10 ثم تنازلي" : "Advanced HR + tiered" },
-      { name: "POS", price: isAr ? "+150 ج.م / +15 ر.س" : "+$3/device", desc: isAr ? "نقطة بيع (مؤسسي)" : "POS (Enterprise)" },
-      { name: isAr ? "تخزين" : "Storage", price: isAr ? "500 ج.م / 50 ر.س" : "$10/GB", desc: isAr ? "مساحة إضافية" : "Extra space" },
-    ],
     tips: {
       badge: isAr ? "نصائح محاسبية" : "Accounting Tips",
       title: isAr ? "أخبار ونصائح مالية" : "Financial News & Tips",
@@ -1140,27 +1133,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
           {/* Old pricing cards replaced by PricingCards component above */}
 
-          {/* Add-ons */}
+          {/* Add-ons (geo-aware: shows only the user's local currency) */}
           <div className="bg-gradient-to-br from-[#F8FAFC] to-[#EFF6FF] rounded-2xl p-8 border border-gray-100">
             <h3 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.pricing.addons}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              {[
-                { name: t.addonItems[0].name, price: t.addonItems[0].price, desc: t.addonItems[0].desc, iconPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
-                { name: t.addonItems[1].name, price: t.addonItems[1].price, desc: t.addonItems[1].desc, iconPath: "M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020.01 4H5.21l-.94-2H1z" },
-                { name: t.addonItems[2].name, price: t.addonItems[2].price, desc: t.addonItems[2].desc, iconPath: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z" },
-                { name: t.addonItems[3].name, price: t.addonItems[3].price, desc: t.addonItems[3].desc, iconPath: "M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4z" },
-                { name: t.addonItems[4].name, price: t.addonItems[4].price, desc: t.addonItems[4].desc, iconPath: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zM2 14h20v-4H2v4zm2-3h2v2H4v-2z" },
-              ].map((addon, i) => (
-                <div key={i} className="bg-white rounded-xl p-4 border border-gray-100 text-center hover:shadow-md transition-all">
-                  <div className="w-10 h-10 rounded-lg bg-[#0070F2]/10 flex items-center justify-center mx-auto mb-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#0070F2"><path d={addon.iconPath}/></svg>
-                  </div>
-                  <div className="font-bold text-sm text-[#021544]">{addon.name}</div>
-                  <div className="text-xs text-[#0070F2] font-bold mt-1">{addon.price}</div>
-                  <div className="text-[10px] text-gray-400 mt-1">{addon.desc}</div>
-                </div>
-              ))}
-            </div>
+            <AddonsCards />
           </div>
 
           {/* Payment Methods */}
@@ -1235,6 +1211,96 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ============ MEET OUR ACCOUNTANT — DALIA ============ */}
+      <section className="py-20 bg-gradient-to-b from-white via-[#fafbfc] to-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="inline-block text-xs font-semibold text-[#0d4d35] bg-[#0d4d35]/10 px-4 py-1.5 rounded-full mb-4">
+              {isAr ? "دعم محاسبي مباشر" : "Direct Accounting Support"}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#021544]">
+              {isAr ? "محاسبة معتمدة على واتساب — مجاناً للمشتركين" : "Certified accountant on WhatsApp — free for subscribers"}
+            </h2>
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+              {isAr
+                ? "احصل على إجابات محاسبية فورية من خبيرة معتمدة CMA — لا حاجة لمحاسب خارجي للأسئلة اليومية"
+                : "Get instant accounting answers from a CMA-certified expert — no need to hire an external accountant for daily questions"}
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-border shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3">
+              {/* Avatar / accent column */}
+              <div className="bg-gradient-to-br from-[#0d4d35] via-[#0f5f3e] to-[#0d4d35] p-8 flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "20px 20px" }} />
+                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[#c9a14a] to-[#a67c2a] flex items-center justify-center text-4xl font-bold text-white shadow-2xl border-4 border-[#c9a14a]/30 mb-4">
+                  د
+                </div>
+                <div className="relative">
+                  <div className="text-xl font-bold">{isAr ? "د. داليا مهدي" : "Dr. Dalia Mahdy"}</div>
+                  <div className="text-xs text-[#c9a14a] mt-1 font-semibold">
+                    {isAr ? "محاسبة أولى — CMA" : "Senior Accountant — CMA"}
+                  </div>
+                  <div className="text-[10px] text-white/60 mt-1">
+                    {isAr ? "أكثر من 10 سنوات خبرة" : "10+ years experience"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Details column */}
+              <div className="md:col-span-2 p-8">
+                <h3 className="text-lg font-bold text-[#021544] mb-4">
+                  {isAr ? "تخصصاتها" : "Specialties"}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  {[
+                    isAr ? "الذمم الدائنة والمدينة" : "Accounts Payable & Receivable",
+                    isAr ? "إقفال الحسابات الشهري" : "Monthly Account Closing",
+                    isAr ? "القوائم المالية" : "Financial Statements",
+                    isAr ? "التسويات البنكية" : "Bank Reconciliation",
+                    isAr ? "QuickBooks + Odoo ERP" : "QuickBooks + Odoo ERP",
+                    isAr ? "الموازنات والتقارير" : "Budgets & Reporting",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0d4d35"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t border-border/50 pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-1">
+                      {isAr ? "تواصل مباشر على واتساب" : "Contact directly on WhatsApp"}
+                    </div>
+                    <div className="text-sm font-mono font-semibold text-[#021544]" dir="ltr">
+                      +20 128 573 6144
+                    </div>
+                  </div>
+                  <a
+                    href={`https://wa.me/201285736144?text=${encodeURIComponent(isAr ? "مرحباً د. داليا، أحتاج استفسار محاسبي بخصوص G-Ledger" : "Hello Dr. Dalia, I have an accounting question about G-Ledger")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-xl font-semibold text-sm hover:bg-[#1ea952] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
+                    {isAr ? "ابدأ المحادثة" : "Start chat"}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-xs text-muted-foreground mt-4">
+            {isAr
+              ? "الدعم الفني متاح أيضاً عبر زر الواتساب الأخضر في أسفل الشاشة"
+              : "Technical support is also available via the green WhatsApp button at the bottom of the screen"}
+          </p>
         </div>
       </section>
 
