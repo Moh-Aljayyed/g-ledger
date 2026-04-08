@@ -178,6 +178,148 @@ export default function ContactPage() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6 py-16">
+        {/* ============ EXCLUSIVE GULF AGENTS WANTED ============ */}
+        <div className="mb-16 relative overflow-hidden rounded-3xl border-2 border-[#c9a14a]/40 bg-gradient-to-br from-[#021544] via-[#0a2a6e] to-[#0d4d35] p-8 md:p-12">
+          {/* Decorative background */}
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "30px 30px" }} />
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#c9a14a]/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#0070F2]/20 rounded-full blur-3xl" />
+
+          <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            {/* Left: Headline */}
+            <div className="lg:col-span-2 text-white">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#c9a14a]/20 border border-[#c9a14a]/50 text-[#f5e6b8] text-xs font-bold mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#c9a14a] animate-pulse" />
+                {isAr ? "فرصة شراكة حصرية" : "Exclusive Partnership Opportunity"}
+              </div>
+              <h2 className="text-2xl md:text-4xl font-bold mb-4 leading-tight">
+                {isAr ? (
+                  <>
+                    مطلوب <span className="text-[#c9a14a]">وكلاء حصريين</span> في الخليج وجميع دول العالم
+                  </>
+                ) : (
+                  <>
+                    Wanted: <span className="text-[#c9a14a]">Exclusive Agents</span> in the GCC and worldwide
+                  </>
+                )}
+              </h2>
+              <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+                {isAr
+                  ? "G-Ledger يبحث عن شركاء استراتيجيين لتمثيل المنصة حصرياً في كل دولة حول العالم. فرصة لبناء أعمال متكررة الإيرادات في سوق ERP السحابي الأسرع نمواً — مع منتج عربي/إنجليزي يدعم 29+ دولة."
+                  : "G-Ledger is seeking strategic partners to exclusively represent the platform in every country worldwide. A chance to build recurring-revenue business in the fastest-growing cloud ERP market — with an Arabic/English product supporting 29+ countries."}
+              </p>
+
+              {/* Priority regions */}
+              <div className="mb-3">
+                <div className="text-[10px] font-bold text-[#c9a14a] uppercase tracking-wider mb-2">
+                  {isAr ? "🌟 أولوية قصوى — الخليج" : "🌟 Top Priority — GCC"}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { flag: "🇸🇦", name: isAr ? "السعودية" : "Saudi Arabia" },
+                    { flag: "🇦🇪", name: isAr ? "الإمارات" : "UAE" },
+                    { flag: "🇰🇼", name: isAr ? "الكويت" : "Kuwait" },
+                    { flag: "🇶🇦", name: isAr ? "قطر" : "Qatar" },
+                    { flag: "🇧🇭", name: isAr ? "البحرين" : "Bahrain" },
+                    { flag: "🇴🇲", name: isAr ? "عُمان" : "Oman" },
+                  ].map((c) => (
+                    <div
+                      key={c.name}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#c9a14a]/15 border border-[#c9a14a]/40 backdrop-blur-sm"
+                    >
+                      <span className="text-base">{c.flag}</span>
+                      <span className="text-[11px] font-semibold">{c.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="text-[10px] font-bold text-white/70 uppercase tracking-wider mb-2">
+                  {isAr ? "🌍 ومفتوح لجميع دول العالم" : "🌍 And open to all countries worldwide"}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "🇪🇬", "🇯🇴", "🇱🇧", "🇮🇶", "🇸🇾", "🇵🇸", "🇾🇪",
+                    "🇲🇦", "🇹🇳", "🇩🇿", "🇱🇾", "🇸🇩",
+                    "🇹🇷", "🇺🇸", "🇬🇧", "🇨🇦", "🇩🇪", "🇫🇷", "🇮🇹", "🇪🇸",
+                    "🇮🇳", "🇵🇰", "🇧🇩", "🇮🇩", "🇲🇾",
+                    "🇿🇦", "🇳🇬", "🇰🇪",
+                  ].map((flag, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-white/5 border border-white/10 text-base hover:bg-white/15 hover:scale-110 transition-all cursor-default"
+                      title={flag}
+                    >
+                      {flag}
+                    </span>
+                  ))}
+                  <span className="inline-flex items-center justify-center px-2 h-7 rounded-md bg-white/5 border border-white/10 text-[10px] text-white/60 font-bold">
+                    +
+                  </span>
+                </div>
+              </div>
+
+              {/* Benefits */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  isAr ? "حصرية كاملة في بلدك" : "Full exclusivity in your country",
+                  isAr ? "عمولات متكررة من كل اشتراك" : "Recurring commissions on every subscription",
+                  isAr ? "تدريب وتسويق ودعم كامل" : "Full training, marketing & support",
+                  isAr ? "عقد طويل الأجل قابل للتجديد" : "Renewable long-term contract",
+                ].map((b, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-white/90">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#c9a14a">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    {b}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: CTA card */}
+            <div className="bg-white rounded-2xl p-6 shadow-2xl">
+              <div className="text-center mb-4">
+                <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a14a] to-[#a67c2a] items-center justify-center text-2xl shadow-lg mb-3">
+                  🤝
+                </div>
+                <h3 className="text-lg font-bold text-[#021544]">
+                  {isAr ? "قدّم طلبك للوكالة" : "Apply for Agency"}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {isAr ? "سيتم التواصل معك خلال 48 ساعة" : "We'll contact you within 48 hours"}
+                </p>
+              </div>
+
+              <a
+                href={`https://wa.me/201507522155?text=${encodeURIComponent(
+                  isAr
+                    ? "مرحباً، أنا مهتم بأن أكون وكيلاً حصرياً لـ G-Ledger في دولتي. أرجو التواصل معي لمناقشة التفاصيل."
+                    : "Hello, I'm interested in becoming an exclusive G-Ledger agent in my country. Please contact me to discuss details."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center py-3 rounded-xl bg-[#25D366] text-white font-bold text-sm hover:bg-[#1ea952] transition-all shadow-lg mb-2"
+              >
+                💬 {isAr ? "تواصل عبر واتساب" : "Contact via WhatsApp"}
+              </a>
+
+              <a
+                href={`mailto:info@g-ledger.com?subject=${encodeURIComponent(isAr ? "طلب وكالة حصرية - G-Ledger" : "Exclusive Agency Application - G-Ledger")}`}
+                className="block w-full text-center py-3 rounded-xl border-2 border-[#021544] text-[#021544] font-bold text-sm hover:bg-[#021544] hover:text-white transition-all"
+              >
+                ✉ {isAr ? "إرسال بريد إلكتروني" : "Send Email"}
+              </a>
+
+              <p className="text-[10px] text-center text-muted-foreground mt-3">
+                {isAr ? "بلد واحد · وكيل واحد · حصرية كاملة · في أي مكان بالعالم" : "One country · One agent · Full exclusivity · Anywhere in the world"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+
         {/* Quick contact cards */}
         <div className="mb-12">
           <h2 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.quickWays}</h2>
