@@ -323,10 +323,10 @@ export default function ContactPage() {
         {/* Quick contact cards */}
         <div className="mb-12">
           <h2 className="text-xl font-bold text-[#021544] mb-6 text-center">{t.quickWays}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* WhatsApp Technical */}
             <a
-              href={`https://wa.me/201507522155?text=${encodeURIComponent(isAr ? "مرحباً، أحتاج دعم فني بخصوص G-Ledger" : "Hello, I need technical support for G-Ledger")}`}
+              href={`https://wa.me/201507522155?text=${encodeURIComponent(isAr ? "مرحباً، أحتاج دعم بخصوص G-Ledger" : "Hello, I need support for G-Ledger")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-white rounded-2xl border border-border p-5 hover:shadow-xl hover:-translate-y-1 transition-all"
@@ -337,33 +337,10 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div className="font-bold text-[#021544] text-sm">
-                {isAr ? "واتساب — دعم فني" : "WhatsApp — Tech Support"}
+                {isAr ? "واتساب" : "WhatsApp"}
               </div>
               <div className="text-xs text-muted-foreground mt-1" dir="ltr">
                 +20 150 752 2155
-              </div>
-            </a>
-
-            {/* WhatsApp Accounting */}
-            <a
-              href={`https://wa.me/201285736144?text=${encodeURIComponent(isAr ? "مرحباً د. داليا، أحتاج استفسار محاسبي" : "Hello Dr. Dalia, I have an accounting question")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-white rounded-2xl border border-[#c9a14a]/30 p-5 hover:shadow-xl hover:-translate-y-1 transition-all relative"
-            >
-              <span className="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-[#c9a14a]/15 text-[#a67c2a] font-bold">
-                {isAr ? "CMA" : "CMA"}
-              </span>
-              <div className="w-12 h-12 rounded-xl bg-[#0d4d35]/10 flex items-center justify-center mb-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#0d4d35">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-                </svg>
-              </div>
-              <div className="font-bold text-[#021544] text-sm">
-                {isAr ? "د. داليا — دعم محاسبي" : "Dr. Dalia — Accounting"}
-              </div>
-              <div className="text-xs text-muted-foreground mt-1" dir="ltr">
-                +20 128 573 6144
               </div>
             </a>
 
