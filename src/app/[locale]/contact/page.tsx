@@ -413,6 +413,44 @@ export default function ContactPage() {
               <div>
                 <h2 className="text-xl font-bold text-[#021544] mb-2">{t.openPositions}</h2>
                 <p className="text-sm text-muted-foreground mb-5">{t.careersIntro}</p>
+
+                {/* Send CV via WhatsApp banner */}
+                <a
+                  href={`https://wa.me/201507522155?text=${encodeURIComponent(
+                    isAr
+                      ? "السلام عليكم،\n\nأود التقديم على وظيفة في G-Ledger.\n\nالاسم: \nالوظيفة المطلوبة: \nسنوات الخبرة: \n\n📎 مرفق السيرة الذاتية"
+                      : "Hello,\n\nI'd like to apply for a position at G-Ledger.\n\nName: \nPosition: \nYears of experience: \n\n📎 CV attached"
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 mb-5 p-4 rounded-2xl bg-gradient-to-l from-[#0d4d35] via-[#0f5f3e] to-[#0d4d35] border border-[#25D366]/40 hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden relative"
+                >
+                  <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "20px 20px" }} />
+                  <div className="relative w-12 h-12 rounded-xl bg-[#25D366] flex items-center justify-center shadow-lg flex-shrink-0">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
+                  </div>
+                  <div className="relative flex-1 min-w-0 text-white">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#c9a14a] text-[#0d4d35] uppercase tracking-wide">
+                        {isAr ? "الأسرع" : "Fastest"}
+                      </span>
+                      <span className="text-sm font-bold">
+                        {isAr ? "أرسل سيرتك الذاتية على واتساب" : "Send your CV via WhatsApp"}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-white/70 leading-snug">
+                      {isAr
+                        ? "اضغط هنا، اكتب بياناتك، وأرفق ملف الـ CV (PDF/Word)"
+                        : "Click here, fill in your details, and attach your CV file (PDF/Word)"}
+                    </div>
+                  </div>
+                  <span className="relative text-[#c9a14a] text-2xl group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">
+                    {isAr ? "←" : "→"}
+                  </span>
+                </a>
+
                 <div className="space-y-3">
                   {positions.map((p, i) => (
                     <div
@@ -582,8 +620,8 @@ export default function ContactPage() {
                   placeholder={
                     mode === "careers"
                       ? isAr
-                        ? "اكتب نبذة عنك وألصق رابط CV (Drive / LinkedIn)"
-                        : "Tell us about yourself and paste your CV link (Drive / LinkedIn)"
+                        ? "اكتب نبذة عنك وألصق رابط CV (Google Drive / LinkedIn / Dropbox)\n\nأو الأسرع: استخدم زر واتساب أعلاه لإرسال ملف CV مباشرة 📎"
+                        : "Tell us about yourself and paste your CV link (Google Drive / LinkedIn / Dropbox)\n\nOr faster: use the WhatsApp button above to send your CV file directly 📎"
                       : ""
                   }
                   className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-[#0070F2]/20 focus:border-[#0070F2] resize-none"
