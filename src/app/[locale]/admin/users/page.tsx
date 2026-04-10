@@ -10,9 +10,11 @@ export default function AllUsersPage() {
   const tc = useTranslations("common");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: allUsers, isLoading } = trpc.admin.getAllUsers.useQuery();
+  const { data: allUsers, isLoading, error } = trpc.admin.getAllUsers.useQuery(undefined, {
+    retry: 1,
+  });
   const data = allUsers?.filter((u: any) =>
-    !searchTerm || u.name.includes(searchTerm) || u.email.includes(searchTerm)
+    !searchTerm || u.name?.toLowerCase().includes(searchTerm.toLowerCase()) || u.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const roleLabels: Record<string, string> = {
@@ -57,6 +59,14 @@ export default function AllUsersPage() {
           className="px-4 py-2 rounded-lg border border-input bg-background text-sm focus:ring-2 focus:ring-ring outline-none w-80"
         />
       </div>
+
+      {/* Error display */}
+      {error && (
+        <div className="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
+          <strong>خطأ في تحميل المستخدمين:</strong> {error.message}
+          <div className="text-xs text-red-500 mt-1 font-mono">{error.data?.code}</div>
+        </div>
+      )}
 
       {/* Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
