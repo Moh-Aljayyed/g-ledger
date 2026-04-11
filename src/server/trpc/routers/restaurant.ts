@@ -64,13 +64,28 @@ export const restaurantRouter = router({
         },
         include: {
           tabs: {
-            where: { status: "OPEN" },
+            where: { status: { in: ["OPEN", "PENDING_CONFIRM"] } },
             include: { items: true },
           },
         },
         orderBy: { name: "asc" },
       });
     }),
+
+  /**
+   * All pending customer orders (no table attached or with table) —
+   * shown in a banner above the floor map so the cashier spots them.
+   */
+  listPendingCustomerOrders: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.tab.findMany({
+      where: { tenantId: ctx.tenantId, status: "PENDING_CONFIRM" },
+      include: {
+        table: true,
+        items: { include: { product: true } },
+      },
+      orderBy: { openedAt: "desc" },
+    });
+  }),
 
   createTable: protectedProcedure
     .input(
@@ -484,6 +499,204 @@ export const restaurantRouter = router({
   // Customers scan a QR code at their table, this loads the restaurant's
   // public menu without requiring a login. Used in browse-only mode for
   // now — first step toward customer self-ordering.
+
+  /**
+   * Customer self-order submission (no auth). Takes the tenant slug +
+   * optional table name + items + customer info, creates a Tab in
+   * PENDING_CONFIRM status so the cashier can review before sending
+   * to the kitchen. Validates products belong to the tenant.
+   */
+  publicSubmitOrder: publicProcedure
+    .input(
+      z.object({
+        slug: z.string().min(1),
+        tableName: z.string().optional(),
+        customerName: z.string().optional(),
+        customerPhone: z.string().optional(),
+        items: z
+          .array(
+            z.object({
+              productId: z.string(),
+              quantity: z.number().positive().max(99),
+              notes: z.string().max(200).optional(),
+            }),
+          )
+          .min(1)
+          .max(50),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { slug: input.slug },
+        select: { id: true, vatRate: true },
+      });
+      if (!tenant) throw new TRPCError({ code: "NOT_FOUND" });
+
+      const productIds = input.items.map((i) => i.productId);
+      const products = await ctx.db.product.findMany({
+        where: { id: { in: productIds }, tenantId: tenant.id, isActive: true },
+        include: { kitchenStations: { take: 1 } },
+      });
+      if (products.length === 0) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "No valid products" });
+      }
+
+      // Try to match the scanned table name
+      let tableId: string | undefined;
+      if (input.tableName) {
+        const table = await ctx.db.restaurantTable.findFirst({
+          where: { tenantId: tenant.id, name: input.tableName },
+          select: { id: true },
+        });
+        if (table) tableId = table.id;
+      }
+
+      // Pick any tenant owner as the opener (cashier will confirm later)
+      const owner = await ctx.db.user.findFirst({
+        where: { tenantId: tenant.id },
+        select: { id: true },
+      });
+      if (!owner) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No user" });
+
+      const tabNumber = await nextCounter(ctx.db, tenant.id, "TAB");
+      const vatRate = Number(tenant.vatRate);
+
+      const tabItems = input.items
+        .map((i) => {
+          const p = products.find((x) => x.id === i.productId);
+          if (!p) return null;
+          const unit = Number(p.sellingPrice);
+          const lineTotal = unit * i.quantity;
+          return {
+            productId: p.id,
+            quantity: new Prisma.Decimal(i.quantity),
+            unitPrice: new Prisma.Decimal(unit),
+            modifiers: [] as unknown as Prisma.InputJsonValue,
+            modifierTotal: new Prisma.Decimal(0),
+            totalPrice: new Prisma.Decimal(lineTotal),
+            notes: i.notes,
+            status: "NEW",
+            stationId: p.kitchenStations[0]?.stationId,
+          };
+        })
+        .filter((x): x is NonNullable<typeof x> => x !== null);
+
+      const subtotal = tabItems.reduce((s, it) => s + Number(it.totalPrice), 0);
+      const vat = subtotal * (vatRate / 100);
+
+      const tab = await ctx.db.tab.create({
+        data: {
+          tabNumber,
+          status: "PENDING_CONFIRM",
+          source: "CUSTOMER_QR",
+          orderType: tableId ? "DINE_IN" : "TAKEAWAY",
+          guestCount: 1,
+          customerName: input.customerName,
+          customerPhone: input.customerPhone,
+          tableId,
+          subtotal: new Prisma.Decimal(subtotal),
+          vatAmount: new Prisma.Decimal(vat),
+          total: new Prisma.Decimal(subtotal + vat),
+          notes: "⚠️ طلب من العميل عبر QR — يحتاج تأكيد",
+          tenantId: tenant.id,
+          openedById: owner.id,
+          items: { create: tabItems },
+        },
+      });
+
+      return {
+        ok: true,
+        tabNumber: tab.tabNumber,
+        total: Number(tab.total),
+      };
+    }),
+
+  /**
+   * Cashier confirms a customer-submitted order — transitions it from
+   * PENDING_CONFIRM to OPEN so items can be sent to the kitchen.
+   */
+  confirmCustomerOrder: protectedProcedure
+    .input(z.object({ tabId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const tab = await ctx.db.tab.findFirst({
+        where: { id: input.tabId, tenantId: ctx.tenantId, status: "PENDING_CONFIRM" },
+      });
+      if (!tab) throw new TRPCError({ code: "NOT_FOUND" });
+      return ctx.db.tab.update({
+        where: { id: tab.id },
+        data: { status: "OPEN", openedById: ctx.user.id },
+      });
+    }),
+
+  rejectCustomerOrder: protectedProcedure
+    .input(z.object({ tabId: z.string(), reason: z.string().optional() }))
+    .mutation(async ({ ctx, input }) => {
+      const tab = await ctx.db.tab.findFirst({
+        where: { id: input.tabId, tenantId: ctx.tenantId, status: "PENDING_CONFIRM" },
+      });
+      if (!tab) throw new TRPCError({ code: "NOT_FOUND" });
+      await ctx.db.$transaction(async (tx) => {
+        await tx.tabItem.updateMany({ where: { tabId: tab.id }, data: { status: "VOIDED" } });
+        await tx.tab.update({
+          where: { id: tab.id },
+          data: {
+            status: "CANCELLED",
+            closedAt: new Date(),
+            notes: `REJECTED: ${input.reason || "no reason"}`,
+          },
+        });
+      });
+      return { ok: true };
+    }),
+
+  // ============ HAPPY HOUR RULES ============
+  listHappyHourRules: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.happyHourRule.findMany({
+      where: { tenantId: ctx.tenantId },
+      orderBy: { createdAt: "desc" },
+    });
+  }),
+
+  createHappyHourRule: protectedProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        dayOfWeek: z.number().min(0).max(6).nullable().optional(),
+        startTime: z.string().regex(/^\d{2}:\d{2}$/),
+        endTime: z.string().regex(/^\d{2}:\d{2}$/),
+        discountPct: z.number().min(0).max(100),
+        categories: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.happyHourRule.create({
+        data: {
+          name: input.name,
+          dayOfWeek: input.dayOfWeek ?? null,
+          startTime: input.startTime,
+          endTime: input.endTime,
+          discountPct: new Prisma.Decimal(input.discountPct),
+          categories: input.categories,
+          tenantId: ctx.tenantId,
+        },
+      });
+    }),
+
+  toggleHappyHourRule: protectedProcedure
+    .input(z.object({ id: z.string(), enabled: z.boolean() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.happyHourRule.update({
+        where: { id: input.id },
+        data: { enabled: input.enabled },
+      });
+    }),
+
+  deleteHappyHourRule: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.happyHourRule.delete({ where: { id: input.id } });
+      return { ok: true };
+    }),
 
   publicMenuByTenantSlug: publicProcedure
     .input(z.object({ slug: z.string().min(1) }))

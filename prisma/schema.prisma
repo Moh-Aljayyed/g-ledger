@@ -126,6 +126,9 @@ model Tenant {
   // Loyalty
   loyaltySettings   LoyaltySettings?
   loyaltyAccounts   LoyaltyAccount[]
+
+  // Happy Hour
+  happyHourRules    HappyHourRule[]
 }
 
 model User {
@@ -1426,7 +1429,8 @@ model RestaurantTable {
 model Tab {
   id            String           @id @default(cuid())
   tabNumber     Int
-  status        String           @default("OPEN") // OPEN | CLOSED | PAID | CANCELLED
+  status        String           @default("OPEN") // OPEN | CLOSED | PAID | CANCELLED | PENDING_CONFIRM
+  source        String           @default("CASHIER") // CASHIER | CUSTOMER_QR | WHATSAPP
   orderType     String           @default("DINE_IN") // DINE_IN | TAKEAWAY | DELIVERY
   guestCount    Int              @default(1)
   customerName  String?
@@ -1534,6 +1538,28 @@ model ProductKitchenStation {
   station   KitchenStation @relation(fields: [stationId], references: [id], onDelete: Cascade)
 
   @@id([productId, stationId])
+}
+
+// ============ HAPPY HOUR RULES ============
+// Time-windowed automatic discount rules (e.g. "20% off every day 3-5pm").
+// The cashier POS consults active rules at checkout and applies the best
+// matching discount automatically.
+
+model HappyHourRule {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String   // "Afternoon 3-5"
+  enabled     Boolean  @default(true)
+  dayOfWeek   Int?     // 0=Sunday..6=Saturday, null = every day
+  startTime   String   // "15:00" HH:mm (24h)
+  endTime     String   // "17:00"
+  discountPct Decimal  @default(0) @db.Decimal(5, 2)
+  categories  String?  // comma-separated category names, null = all products
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tenantId, enabled])
 }
 
 // ============ LOYALTY PROGRAM ============
