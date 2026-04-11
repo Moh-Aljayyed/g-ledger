@@ -5,6 +5,7 @@ import { LangLink } from "@/components/lang-link";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animated-landing";
 import { PricingCards } from "@/components/pricing-cards";
 import { AddonsCards } from "@/components/addons-cards";
+import { TrialCountdown } from "@/components/trial-countdown";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -1127,6 +1128,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <span className="text-sm font-semibold text-[#0070F2] bg-[#0070F2]/10 px-4 py-1.5 rounded-full">{t.pricing.badge}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#021544] mt-4">{t.pricing.title}</h2>
             <p className="text-gray-500 mt-3">{t.pricing.subtitle}</p>
+            <TrialCountdown />
           </div>
           </AnimatedSection>
 
