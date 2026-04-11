@@ -231,19 +231,51 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           "Transport & Logistics",
           "Auto Services",
         ],
-    // 4 أنواع طبية تحت Custom Suite
+    // 4 أنواع طبية تحت Custom Suite — بالصور الأصلية
     medicalSectors: isAr
       ? [
-          { name: "مستشفيات", desc: "HIS + مطالبات تأمين + جرعات" },
-          { name: "مراكز صحية", desc: "ربط وزارة الصحة + تقارير وبائية" },
-          { name: "عيادات", desc: "مواعيد + وصفات + Telehealth" },
-          { name: "معامل تحاليل", desc: "LIS + ربط أجهزة + تقارير PDF" },
+          {
+            name: "مستشفيات",
+            desc: "HIS + مطالبات تأمين + جرعات",
+            image: "https://images.pexels.com/photos/3182834/pexels-photo-3182834.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "مراكز صحية",
+            desc: "ربط وزارة الصحة + تقارير وبائية",
+            image: "https://images.pexels.com/photos/668298/pexels-photo-668298.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "عيادات",
+            desc: "مواعيد + وصفات + Telehealth",
+            image: "https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "معامل تحاليل",
+            desc: "LIS + ربط أجهزة + تقارير PDF",
+            image: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
         ]
       : [
-          { name: "Hospitals", desc: "HIS + insurance claims + dosing" },
-          { name: "Health Centers", desc: "MoH integration + epi reports" },
-          { name: "Clinics", desc: "Appointments + prescriptions + Telehealth" },
-          { name: "Labs", desc: "LIS + device integration + PDF reports" },
+          {
+            name: "Hospitals",
+            desc: "HIS + insurance claims + dosing",
+            image: "https://images.pexels.com/photos/3182834/pexels-photo-3182834.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "Health Centers",
+            desc: "MoH integration + epi reports",
+            image: "https://images.pexels.com/photos/668298/pexels-photo-668298.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "Clinics",
+            desc: "Appointments + prescriptions + Telehealth",
+            image: "https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
+          {
+            name: "Labs",
+            desc: "LIS + device integration + PDF reports",
+            image: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=300",
+          },
         ],
     comparison: {
       badge: isAr ? "المقارنة" : "Comparison",
@@ -1160,7 +1192,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {/* Medical sub-sectors */}
+            {/* Medical sub-sectors — same image treatment as standard cards */}
             {t.medicalSectors.map((m, i) => (
               <AnimatedCard delay={i * 60} key={m.name}>
                 <a
@@ -1171,23 +1203,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block rounded-xl overflow-hidden border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                  className="group block rounded-xl overflow-hidden border-2 border-purple-200 hover:border-purple-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 shadow-premium"
                 >
-                  <div className="p-5 text-center">
-                    <div className="text-4xl mb-2">
-                      {["🏥", "🩺", "💉", "🧪"][i] || "🏥"}
-                    </div>
+                  <div className="h-28 overflow-hidden img-branded relative">
+                    <img
+                      src={m.image}
+                      alt={m.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-2 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-600 text-white shadow-md">
+                      ✦
+                    </span>
+                  </div>
+                  <div className="p-3 bg-gradient-to-br from-purple-50 via-white to-purple-50 text-center">
                     <div className="text-sm font-bold text-[#021544] mb-1">{m.name}</div>
                     <div className="text-[10px] text-purple-700 leading-snug">{m.desc}</div>
-                    <div className="mt-3 inline-block text-[10px] font-bold text-purple-700 border-t border-purple-200 pt-2 w-full">
-                      {isAr ? "اطلب استشارة →" : "Request quote →"}
+                    <div className="mt-2 pt-2 border-t border-purple-200 text-[10px] font-bold text-purple-700">
+                      {isAr ? "اطلب استشارة ←" : "Request quote →"}
                     </div>
                   </div>
                 </a>
               </AnimatedCard>
             ))}
 
-            {/* Custom / Bespoke sector */}
+            {/* Custom / Bespoke sector — same image-card structure */}
             <AnimatedCard delay={4 * 60}>
               <a
                 href={`https://wa.me/201507522155?text=${encodeURIComponent(
@@ -1197,27 +1237,29 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-xl overflow-hidden border-2 border-[#c9a14a]/50 bg-gradient-to-br from-[#021544] via-[#0a2a6e] to-[#0d4d35] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative"
+                className="group block rounded-xl overflow-hidden border-2 border-[#c9a14a]/60 hover:border-[#c9a14a] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 shadow-premium"
               >
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 1px 1px, #c9a14a 1px, transparent 0)",
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-                <div className="relative p-5 text-center text-white">
-                  <div className="text-4xl mb-2">✨</div>
+                <div className="h-28 overflow-hidden img-branded relative">
+                  <img
+                    src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=300"
+                    alt={isAr ? "قطاعك الخاص" : "Custom sector"}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <span className="absolute top-2 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#c9a14a] text-[#021544] shadow-md">
+                    ✨
+                  </span>
+                </div>
+                <div className="p-3 bg-gradient-to-br from-[#021544] via-[#0a2a6e] to-[#0d4d35] text-center text-white">
                   <div className="text-sm font-bold mb-1">
                     {isAr ? "قطاعك الخاص" : "Your Own Sector"}
                   </div>
                   <div className="text-[10px] text-[#c9a14a] leading-snug">
                     {isAr
-                      ? "ما لقيت قطاعك؟ نعمله لك بالكامل — شجرة حسابات، ضرائب، تقارير"
+                      ? "ما لقيت قطاعك؟ نعمله لك — شجرة حسابات، ضرائب، تقارير"
                       : "Not listed? We'll build it for you — accounts, taxes, reports"}
                   </div>
-                  <div className="mt-3 inline-block text-[10px] font-bold text-[#c9a14a] border-t border-[#c9a14a]/30 pt-2 w-full">
+                  <div className="mt-2 pt-2 border-t border-[#c9a14a]/30 text-[10px] font-bold text-[#c9a14a]">
                     {t.sectors.customCta} →
                   </div>
                 </div>

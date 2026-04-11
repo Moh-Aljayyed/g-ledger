@@ -240,6 +240,157 @@ export default function SuperAdminDashboard() {
         </div>
       </div>
 
+      {/* Medical Suite Roadmap — Waves 11-16 */}
+      <div className="mb-8 bg-card rounded-xl border border-border p-6">
+        <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+          <div>
+            <h2 className="text-lg font-bold text-[#021544]">🏥 خريطة طريق Medical Suite — Waves 11-16</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              قطاع طبي كامل: مستشفيات، مراكز صحية، عيادات، ومعامل تحاليل — بمعايير ICD-10/11, CPT, HCPCS, ATC, LOINC
+            </p>
+          </div>
+          <span className="text-xs px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 font-medium">
+            6 موجات · متعدد السنوات
+          </span>
+        </div>
+
+        {/* Warning callout */}
+        <div className="mb-5 p-3 rounded-lg bg-amber-50 border border-amber-200">
+          <div className="text-xs font-bold text-amber-900 mb-1">⚠️ تحذيرات مهمة قبل البدء</div>
+          <ul className="text-[11px] text-amber-800 space-y-0.5 mr-3">
+            <li>• <strong>CPT license مدفوع</strong> من AMA (~$1k-10k/سنة حسب الاستخدام)</li>
+            <li>• <strong>موافقات تنظيمية لكل دولة</strong> (Saudi SFDA/CBAHI، Egypt EDA، UAE MoHAP...)</li>
+            <li>• <strong>تأمين مسؤولية طبية</strong> إجباري بعد لمس القرارات السريرية (الجرعات، الوصفات)</li>
+            <li>• <strong>فريق طبي لازم</strong>: CMO + صيدلي إكلينيكي + مبرمج HL7 + مبرمج DICOM</li>
+            <li>• <strong>مشروع 3-5 سنين</strong> ويفضل يكون خط منتج منفصل بفريقه وميزانيته</li>
+          </ul>
+        </div>
+
+        {/* Waves list */}
+        <div className="space-y-3">
+          {[
+            {
+              num: 11,
+              title: "Medical Foundation — معايير الترميز وقاعدة الأدوية",
+              desc: "ICD-10/11, ICD-10-PCS, CPT, HCPCS, ATC, NDC, LOINC + قاعدة أدوية موحدة + ترجمة عربية + مدقق تفاعلات دوائية",
+              duration: "6-12 شهر",
+              priority: "🔴 أساسي",
+              priorityColor: "bg-red-100 text-red-700",
+              blocker: true,
+            },
+            {
+              num: 12,
+              title: "Medical Clinic Platform — منصة العيادات",
+              desc: "إدارة مواعيد + EMR مبسط + وصفات إلكترونية + Telehealth + بوابة المريض",
+              duration: "4-6 شهور",
+              priority: "🟠 عالية",
+              priorityColor: "bg-orange-100 text-orange-700",
+              blocker: false,
+            },
+            {
+              num: 13,
+              title: "Medical Lab Platform — منصة معامل التحاليل (LIS)",
+              desc: "كتالوج تحاليل بـ LOINC + تتبع عينات بباركود + ربط أجهزة HL7/ASTM + تقارير PDF مخصصة + QC (Levey-Jennings)",
+              duration: "4-6 شهور",
+              priority: "🟠 عالية",
+              priorityColor: "bg-orange-100 text-orange-700",
+              blocker: false,
+            },
+            {
+              num: 14,
+              title: "Health Centers — مراكز الصحة الأولية",
+              desc: "سجل تطعيمات + تقارير وبائية + ربط وزارة الصحة (Saudi NPHIES / Egypt UHIS / UAE Malaffi) + تطبيق زيارات ميدانية",
+              duration: "3-6 شهور/دولة",
+              priority: "🟡 متوسطة",
+              priorityColor: "bg-yellow-100 text-yellow-700",
+              blocker: false,
+            },
+            {
+              num: 15,
+              title: "Hospital Platform — منصة المستشفيات (HIS الكامل)",
+              desc: "ADT + إدارة الأسِرّة + صيدلية كاملة + حاسبة جرعات + مطالبات تأمين + جدولة عمليات + DICOM viewer + ICU + ER + Quality metrics",
+              duration: "18-36 شهر",
+              priority: "🔴 ضخم",
+              priorityColor: "bg-red-100 text-red-700",
+              blocker: false,
+            },
+            {
+              num: 16,
+              title: "Regulatory Compliance & Accreditation",
+              desc: "اعتماد CBAHI / JCI + Audit logs متقدم (HIPAA/PDPL) + إدارة الموافقات + Data residency + Clinical Trials (GCP)",
+              duration: "مستمر",
+              priority: "🔴 إلزامي",
+              priorityColor: "bg-red-100 text-red-700",
+              blocker: false,
+            },
+          ].map((wave) => (
+            <div
+              key={wave.num}
+              className="flex items-start gap-3 p-4 rounded-lg bg-gradient-to-r from-purple-50/50 to-pink-50/30 border border-purple-100 hover:border-purple-300 transition-colors"
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 text-white text-sm font-bold flex items-center justify-center shadow-md">
+                W{wave.num}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-1 flex-wrap">
+                  <h3 className="text-sm font-bold text-[#021544]">{wave.title}</h3>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">
+                      {wave.duration}
+                    </span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${wave.priorityColor}`}>
+                      {wave.priority}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{wave.desc}</p>
+                {wave.blocker && (
+                  <p className="text-[10px] text-red-600 font-semibold mt-1">
+                    ⚠️ شرط مسبق لكل الموجات اللي بعده
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Integration standards reference */}
+        <div className="mt-5 p-4 rounded-lg bg-muted/40 border border-border">
+          <div className="text-xs font-bold text-[#021544] mb-3">📚 معايير الترميز الطبي المستهدفة</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-[11px]">
+            {[
+              { code: "ICD-10", body: "WHO", use: "تشخيصات الأمراض", cost: "مجاني" },
+              { code: "ICD-11", body: "WHO", use: "تشخيصات — الجيل الجديد", cost: "مجاني" },
+              { code: "ICD-10-PCS", body: "CMS", use: "إجراءات المستشفى", cost: "مجاني" },
+              { code: "CPT", body: "AMA", use: "فحوصات + أشعة + عيادات", cost: "💰 مدفوع" },
+              { code: "HCPCS", body: "CMS", use: "أجهزة ومستلزمات", cost: "مجاني" },
+              { code: "ATC", body: "WHO", use: "تصنيف الأدوية", cost: "مجاني" },
+              { code: "NDC", body: "FDA", use: "تعريف الدواء تجارياً", cost: "مجاني" },
+              { code: "LOINC", body: "Regenstrief", use: "ترميز التحاليل", cost: "مجاني" },
+            ].map((std) => (
+              <div
+                key={std.code}
+                className="flex items-center justify-between gap-2 p-2 rounded bg-white border border-border/50"
+              >
+                <div className="min-w-0">
+                  <div className="font-bold text-[#021544] text-xs">{std.code}</div>
+                  <div className="text-[10px] text-muted-foreground">{std.body} · {std.use}</div>
+                </div>
+                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap ${
+                  std.cost.includes("مدفوع") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                }`}>
+                  {std.cost}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-border/50 text-xs text-muted-foreground">
+          الحالة: <span className="font-semibold text-amber-600">خطة مستقبلية</span> — لم يبدأ التنفيذ · تتطلب شراكات طبية وفريق متخصص · آخر تحديث: 2026-04-11
+        </div>
+      </div>
+
       {/* Tenants Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
