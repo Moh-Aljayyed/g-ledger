@@ -2,7 +2,11 @@ import type { Sector } from "@prisma/client";
 import type { SectorConfig } from "./types";
 import { commercialConfig } from "./commercial";
 
-// Lazy-load sector configs to avoid loading all at startup
+// Lazy-load sector configs to avoid loading all at startup.
+// New sectors that don't yet have a dedicated config file fall back to
+// the closest existing one (services/commercial). A dedicated config
+// per sector will be added in a future session — the base config works
+// well enough for chart-of-accounts bootstrap.
 const sectorConfigMap: Record<Sector, () => Promise<SectorConfig>> = {
   COMMERCIAL: async () => commercialConfig,
   INDUSTRIAL: async () => (await import("./industrial")).industrialConfig,
@@ -20,6 +24,21 @@ const sectorConfigMap: Record<Sector, () => Promise<SectorConfig>> = {
   MEDICAL_CLINIC: async () => (await import("./medical-clinic")).medicalClinicConfig,
   MEDICAL_LAB: async () => (await import("./medical-lab")).medicalLabConfig,
   RESTAURANT: async () => (await import("./restaurant")).restaurantConfig,
+
+  // New sectors — reuse the closest existing config as a bootstrap
+  HOTEL: async () => (await import("./services")).servicesConfig,
+  EDUCATION: async () => (await import("./services")).servicesConfig,
+  GYM_FITNESS: async () => (await import("./services")).servicesConfig,
+  BEAUTY_SALON: async () => (await import("./services")).servicesConfig,
+  TRANSPORT_LOGISTICS: async () => (await import("./services")).servicesConfig,
+  AUTO_SERVICE: async () => commercialConfig,
+
+  // Medical Suite — health centers reuse the clinic config for now
+  MEDICAL_HEALTH_CENTER: async () => (await import("./medical-clinic")).medicalClinicConfig,
+
+  // Bespoke — falls back to commercial; real setup happens during
+  // the custom-quote onboarding process with the customer
+  CUSTOM: async () => commercialConfig,
 };
 
 export async function getSectorConfig(sector: Sector): Promise<SectorConfig> {
@@ -31,6 +50,7 @@ export async function getSectorConfig(sector: Sector): Promise<SectorConfig> {
 }
 
 export const ALL_SECTORS: Sector[] = [
+  // Standard pricing
   "INDUSTRIAL",
   "COMMERCIAL",
   "SERVICES",
@@ -42,9 +62,19 @@ export const ALL_SECTORS: Sector[] = [
   "TECHNOLOGY",
   "NON_PROFIT",
   "CROWDFUNDING",
-  "MEDICAL_HOSPITAL",
   "MEDICAL_PHARMACY",
+  "RESTAURANT",
+  "HOTEL",
+  "EDUCATION",
+  "GYM_FITNESS",
+  "BEAUTY_SALON",
+  "TRANSPORT_LOGISTICS",
+  "AUTO_SERVICE",
+  // Medical Suite (custom pricing)
+  "MEDICAL_HOSPITAL",
+  "MEDICAL_HEALTH_CENTER",
   "MEDICAL_CLINIC",
   "MEDICAL_LAB",
-  "RESTAURANT",
+  // Bespoke
+  "CUSTOM",
 ];

@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       register: isAr ? "ابدأ تجربتك المجانية" : "Start Free Trial",
     },
     hero: {
-      badge: isAr ? "29+ دولة | 15 قطاع | فوترة إلكترونية" : "29+ Countries | 15 Sectors | E-Invoicing",
+      badge: isAr ? "29+ دولة | 23+ قطاع | فوترة إلكترونية" : "29+ Countries | 23+ Sectors | E-Invoicing",
       title1: isAr ? "اختر قطاعك..." : "Choose Your Sector...",
       title2: isAr ? "ونظامك جاهز" : "Your System is Ready",
       subtitle: isAr
@@ -57,7 +57,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       cta2: isAr ? "شاهد المميزات" : "View Features",
       trust1: isAr ? "+5,000 مستخدم" : "5,000+ Users",
       trust2: isAr ? "29 دولة" : "29 Countries",
-      trust3: isAr ? "15 قطاع" : "15 Sectors",
+      trust3: isAr ? "23+ قطاع" : "23+ Sectors",
       trust4: isAr ? "100% قيود تلقائية" : "100% Auto Entries",
     },
     whyDifferent: {
@@ -68,7 +68,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       card1Desc: isAr
         ? "البرامج الأخرى تعطيك شجرة فارغة وتتركك تبنيها من الصفر. G-Ledger يعطيك شجرة مكتملة ومصممة خصيصًا لقطاعك — صناعي، طبي، مقاولات، أو أي قطاع آخر."
         : "Other software gives you an empty chart. G-Ledger gives you a complete chart designed specifically for your sector — manufacturing, medical, contracting, or any other.",
-      card1Stat: isAr ? "15 قطاع جاهز" : "15 Ready Sectors",
+      card1Stat: isAr ? "23+ قطاع جاهز" : "23+ Ready Sectors",
       card2Title: isAr ? "ضرائب ذكية — مش رقم واحد للكل" : "Smart Taxes — Not One Rate for All",
       card2Desc: isAr
         ? "هل تعرف إن القطاع الطبي في مصر معفى من ض.ق.م بينما المقاولات 14% + خصم منبع 0.5%؟ G-Ledger يعرف — ويحسب الضريبة الصحيحة تلقائيًا حسب دولتك وقطاعك."
@@ -174,13 +174,77 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     },
     sectors: {
       badge: isAr ? "القطاعات المدعومة" : "Supported Sectors",
-      title1: isAr ? "15 قطاع" : "15 Sectors",
+      title1: isAr ? "23+ قطاع" : "23+ Sectors",
       title2: isAr ? " بشجرة حسابات جاهزة" : " with Ready Chart of Accounts",
-      subtitle: isAr ? "اختر قطاعك وابدأ فورًا — النظام يجهّز لك الشجرة المحاسبية والضرائب المناسبة تلقائيًا" : "Choose your sector and start immediately — the system sets up your chart of accounts and taxes automatically",
+      subtitle: isAr
+        ? "اختر قطاعك وابدأ فورًا — النظام يجهّز لك الشجرة المحاسبية والضرائب المناسبة تلقائيًا"
+        : "Choose your sector and start immediately — the system sets up your chart of accounts and taxes automatically",
+      standardTitle: isAr ? "قطاعات بتسعير قياسي" : "Standard Pricing Sectors",
+      standardSubtitle: isAr ? "تجربة فورية — جاهزة في 5 دقائق" : "Instant setup — ready in 5 minutes",
+      customTitle: isAr ? "🏥 Medical Suite & Custom — حسب الطلب" : "🏥 Medical Suite & Custom — By Request",
+      customSubtitle: isAr
+        ? "قطاعات متخصصة تحتاج تكاملات ومزايا خاصة — تواصل معنا لعرض سعر وتنفيذ حسب احتياجك"
+        : "Specialized sectors that need custom integrations — contact us for a tailored quote",
+      customCta: isAr ? "اطلب استشارة مجانية" : "Request Free Consultation",
     },
+    // 16 قطاع تحت التسعير القياسي (مع المطاعم اللي بنيناها فعلاً)
     sectorNames: isAr
-      ? ["صناعي","تجاري","خدمي","بنوك ومالي","تأمين","عقاري","مقاولات","زراعي","تقني / SaaS","غير ربحي","تمويل جماعي","مستشفيات","صيدليات","عيادات","معامل تحاليل"]
-      : ["Manufacturing","Commercial","Services","Banking & Finance","Insurance","Real Estate","Contracting","Agriculture","Tech / SaaS","Non-Profit","Crowdfunding","Hospitals","Pharmacies","Clinics","Laboratories"],
+      ? [
+          "صناعي",
+          "تجاري",
+          "خدمي",
+          "بنوك ومالي",
+          "تأمين",
+          "عقاري",
+          "مقاولات",
+          "زراعي",
+          "تقني / SaaS",
+          "غير ربحي",
+          "تمويل جماعي",
+          "صيدليات",
+          "مطاعم وكافيهات",
+          "فنادق وضيافة",
+          "تعليم ومدارس",
+          "نوادي ولياقة",
+          "صالونات تجميل",
+          "نقل ولوجيستيك",
+          "ورش سيارات",
+        ]
+      : [
+          "Manufacturing",
+          "Commercial",
+          "Services",
+          "Banking & Finance",
+          "Insurance",
+          "Real Estate",
+          "Contracting",
+          "Agriculture",
+          "Tech / SaaS",
+          "Non-Profit",
+          "Crowdfunding",
+          "Pharmacies",
+          "Restaurants & Cafés",
+          "Hotels & Hospitality",
+          "Education & Schools",
+          "Gyms & Fitness",
+          "Beauty Salons",
+          "Transport & Logistics",
+          "Auto Services",
+        ],
+    // 4 أنواع طبية تحت Custom Suite
+    medicalSectors: isAr
+      ? [
+          { name: "مستشفيات", desc: "HIS + مطالبات تأمين + جرعات" },
+          { name: "مراكز صحية", desc: "ربط وزارة الصحة + تقارير وبائية" },
+          { name: "عيادات", desc: "مواعيد + وصفات + Telehealth" },
+          { name: "معامل تحاليل", desc: "LIS + ربط أجهزة + تقارير PDF" },
+        ]
+      : [
+          { name: "Hospitals", desc: "HIS + insurance claims + dosing" },
+          { name: "Health Centers", desc: "MoH integration + epi reports" },
+          { name: "Clinics", desc: "Appointments + prescriptions + Telehealth" },
+          { name: "Labs", desc: "LIS + device integration + PDF reports" },
+        ],
     comparison: {
       badge: isAr ? "المقارنة" : "Comparison",
       title: isAr ? "قارن بنفسك" : "Compare Yourself",
@@ -189,7 +253,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       otherHeader: isAr ? "البرامج الأخرى" : "Other Software",
     },
     comparisonRows: [
-      { feature: isAr ? "شجرة حسابات جاهزة حسب القطاع" : "Ready chart of accounts per sector", gl: { text: isAr ? "15 قطاع" : "15 Sectors", status: "green" }, other: { text: isAr ? "شجرة فارغة" : "Empty chart", status: "red" } },
+      { feature: isAr ? "شجرة حسابات جاهزة حسب القطاع" : "Ready chart of accounts per sector", gl: { text: isAr ? "23+ قطاع" : "23+ Sectors", status: "green" }, other: { text: isAr ? "شجرة فارغة" : "Empty chart", status: "red" } },
       { feature: isAr ? "ضرائب مخصصة لكل دولة وقطاع" : "Custom taxes per country & sector", gl: { text: isAr ? "29+ دولة" : "29+ Countries", status: "green" }, other: { text: isAr ? "نسبة واحدة" : "One rate", status: "red" } },
       { feature: isAr ? "قيود تلقائية من كل موديول" : "Auto entries from every module", gl: { text: isAr ? "تلقائي 100%" : "100% Auto", status: "green" }, other: { text: isAr ? "يدوي غالبًا" : "Mostly manual", status: "yellow" } },
       { feature: isAr ? "فوترة إلكترونية ETA + ZATCA" : "E-invoicing ETA + ZATCA", gl: { text: isAr ? "مدمجة" : "Built-in", status: "green" }, other: { text: isAr ? "إضافة مدفوعة" : "Paid add-on", status: "yellow" } },
@@ -286,7 +350,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         tagColor: "bg-rose-100 text-rose-700",
         title: isAr ? "كيف تختار النظام المحاسبي المناسب لشركتك؟" : "How to Choose the Right Accounting System for Your Business?",
         desc: isAr
-          ? "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 15 قطاع جاهز مع تجربة مجانية بدون بطاقة ائتمان."
+          ? "أهم المعايير: دعم قطاعك بشجرة حسابات جاهزة، التوافق مع الفوترة الإلكترونية، سهولة الاستخدام، الأمان، والتكلفة. G-Ledger يوفر 23+ قطاع جاهز + Custom Suite للقطاعات المتخصصة مع تجربة مجانية بدون بطاقة ائتمان."
           : "Key criteria: sector support with ready chart of accounts, e-invoicing compliance, ease of use, security, and cost. G-Ledger offers 15 ready sectors with a free trial — no credit card needed.",
         date: isAr ? "ديسمبر 2025" : "December 2025",
         image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=400",
@@ -349,7 +413,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             name: "G-Ledger",
             applicationCategory: "BusinessApplication",
             operatingSystem: "Web",
-            description: "نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف مع فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية",
+            description: "نظام محاسبي سحابي متكامل يدعم 23+ قطاع مختلف + Medical Suite حسب الطلب، مع فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية",
             url: "https://g-ledger.com",
             offers: {
               "@type": "Offer",
@@ -374,7 +438,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               "الإنتاج والتصنيع",
               "التقارير المالية",
               "29+ دولة حول العالم مدعومة",
-              "15 قطاع بشجرة حسابات جاهزة",
+              "23+ قطاع بشجرة حسابات جاهزة + Medical Suite",
             ],
             author: {
               "@type": "Organization",
@@ -417,7 +481,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 name: "ما هو G-Ledger؟",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "G-Ledger هو نظام محاسبي سحابي متكامل (ERP) يدعم 15 قطاع مختلف مع شجرة حسابات جاهزة لكل قطاع. متوافق مع الفوترة الإلكترونية في مصر (ETA) والسعودية (ZATCA).",
+                  text: "G-Ledger هو نظام محاسبي سحابي متكامل (ERP) يدعم 23+ قطاع مختلف + Medical Suite للمستشفيات والعيادات والمعامل بتسعير حسب الطلب. متوافق مع الفوترة الإلكترونية في مصر (ETA) والسعودية (ZATCA).",
                 },
               },
               {
@@ -441,7 +505,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 name: "ما هي القطاعات المدعومة؟",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "يدعم 15 قطاع: صناعي، تجاري، خدمي، بنوك، تأمين، عقاري، مقاولات، زراعي، تقني، غير ربحي، تمويل جماعي، مستشفيات، صيدليات، عيادات، ومعامل تحاليل.",
+                  text: "قطاعات التسعير القياسي (19 قطاع): صناعي، تجاري، خدمي، بنوك، تأمين، عقاري، مقاولات، زراعي، تقني، غير ربحي، تمويل جماعي، صيدليات، مطاعم وكافيهات، فنادق، تعليم، نوادي رياضية، صالونات تجميل، نقل ولوجيستيك، ورش سيارات. بالإضافة إلى Medical Suite حسب الطلب (مستشفيات، مراكز صحية، عيادات، معامل تحاليل) وقطاعات مخصصة عند الطلب.",
                 },
               },
               {
@@ -1030,35 +1094,135 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {[
-              { name: t.sectorNames[0], image: "https://images.pexels.com/photos/1108117/pexels-photo-1108117.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[1], image: "https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[2], image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[3], image: "https://images.pexels.com/photos/259027/pexels-photo-259027.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[4], image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[5], image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[6], image: "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[7], image: "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[8], image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[9], image: "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[10], image: "https://images.pexels.com/photos/3182834/pexels-photo-3182834.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[11], image: "https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[12], image: "https://images.pexels.com/photos/3683098/pexels-photo-3683098.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-              { name: t.sectorNames[13], image: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#00C9A7" },
-              { name: t.sectorNames[14], image: "https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300", color: "#0070F2" },
-            ].map((sector, i) => (
-              <AnimatedCard delay={i * 60} key={sector.name}>
-              <div className="group rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default shadow-premium">
-                <div className="h-28 overflow-hidden img-branded">
-                  <img src={sector.image} alt={sector.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-                </div>
-                <div className="p-3 bg-white text-center">
-                  <span className="text-sm font-bold text-[#021544]">{sector.name}</span>
-                </div>
-              </div>
+          {/* ====== STANDARD SECTORS (covered by regular pricing) ====== */}
+          <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h4 className="text-lg font-bold text-[#021544]">{t.sectors.standardTitle}</h4>
+              <p className="text-xs text-gray-500">{t.sectors.standardSubtitle}</p>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+              {isAr ? "✓ تسعير قياسي" : "✓ Standard Pricing"}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-16">
+            {(() => {
+              const standardImages = [
+                "https://images.pexels.com/photos/1108117/pexels-photo-1108117.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/259027/pexels-photo-259027.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/3182834/pexels-photo-3182834.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=300",
+                "https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=300",
+              ];
+              return t.sectorNames.map((name, i) => (
+                <AnimatedCard delay={i * 40} key={name}>
+                  <div className="group rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default shadow-premium">
+                    <div className="h-28 overflow-hidden img-branded">
+                      <img
+                        src={standardImages[i] || standardImages[0]}
+                        alt={name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="p-3 bg-white text-center">
+                      <span className="text-sm font-bold text-[#021544]">{name}</span>
+                    </div>
+                  </div>
+                </AnimatedCard>
+              ));
+            })()}
+          </div>
+
+          {/* ====== CUSTOM SUITE (Medical + Bespoke) ====== */}
+          <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h4 className="text-lg font-bold text-[#021544]">{t.sectors.customTitle}</h4>
+              <p className="text-xs text-gray-500 max-w-2xl">{t.sectors.customSubtitle}</p>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-purple-100 text-purple-700">
+              {isAr ? "✦ حسب الطلب" : "✦ By Request"}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {/* Medical sub-sectors */}
+            {t.medicalSectors.map((m, i) => (
+              <AnimatedCard delay={i * 60} key={m.name}>
+                <a
+                  href={`https://wa.me/201507522155?text=${encodeURIComponent(
+                    isAr
+                      ? `مرحباً، أريد استشارة مجانية عن نظام G-Ledger لقطاع ${m.name}`
+                      : `Hello, I want a free consultation on G-Ledger for ${m.name}`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-xl overflow-hidden border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                >
+                  <div className="p-5 text-center">
+                    <div className="text-4xl mb-2">
+                      {["🏥", "🩺", "💉", "🧪"][i] || "🏥"}
+                    </div>
+                    <div className="text-sm font-bold text-[#021544] mb-1">{m.name}</div>
+                    <div className="text-[10px] text-purple-700 leading-snug">{m.desc}</div>
+                    <div className="mt-3 inline-block text-[10px] font-bold text-purple-700 border-t border-purple-200 pt-2 w-full">
+                      {isAr ? "اطلب استشارة →" : "Request quote →"}
+                    </div>
+                  </div>
+                </a>
               </AnimatedCard>
             ))}
+
+            {/* Custom / Bespoke sector */}
+            <AnimatedCard delay={4 * 60}>
+              <a
+                href={`https://wa.me/201507522155?text=${encodeURIComponent(
+                  isAr
+                    ? "مرحباً، قطاعنا غير موجود في القطاعات المدعومة وأريد تصميم باقة مخصصة"
+                    : "Hello, our sector isn't listed and we'd like a custom package",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-xl overflow-hidden border-2 border-[#c9a14a]/50 bg-gradient-to-br from-[#021544] via-[#0a2a6e] to-[#0d4d35] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative"
+              >
+                <div
+                  className="absolute inset-0 opacity-20"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 1px 1px, #c9a14a 1px, transparent 0)",
+                    backgroundSize: "20px 20px",
+                  }}
+                />
+                <div className="relative p-5 text-center text-white">
+                  <div className="text-4xl mb-2">✨</div>
+                  <div className="text-sm font-bold mb-1">
+                    {isAr ? "قطاعك الخاص" : "Your Own Sector"}
+                  </div>
+                  <div className="text-[10px] text-[#c9a14a] leading-snug">
+                    {isAr
+                      ? "ما لقيت قطاعك؟ نعمله لك بالكامل — شجرة حسابات، ضرائب، تقارير"
+                      : "Not listed? We'll build it for you — accounts, taxes, reports"}
+                  </div>
+                  <div className="mt-3 inline-block text-[10px] font-bold text-[#c9a14a] border-t border-[#c9a14a]/30 pt-2 w-full">
+                    {t.sectors.customCta} →
+                  </div>
+                </div>
+              </a>
+            </AnimatedCard>
           </div>
         </div>
       </section>

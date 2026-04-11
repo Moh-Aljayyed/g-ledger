@@ -12,7 +12,7 @@ import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "G-Ledger — حساب الأستاذ | General Ledger ERP",
-  description: "نظام محاسبي سحابي متكامل يدعم 15 قطاع مختلف — صناعي، تجاري، طبي، مقاولات. فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية. ابدأ مجاناً!",
+  description: "نظام محاسبي سحابي متكامل يدعم 23+ قطاع + Medical Suite حسب الطلب — صناعي، تجاري، طبي، مقاولات، مطاعم. فوترة إلكترونية متوافقة مع ETA مصر و ZATCA السعودية. ابدأ مجاناً!",
   keywords: [
     "برنامج محاسبة", "نظام محاسبي", "محاسبة سحابية", "ERP",
     "فوترة إلكترونية", "فاتورة إلكترونية", "ZATCA", "ETA",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: "https://g-ledger.com",
     siteName: "G-Ledger",
     title: "G-Ledger — حساب الأستاذ — لكل القطاعات",
-    description: "نظام ERP محاسبي سحابي متكامل يدعم 15 قطاع. فوترة إلكترونية ETA + ZATCA. ابدأ مجاناً!",
+    description: "نظام ERP محاسبي سحابي متكامل يدعم 23+ قطاع + Medical Suite. فوترة إلكترونية ETA + ZATCA. ابدأ مجاناً!",
     images: [
       {
         url: "https://g-ledger.com/og-image.svg",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "G-Ledger — حساب الأستاذ — لكل القطاعات",
-    description: "نظام ERP محاسبي سحابي. 15 قطاع. فوترة إلكترونية. ابدأ مجاناً!",
+    description: "نظام ERP محاسبي سحابي. 23+ قطاع + Medical Suite. فوترة إلكترونية. ابدأ مجاناً!",
     images: ["https://g-ledger.com/og-image.svg"],
   },
   robots: {

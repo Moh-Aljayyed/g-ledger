@@ -10,6 +10,7 @@ datasource db {
 // ============ ENUMS ============
 
 enum Sector {
+  // ===== Standard pricing sectors =====
   INDUSTRIAL
   COMMERCIAL
   SERVICES
@@ -21,11 +22,23 @@ enum Sector {
   TECHNOLOGY
   NON_PROFIT
   CROWDFUNDING
-  MEDICAL_HOSPITAL
-  MEDICAL_PHARMACY
-  MEDICAL_CLINIC
-  MEDICAL_LAB
-  RESTAURANT    // مطاعم وكافيهات
+  MEDICAL_PHARMACY     // صيدليات — قطاع تجزئة قياسي
+  RESTAURANT           // مطاعم وكافيهات
+  HOTEL                // فنادق وضيافة
+  EDUCATION            // تعليم ومدارس
+  GYM_FITNESS          // نوادي رياضية
+  BEAUTY_SALON         // صالونات تجميل
+  TRANSPORT_LOGISTICS  // نقل ولوجيستيك
+  AUTO_SERVICE         // ورش سيارات
+
+  // ===== Medical Suite — custom pricing (by request) =====
+  MEDICAL_HOSPITAL        // مستشفيات
+  MEDICAL_HEALTH_CENTER   // مراكز صحية
+  MEDICAL_CLINIC          // عيادات
+  MEDICAL_LAB             // معامل تحاليل
+
+  // ===== Custom / bespoke =====
+  CUSTOM               // قطاع مخصص حسب الطلب
 }
 
 enum UserRole {
