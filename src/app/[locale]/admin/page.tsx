@@ -167,11 +167,181 @@ export default function SuperAdminDashboard() {
         </div>
       </div>
 
+      {/* ============ TODO CENTER — all pending roadmaps ============ */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-xl font-bold text-[#021544]">📋 مركز المهام (TODO Center)</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              كل الخرائط والمهام المؤجلة في مكان واحد — بنود مؤجلة، أولويات، وتقديرات زمنية
+            </p>
+          </div>
+          <span className="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-[#021544] to-[#0070F2] text-white font-bold shadow-md">
+            4 خرائط مفتوحة
+          </span>
+        </div>
+
+        {/* Roadmap summary cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+          {[
+            {
+              emoji: "🔌",
+              title: "تكامل رقي (Raqyy)",
+              count: "5 بنود",
+              priority: "متوسطة",
+              color: "from-cyan-500/10 to-blue-500/10 border-cyan-200",
+              priorityColor: "bg-yellow-100 text-yellow-700",
+            },
+            {
+              emoji: "⚡",
+              title: "Scaling & Performance",
+              count: "2 بنود حرجة",
+              priority: "عالية",
+              color: "from-red-500/10 to-orange-500/10 border-red-200",
+              priorityColor: "bg-red-100 text-red-700",
+            },
+            {
+              emoji: "🍽️",
+              title: "Restaurant POS Waves 5-10",
+              count: "58 فيتشر · 6 موجات",
+              priority: "مرحلية",
+              color: "from-orange-500/10 to-amber-500/10 border-orange-200",
+              priorityColor: "bg-blue-100 text-blue-700",
+            },
+            {
+              emoji: "🏥",
+              title: "Medical Suite Waves 11-16",
+              count: "6 موجات · 3-5 سنين",
+              priority: "استراتيجية",
+              color: "from-purple-500/10 to-pink-500/10 border-purple-200",
+              priorityColor: "bg-purple-100 text-purple-700",
+            },
+          ].map((r) => (
+            <div
+              key={r.title}
+              className={`p-4 rounded-xl border bg-gradient-to-br ${r.color}`}
+            >
+              <div className="text-3xl mb-2">{r.emoji}</div>
+              <div className="text-sm font-bold text-[#021544] mb-1">{r.title}</div>
+              <div className="text-xs text-muted-foreground mb-2">{r.count}</div>
+              <span className={`inline-block text-[10px] px-2 py-0.5 rounded-full font-medium ${r.priorityColor}`}>
+                {r.priority}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ============ Scaling & Performance — critical infra fixes ============ */}
+      <div className="mb-8 bg-card rounded-xl border border-red-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-[#021544]">⚡ أداء وسعة — إصلاحات بنية تحتية حرجة</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              يرفع السقف من ~100 اتصال لـ 10,000+ · بدون هذه الإصلاحات السقف الحالي ~5,000 مشترك
+            </p>
+          </div>
+          <span className="text-xs px-2.5 py-1 rounded-full bg-red-100 text-red-700 font-medium">2 بنود</span>
+        </div>
+
+        <div className="space-y-3">
+          {[
+            {
+              id: 1,
+              title: "🔴 تفعيل Neon Pooler (5 دقائق، مجاني)",
+              desc: "تغيير DATABASE_URL على Vercel لاستخدام ep-patient-dew-agbrqn30-pooler بدل endpoint المباشر. يرفع السقف من 100 اتصال لـ 10,000+ اتصال متزامن فوراً. بدون deploy تقني — مجرد تحديث env variable.",
+              priority: "حرجة",
+              priorityColor: "bg-red-100 text-red-700",
+            },
+            {
+              id: 2,
+              title: "🟠 OTP Store في Upstash Redis",
+              desc: "OTP حالياً في ذاكرة Vercel function (Map). لو user يطلب OTP من instance A ويتحقق من instance B، التحقق يفشل. الحل: استخدام Upstash Redis free tier (10k req/يوم). يصلح bug فعلي مش مجرد scaling.",
+              priority: "عالية",
+              priorityColor: "bg-orange-100 text-orange-700",
+            },
+          ].map((todo) => (
+            <div
+              key={todo.id}
+              className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50 hover:bg-muted/50 transition-colors"
+            >
+              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center">
+                {todo.id}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h3 className="text-sm font-semibold text-[#021544]">{todo.title}</h3>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${todo.priorityColor}`}>
+                    {todo.priority}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{todo.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-red-200/50 text-xs text-muted-foreground">
+          الحالة: <span className="font-semibold text-amber-600">مؤجّل بناءً على طلب المستخدم</span> · السقف الحالي: ~5,000 مشترك · race-safe numbering ✅ شُحن 2026-04-11
+        </div>
+      </div>
+
+      {/* ============ Restaurant POS Waves 5-10 ============ */}
+      <div className="mb-8 bg-card rounded-xl border border-border p-6">
+        <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+          <div>
+            <h2 className="text-lg font-bold text-[#021544]">🍽️ Restaurant POS — Waves 5-10</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              Waves 1-4 شُحنت 2026-04-11 · المنصة مكتملة وظيفياً · الباقي خندق تنافسي وتوسّع
+            </p>
+          </div>
+          <span className="text-xs px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">6 موجات · 58 فيتشر</span>
+        </div>
+
+        <div className="space-y-2">
+          {[
+            { num: 5, title: "إغلاق حلقات Wave 4", desc: "Apply Happy Hour pricing, KDS sound, AI predictions, WhatsApp orders, customer profile, analytics, iPad app", duration: "1 شهر", color: "bg-green-100 text-green-700" },
+            { num: 6, title: "العمق التشغيلي + الأجهزة", desc: "Recipes/BOM (أهم فيتشر ناقص!), Food Cost %, Waste, Tips, ESC/POS, Barcode HID, Scales, Multi-branch, Shifts, Split/Merge", duration: "2-3 شهور", color: "bg-green-100 text-green-700" },
+            { num: 7, title: "النمو والمنصة", desc: "تكاملات دليفري (Talabat/HungerStation/Uber Eats), White-label, Open API, NPS, Franchise portal, Driver app, Voice ordering, Vision OCR, Memberships, Reservations", duration: "3-4 شهور", color: "bg-yellow-100 text-yellow-700" },
+            { num: 8, title: "AI-Native + توسّع الامتثال", desc: "Arabic voice POS, Bank auto-categorization, Receipt AI scanning, فواتير الإمارات/عُمان/البحرين/الأردن/المغرب, IFRS↔GAAP, SOX permissions, Anomaly detection", duration: "3-4 شهور", color: "bg-green-100 text-green-700" },
+            { num: 9, title: "Embedded Finance", desc: "قروض رأس مال عامل, Invoice factoring, MCA, BNPL, Virtual cards, Plaid-style aggregation, Savings wallet, Insurance", duration: "6-12 شهر", color: "bg-red-100 text-red-700" },
+            { num: 10, title: "Ecosystem / Exit-Ready", desc: "App store plugins, Partner channel, Acquisition imports, Global tax engine, Marketplaces, IoT smart kitchen, AR/VR menus, IPO-readiness", duration: "12-24 شهر", color: "bg-red-100 text-red-700" },
+          ].map((wave) => (
+            <div
+              key={wave.num}
+              className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-orange-50/40 to-amber-50/20 border border-orange-100"
+            >
+              <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600 text-white text-xs font-bold flex items-center justify-center shadow">
+                W{wave.num}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-0.5 flex-wrap">
+                  <h3 className="text-sm font-bold text-[#021544]">{wave.title}</h3>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted font-mono text-muted-foreground">
+                      {wave.duration}
+                    </span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${wave.color}`}>
+                      {wave.num <= 8 ? (wave.num === 7 ? "مختلط" : "هندسي") : "يحتاج شراكات"}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">{wave.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-border/50 text-xs text-muted-foreground">
+          المرحلة الحالية: <span className="font-semibold text-green-700">Waves 1-4 مكتملة · 4 موجات</span> · أفضل نقاط انطلاق للموجة الجاية: Apply Happy Hour, Recipes/BOM, KDS sound, Delivery platforms
+        </div>
+      </div>
+
       {/* Pending TODOs — deferred Raqyy integration items */}
       <div className="mb-8 bg-card rounded-xl border border-border p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-lg font-bold text-[#021544]">📋 المهام المؤجلة — تكامل رقي (Raqyy)</h2>
+            <h2 className="text-lg font-bold text-[#021544]">🔌 المهام المؤجلة — تكامل رقي (Raqyy)</h2>
             <p className="text-xs text-muted-foreground mt-1">بنود تم تأجيلها بقصد بعد إطلاق Phases 1–3 يوم 2026-04-07</p>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">5 بنود</span>
