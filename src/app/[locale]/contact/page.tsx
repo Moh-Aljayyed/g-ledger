@@ -362,7 +362,7 @@ export default function ContactPage() {
 
             {/* Messenger */}
             <a
-              href="https://m.me/61574741902666"
+              href="https://www.facebook.com/share/1AqPXESyJr/"
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-white rounded-2xl border border-border p-5 hover:shadow-xl hover:-translate-y-1 transition-all"

@@ -400,7 +400,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               availableLanguage: ["Arabic", "English"],
             },
             sameAs: [
-              "https://www.facebook.com/profile.php?id=61574741902666",
+              "https://www.facebook.com/share/1AqPXESyJr/",
             ],
           }),
         }}
@@ -1329,7 +1329,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h4 className="text-sm font-bold mb-4 text-white/80">{t.footer.contact}</h4>
               <ul className="space-y-2 text-white/50 text-sm">
                 <li>
-                  <a href="https://m.me/61574741902666" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                  <a href="https://www.facebook.com/share/1AqPXESyJr/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.12 7.24V22l3.04-1.67c.82.23 1.68.35 2.58.35h.26c5.64 0 10-4.13 10-9.68C21 6.13 17.64 2 12 2z"/></svg>
                     {t.footer.messenger}
                   </a>
@@ -1370,7 +1370,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <span>{t.footer.copyright}</span>
             <div className="flex items-center gap-4 mt-2 md:mt-0">
               <a
-                href="https://www.facebook.com/profile.php?id=61574741902666"
+                href="https://www.facebook.com/share/1AqPXESyJr/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

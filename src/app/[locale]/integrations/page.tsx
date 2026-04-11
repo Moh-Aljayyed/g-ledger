@@ -155,7 +155,7 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ l
         <div className="mt-16 bg-gradient-to-r from-[#021544] to-[#0070F2] rounded-2xl p-8 text-center text-white">
           <h3 className="text-2xl font-bold mb-2">{t.becomePartner}</h3>
           <p className="text-white/70 mb-6 max-w-xl mx-auto">{t.becomePartnerDesc}</p>
-          <a href="https://m.me/1043966828805970" target="_blank" className="inline-block px-8 py-3 bg-white text-[#021544] rounded-xl font-bold hover:bg-white/90 transition-all">
+          <a href="https://www.facebook.com/share/1AqPXESyJr/" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-white text-[#021544] rounded-xl font-bold hover:bg-white/90 transition-all">
             {t.contact}
           </a>
         </div>

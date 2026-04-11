@@ -1,9 +1,14 @@
 "use client";
 
+// Direct Facebook page share URL — opens the G-Ledger FB page where the
+// visitor can tap "Message" to start a Messenger chat. This replaces the
+// older m.me/{pageId} link that was pointing to a stale page ID.
+const FACEBOOK_PAGE_URL = "https://www.facebook.com/share/1AqPXESyJr/";
+
 export function MessengerButton() {
   return (
     <a
-      href="https://m.me/1043966828805970"
+      href={FACEBOOK_PAGE_URL}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110 hover:shadow-2xl"

@@ -33,8 +33,8 @@ export default function WhatsAppPage() {
     {
       label: isAr ? "دعم فني" : "Support",
       text: isAr
-        ? "للدعم الفني:\n💬 شات بوت في الموقع: g-ledger.com\n📧 إيميل: info@g-ledger.com\n📘 ماسنجر: m.me/1043966828805970\n\nفريقنا جاهز لمساعدتك!"
-        : "Support:\n💬 Chatbot: g-ledger.com\n📧 Email: info@g-ledger.com\n📘 Messenger: m.me/1043966828805970\n\nWe're here to help!",
+        ? "للدعم الفني:\n💬 شات بوت في الموقع: g-ledger.com\n📧 إيميل: info@g-ledger.com\n📘 فيسبوك: facebook.com/share/1AqPXESyJr/\n\nفريقنا جاهز لمساعدتك!"
+        : "Support:\n💬 Chatbot: g-ledger.com\n📧 Email: info@g-ledger.com\n📘 Facebook: facebook.com/share/1AqPXESyJr/\n\nWe're here to help!",
     },
   ];
 

@@ -231,7 +231,7 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong>ماسنجر:</strong>{" "}
-                <a href="https://m.me/61574741902666" target="_blank" rel="noopener noreferrer" className="text-[#0070F2] hover:underline" dir="ltr">m.me/61574741902666</a>
+                <a href="https://www.facebook.com/share/1AqPXESyJr/" target="_blank" rel="noopener noreferrer" className="text-[#0070F2] hover:underline" dir="ltr">facebook.com/G-Ledger</a>
               </li>
             </ul>
           </section>
