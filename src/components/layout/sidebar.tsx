@@ -28,6 +28,8 @@ const navGroups: NavGroup[] = [
     label: "المبيعات",
     items: [
       { key: "pos", href: "/pos", icon: "🖥️" },
+      { key: "posRestaurant", href: "/pos/restaurant", icon: "🍽️" },
+      { key: "restaurantSetup", href: "/restaurant", icon: "🍴" },
       { key: "customers", href: "/customers", icon: "👥" },
       { key: "crm", href: "/crm", icon: "🎯" },
       { key: "invoices", href: "/invoices", icon: "🧾" },

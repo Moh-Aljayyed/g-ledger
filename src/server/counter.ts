@@ -18,7 +18,7 @@ export type CounterClient = Pick<typeof db, "tenantCounter"> | Prisma.Transactio
 export async function nextCounter(
   client: CounterClient,
   tenantId: string,
-  type: "INVOICE" | "STOCK_MOVEMENT" | "JOURNAL_ENTRY",
+  type: "INVOICE" | "STOCK_MOVEMENT" | "JOURNAL_ENTRY" | "TAB",
 ): Promise<number> {
   const row = await client.tenantCounter.upsert({
     where: { tenantId_type: { tenantId, type } },

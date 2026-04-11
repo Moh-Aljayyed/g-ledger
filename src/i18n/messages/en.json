@@ -101,6 +101,8 @@
     "settings": "Settings",
     "fiscalPeriods": "Fiscal Periods",
     "pos": "POS",
+    "posRestaurant": "POS — Restaurant",
+    "restaurantSetup": "Restaurant Setup",
     "crm": "CRM",
     "expenses": "Expenses",
     "projects": "Projects",

@@ -115,6 +115,13 @@ model Tenant {
   employeeDocuments EmployeeDocument[]
   salaryAdvances  SalaryAdvance[]
   employeeCertificates EmployeeCertificate[]
+
+  // Restaurant POS
+  floors            Floor[]
+  restaurantTables  RestaurantTable[]
+  tabs              Tab[]
+  modifierGroups    ModifierGroup[]
+  kitchenStations   KitchenStation[]
 }
 
 model User {
@@ -861,6 +868,12 @@ model Product {
   tenant          Tenant   @relation(fields: [tenantId], references: [id])
 
   stockMovements  StockMovement[]
+
+  // Restaurant POS links
+  tabItems        TabItem[]
+  modifierGroups  ProductModifierGroup[]
+  kitchenStations ProductKitchenStation[]
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -1364,6 +1377,158 @@ model Contract {
 
   @@unique([tenantId, contractNumber])
   @@index([tenantId, status])
+}
+
+// ============ RESTAURANT POS ============
+// Floors, tables, tabs (open checks), modifiers, kitchen stations.
+// Built to make G-Ledger a direct competitor to Foodics for F&B.
+
+model Floor {
+  id           String            @id @default(cuid())
+  name         String            // "Ground Floor", "Terrace", "VIP"
+  displayOrder Int               @default(0)
+  tenantId     String
+  tenant       Tenant            @relation(fields: [tenantId], references: [id])
+  tables       RestaurantTable[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model RestaurantTable {
+  id        String   @id @default(cuid())
+  name      String   // "T1", "VIP-3", "Patio-5"
+  capacity  Int      @default(4)
+  shape     String   @default("SQUARE") // SQUARE | ROUND | RECT
+  x         Int      @default(0)
+  y         Int      @default(0)
+  width     Int      @default(80)
+  height    Int      @default(80)
+  floorId   String
+  floor     Floor    @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tabs      Tab[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, name])
+  @@index([tenantId, floorId])
+}
+
+model Tab {
+  id            String           @id @default(cuid())
+  tabNumber     Int
+  status        String           @default("OPEN") // OPEN | CLOSED | PAID | CANCELLED
+  orderType     String           @default("DINE_IN") // DINE_IN | TAKEAWAY | DELIVERY
+  guestCount    Int              @default(1)
+  customerName  String?
+  customerPhone String?
+  subtotal      Decimal          @default(0) @db.Decimal(18, 4)
+  vatAmount     Decimal          @default(0) @db.Decimal(18, 4)
+  discount      Decimal          @default(0) @db.Decimal(18, 4)
+  total         Decimal          @default(0) @db.Decimal(18, 4)
+  notes         String?
+  tableId       String?
+  table         RestaurantTable? @relation(fields: [tableId], references: [id])
+  tenantId      String
+  tenant        Tenant           @relation(fields: [tenantId], references: [id])
+  openedById    String
+  openedAt      DateTime         @default(now())
+  closedAt      DateTime?
+  invoiceId     String?          // set when tab is closed & invoice created
+  items         TabItem[]
+
+  @@unique([tenantId, tabNumber])
+  @@index([tenantId, status])
+  @@index([tenantId, tableId])
+}
+
+model TabItem {
+  id            String          @id @default(cuid())
+  tabId         String
+  tab           Tab             @relation(fields: [tabId], references: [id], onDelete: Cascade)
+  productId     String
+  product       Product         @relation(fields: [productId], references: [id])
+  quantity      Decimal         @db.Decimal(18, 4)
+  unitPrice     Decimal         @db.Decimal(18, 4)
+  modifiers     Json?           // [{ name, price }]
+  modifierTotal Decimal         @default(0) @db.Decimal(18, 4)
+  totalPrice    Decimal         @db.Decimal(18, 4)
+  notes         String?         // "extra spicy", "no onion"
+  status        String          @default("NEW") // NEW | SENT | READY | SERVED | VOIDED
+  stationId     String?
+  station       KitchenStation? @relation(fields: [stationId], references: [id])
+  sentAt        DateTime?
+  readyAt       DateTime?
+  servedAt      DateTime?
+  createdAt     DateTime        @default(now())
+
+  @@index([tabId])
+  @@index([status])
+}
+
+model ModifierGroup {
+  id         String                 @id @default(cuid())
+  name       String                 // "Size", "Extras", "Bread Type"
+  nameEn     String?
+  minSelect  Int                    @default(0)
+  maxSelect  Int                    @default(1)
+  isRequired Boolean                @default(false)
+  tenantId   String
+  tenant     Tenant                 @relation(fields: [tenantId], references: [id])
+  modifiers  Modifier[]
+  products   ProductModifierGroup[]
+  createdAt  DateTime               @default(now())
+
+  @@index([tenantId])
+}
+
+model Modifier {
+  id          String        @id @default(cuid())
+  name        String        // "Large", "Extra Cheese"
+  nameEn      String?
+  priceAdjust Decimal       @default(0) @db.Decimal(18, 4)
+  groupId     String
+  group       ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+
+  @@index([groupId])
+}
+
+model ProductModifierGroup {
+  productId String
+  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  groupId   String
+  group     ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@id([productId, groupId])
+}
+
+model KitchenStation {
+  id           String                  @id @default(cuid())
+  name         String                  // "Grill", "Bar", "Salads"
+  nameEn       String?
+  printerName  String?                 // network printer name/IP/label
+  displayColor String?                 @default("#0070F2")
+  tenantId     String
+  tenant       Tenant                  @relation(fields: [tenantId], references: [id])
+  products     ProductKitchenStation[]
+  items        TabItem[]
+  createdAt    DateTime                @default(now())
+
+  @@index([tenantId])
+}
+
+model ProductKitchenStation {
+  productId String
+  product   Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  stationId String
+  station   KitchenStation @relation(fields: [stationId], references: [id], onDelete: Cascade)
+
+  @@id([productId, stationId])
 }
 
 // ============ TENANT-SCOPED ATOMIC COUNTERS ============
