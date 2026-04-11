@@ -7,6 +7,7 @@ import { PWAInstallPrompt } from "@/components/pwa-install";
 import { MessengerButton } from "@/components/messenger-button";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { AntiCopy } from "@/components/security/anti-copy";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -105,6 +106,7 @@ export default async function RootLayout({
             <MessengerButton />
             <WhatsAppButton />
             <AntiCopy />
+            <ServiceWorkerRegister />
           </Providers>
         </NextIntlClientProvider>
       </body>

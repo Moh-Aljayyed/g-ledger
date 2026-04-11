@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { trpc } from "@/lib/trpc";
@@ -376,6 +376,9 @@ function TabEditor({
   const { data: productsData } = trpc.inventory.listProducts.useQuery();
   const [search, setSearch] = useState("");
   const [itemNotes, setItemNotes] = useState("");
+  const [splitMode, setSplitMode] = useState(false);
+  const [splitSelection, setSplitSelection] = useState<Set<string>>(new Set());
+  const [printTab, setPrintTab] = useState(false);
 
   const products = useMemo(() => {
     const all = (productsData as any)?.products || productsData || [];
@@ -396,6 +399,18 @@ function TabEditor({
     onSuccess: () => {
       alert(isAr ? "✓ تم إغلاق الحساب وإصدار الفاتورة" : "✓ Tab closed & invoice created");
       onClose();
+    },
+  });
+  const partialClose = trpc.restaurant.partialClose.useMutation({
+    onSuccess: (res) => {
+      setSplitSelection(new Set());
+      if (res.fullyClosed) {
+        alert(isAr ? "✓ تم إغلاق الحساب بالكامل" : "✓ Tab fully closed");
+        onClose();
+      } else {
+        alert(isAr ? "✓ تم إصدار فاتورة الجزء المحدد" : "✓ Split invoice created");
+        refetch();
+      }
     },
   });
 
@@ -434,28 +449,64 @@ function TabEditor({
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {newItems.length > 0 && (
               <button
                 onClick={() => sendToKitchen.mutate({ tabId: tab.id })}
-                className="px-5 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-semibold hover:bg-orange-600"
+                className="px-4 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-semibold hover:bg-orange-600"
               >
-                🍳 {isAr ? `إرسال للمطبخ (${newItems.length})` : `Send to Kitchen (${newItems.length})`}
+                🍳 {isAr ? `للمطبخ (${newItems.length})` : `Kitchen (${newItems.length})`}
               </button>
             )}
             <button
-              onClick={() => {
-                if (tab.items.length === 0) {
-                  alert(isAr ? "الحساب فارغ" : "Tab is empty");
-                  return;
-                }
-                closeTab.mutate({ tabId: tab.id, paymentMethod: "CASH" });
-              }}
-              disabled={closeTab.isPending}
-              className="px-5 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 disabled:opacity-50"
+              onClick={() => setPrintTab(true)}
+              className="px-4 py-2.5 bg-gray-100 text-[#021544] rounded-lg text-sm font-semibold hover:bg-gray-200 border border-border"
             >
-              💳 {isAr ? "إغلاق ودفع" : "Close & Pay"}
+              🖨️ {isAr ? "طباعة" : "Print"}
             </button>
+            <button
+              onClick={() => {
+                setSplitMode((v) => !v);
+                setSplitSelection(new Set());
+              }}
+              className={`px-4 py-2.5 rounded-lg text-sm font-semibold ${
+                splitMode
+                  ? "bg-purple-600 text-white hover:bg-purple-700"
+                  : "bg-purple-100 text-purple-700 hover:bg-purple-200"
+              }`}
+            >
+              ✂️ {isAr ? "تقسيم" : "Split"}
+            </button>
+            {splitMode && splitSelection.size > 0 && (
+              <button
+                onClick={() =>
+                  partialClose.mutate({
+                    tabId: tab.id,
+                    itemIds: Array.from(splitSelection),
+                    paymentMethod: "CASH",
+                  })
+                }
+                disabled={partialClose.isPending}
+                className="px-4 py-2.5 bg-purple-700 text-white rounded-lg text-sm font-semibold disabled:opacity-50"
+              >
+                💳 {isAr ? `دفع المحدد (${splitSelection.size})` : `Pay Selected (${splitSelection.size})`}
+              </button>
+            )}
+            {!splitMode && (
+              <button
+                onClick={() => {
+                  if (tab.items.length === 0) {
+                    alert(isAr ? "الحساب فارغ" : "Tab is empty");
+                    return;
+                  }
+                  closeTab.mutate({ tabId: tab.id, paymentMethod: "CASH" });
+                }}
+                disabled={closeTab.isPending}
+                className="px-4 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 disabled:opacity-50"
+              >
+                💳 {isAr ? "إغلاق ودفع" : "Close & Pay"}
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -508,38 +559,54 @@ function TabEditor({
               </div>
             )}
 
-            {newItems.length > 0 && (
-              <>
-                <div className="text-[10px] font-bold text-orange-600 uppercase">
-                  {isAr ? "جديد" : "New"} ({newItems.length})
-                </div>
-                {newItems.map((it: any) => (
-                  <TabItemRow key={it.id} item={it} onRemove={() => removeItem.mutate({ itemId: it.id })} isAr={isAr} removable />
-                ))}
-              </>
-            )}
-
-            {sentItems.length > 0 && (
-              <>
-                <div className="text-[10px] font-bold text-blue-600 uppercase mt-3">
-                  {isAr ? "في المطبخ" : "Sent"} ({sentItems.length})
-                </div>
-                {sentItems.map((it: any) => (
-                  <TabItemRow key={it.id} item={it} onRemove={() => removeItem.mutate({ itemId: it.id })} isAr={isAr} />
-                ))}
-              </>
-            )}
-
-            {readyItems.length > 0 && (
-              <>
-                <div className="text-[10px] font-bold text-green-600 uppercase mt-3">
-                  {isAr ? "جاهز" : "Ready"}
-                </div>
-                {readyItems.map((it: any) => (
-                  <TabItemRow key={it.id} item={it} onRemove={() => removeItem.mutate({ itemId: it.id })} isAr={isAr} />
-                ))}
-              </>
-            )}
+            {(() => {
+              const toggleSelection = (id: string) => {
+                const next = new Set(splitSelection);
+                if (next.has(id)) next.delete(id);
+                else next.add(id);
+                setSplitSelection(next);
+              };
+              const renderRow = (it: any, removable?: boolean) => (
+                <TabItemRow
+                  key={it.id}
+                  item={it}
+                  onRemove={() => removeItem.mutate({ itemId: it.id })}
+                  isAr={isAr}
+                  removable={removable}
+                  splitMode={splitMode}
+                  selected={splitSelection.has(it.id)}
+                  onToggleSelect={() => toggleSelection(it.id)}
+                />
+              );
+              return (
+                <>
+                  {newItems.length > 0 && (
+                    <>
+                      <div className="text-[10px] font-bold text-orange-600 uppercase">
+                        {isAr ? "جديد" : "New"} ({newItems.length})
+                      </div>
+                      {newItems.map((it: any) => renderRow(it, true))}
+                    </>
+                  )}
+                  {sentItems.length > 0 && (
+                    <>
+                      <div className="text-[10px] font-bold text-blue-600 uppercase mt-3">
+                        {isAr ? "في المطبخ" : "Sent"} ({sentItems.length})
+                      </div>
+                      {sentItems.map((it: any) => renderRow(it))}
+                    </>
+                  )}
+                  {readyItems.length > 0 && (
+                    <>
+                      <div className="text-[10px] font-bold text-green-600 uppercase mt-3">
+                        {isAr ? "جاهز" : "Ready"}
+                      </div>
+                      {readyItems.map((it: any) => renderRow(it))}
+                    </>
+                  )}
+                </>
+              );
+            })()}
           </div>
 
           <div className="border-t border-border pt-3 space-y-1.5 text-sm">
@@ -558,7 +625,168 @@ function TabEditor({
           </div>
         </div>
       </main>
+
+      {printTab && (
+        <ThermalReceipt
+          tab={tab}
+          isAr={isAr}
+          onClose={() => setPrintTab(false)}
+        />
+      )}
     </div>
+  );
+}
+
+// ============ THERMAL RECEIPT (80mm) ============
+function ThermalReceipt({ tab, isAr, onClose }: { tab: any; isAr: boolean; onClose: () => void }) {
+  useEffect(() => {
+    // Auto-open print dialog on mount
+    const timer = setTimeout(() => {
+      window.print();
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const activeItems = tab.items.filter((i: any) => i.status !== "VOIDED");
+
+  return (
+    <>
+      <style jsx global>{`
+        @media print {
+          body > div:not(.thermal-receipt) { display: none !important; }
+          .thermal-receipt { display: block !important; }
+          @page { size: 80mm auto; margin: 0; }
+        }
+        @media screen {
+          .thermal-receipt { display: none; }
+        }
+      `}</style>
+
+      {/* Screen overlay with preview */}
+      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 print:hidden">
+        <div className="bg-white rounded-2xl max-w-sm w-full shadow-2xl">
+          <div className="p-6 text-center">
+            <div className="text-4xl mb-2">🖨️</div>
+            <div className="font-bold text-[#021544] mb-1">
+              {isAr ? "جاري إرسال الإيصال للطابعة..." : "Sending receipt to printer..."}
+            </div>
+            <div className="text-xs text-muted-foreground mb-4">
+              {isAr
+                ? "افتح نافذة الطباعة من المتصفح لإكمال الطباعة"
+                : "Complete printing from the browser print dialog"}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => window.print()}
+                className="flex-1 py-2.5 bg-[#0070F2] text-white rounded-lg font-semibold text-sm"
+              >
+                {isAr ? "طباعة" : "Print"}
+              </button>
+              <button
+                onClick={onClose}
+                className="flex-1 py-2.5 border border-border rounded-lg font-semibold text-sm"
+              >
+                {isAr ? "إغلاق" : "Close"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Printable receipt content (hidden on screen, shown on print) */}
+      <div
+        className="thermal-receipt"
+        style={{
+          width: "80mm",
+          fontFamily: '"Courier New", monospace',
+          fontSize: "11px",
+          padding: "5mm",
+          color: "#000",
+        }}
+        dir={isAr ? "rtl" : "ltr"}
+      >
+        <div style={{ textAlign: "center", marginBottom: "8px" }}>
+          <div style={{ fontSize: "16px", fontWeight: "bold" }}>G-LEDGER</div>
+          <div style={{ fontSize: "10px" }}>{isAr ? "نقطة بيع مطعم" : "Restaurant POS"}</div>
+          <div style={{ fontSize: "10px", marginTop: "4px" }}>
+            {new Date().toLocaleString(isAr ? "ar-EG" : "en-US")}
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px dashed #000", borderBottom: "1px dashed #000", padding: "4px 0", marginBottom: "6px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{isAr ? "حساب" : "Tab"}:</span>
+            <span style={{ fontWeight: "bold" }}>#{tab.tabNumber}</span>
+          </div>
+          {tab.table && (
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <span>{isAr ? "طاولة" : "Table"}:</span>
+              <span>{tab.table.name}</span>
+            </div>
+          )}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{isAr ? "النوع" : "Type"}:</span>
+            <span>{tab.orderType}</span>
+          </div>
+          {tab.customerName && (
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <span>{isAr ? "العميل" : "Customer"}:</span>
+              <span>{tab.customerName}</span>
+            </div>
+          )}
+        </div>
+
+        <table style={{ width: "100%", fontSize: "10px", marginBottom: "6px" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #000" }}>
+              <th style={{ textAlign: "start" }}>{isAr ? "الصنف" : "Item"}</th>
+              <th>{isAr ? "كمية" : "Qty"}</th>
+              <th style={{ textAlign: "end" }}>{isAr ? "المبلغ" : "Total"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {activeItems.map((it: any) => (
+              <tr key={it.id}>
+                <td style={{ padding: "2px 0" }}>{it.product.nameAr}</td>
+                <td style={{ textAlign: "center" }}>{Number(it.quantity)}</td>
+                <td style={{ textAlign: "end" }}>{Number(it.totalPrice).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div style={{ borderTop: "1px dashed #000", paddingTop: "4px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{isAr ? "المجموع" : "Subtotal"}:</span>
+            <span>{Number(tab.subtotal).toFixed(2)}</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{isAr ? "الضريبة" : "VAT"}:</span>
+            <span>{Number(tab.vatAmount).toFixed(2)}</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontSize: "14px",
+              fontWeight: "bold",
+              marginTop: "4px",
+              paddingTop: "4px",
+              borderTop: "2px solid #000",
+            }}
+          >
+            <span>{isAr ? "الإجمالي" : "TOTAL"}:</span>
+            <span>{Number(tab.total).toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div style={{ textAlign: "center", marginTop: "10px", fontSize: "9px" }}>
+          {isAr ? "شكراً لزيارتكم" : "Thank you for your visit"}
+          <br />
+          g-ledger.com
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -567,14 +795,34 @@ function TabItemRow({
   onRemove,
   isAr,
   removable,
+  splitMode,
+  selected,
+  onToggleSelect,
 }: {
   item: any;
   onRemove: () => void;
   isAr: boolean;
   removable?: boolean;
+  splitMode?: boolean;
+  selected?: boolean;
+  onToggleSelect?: () => void;
 }) {
+  const rowClass = splitMode
+    ? `flex items-start gap-2 p-2 rounded-lg cursor-pointer transition-all ${
+        selected ? "bg-purple-100 ring-2 ring-purple-400" : "bg-muted/30 hover:bg-muted/50"
+      }`
+    : "flex items-start gap-2 p-2 rounded-lg bg-muted/30";
+
   return (
-    <div className="flex items-start gap-2 p-2 rounded-lg bg-muted/30">
+    <div className={rowClass} onClick={splitMode ? onToggleSelect : undefined}>
+      {splitMode && (
+        <input
+          type="checkbox"
+          checked={!!selected}
+          onChange={() => {}}
+          className="mt-1 w-4 h-4 accent-purple-600"
+        />
+      )}
       <div className="flex-1 min-w-0">
         <div className="text-xs font-semibold text-[#021544] truncate">{item.product.nameAr}</div>
         <div className="text-[10px] text-muted-foreground">
@@ -586,13 +834,18 @@ function TabItemRow({
       <div className="text-xs font-mono font-bold text-[#021544]">
         {Number(item.totalPrice).toFixed(2)}
       </div>
-      <button
-        onClick={onRemove}
-        className="text-red-500 hover:text-red-700 text-xs"
-        title={isAr ? "حذف" : "Remove"}
-      >
-        ✕
-      </button>
+      {!splitMode && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+          className="text-red-500 hover:text-red-700 text-xs"
+          title={isAr ? "حذف" : "Remove"}
+        >
+          ✕
+        </button>
+      )}
     </div>
   );
 }

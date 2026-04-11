@@ -479,6 +479,200 @@ export const restaurantRouter = router({
         update: {},
       });
     }),
+
+  // ============ KITCHEN DISPLAY SYSTEM (KDS) ============
+
+  /**
+   * Returns every SENT or READY tab item across the tenant, with product,
+   * station, and tab context (table number, order type). KDS polls this
+   * every few seconds to render a live queue.
+   */
+  kdsQueue: protectedProcedure
+    .input(z.object({ stationId: z.string().optional() }).optional())
+    .query(async ({ ctx, input }) => {
+      return ctx.db.tabItem.findMany({
+        where: {
+          status: { in: ["SENT", "READY"] },
+          tab: { tenantId: ctx.tenantId, status: "OPEN" },
+          ...(input?.stationId && { stationId: input.stationId }),
+        },
+        include: {
+          product: { select: { nameAr: true, nameEn: true } },
+          station: true,
+          tab: {
+            select: {
+              id: true,
+              tabNumber: true,
+              orderType: true,
+              customerName: true,
+              table: { select: { name: true } },
+            },
+          },
+        },
+        orderBy: { sentAt: "asc" },
+      });
+    }),
+
+  kdsMarkReady: protectedProcedure
+    .input(z.object({ itemId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const item = await ctx.db.tabItem.findFirst({
+        where: { id: input.itemId, tab: { tenantId: ctx.tenantId } },
+      });
+      if (!item) throw new TRPCError({ code: "NOT_FOUND" });
+      return ctx.db.tabItem.update({
+        where: { id: item.id },
+        data: { status: "READY", readyAt: new Date() },
+      });
+    }),
+
+  kdsMarkServed: protectedProcedure
+    .input(z.object({ itemId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const item = await ctx.db.tabItem.findFirst({
+        where: { id: input.itemId, tab: { tenantId: ctx.tenantId } },
+      });
+      if (!item) throw new TRPCError({ code: "NOT_FOUND" });
+      return ctx.db.tabItem.update({
+        where: { id: item.id },
+        data: { status: "SERVED", servedAt: new Date() },
+      });
+    }),
+
+  // ============ SPLIT BILL ============
+
+  /**
+   * Close a SUBSET of a tab into its own invoice — leaves the remaining
+   * items on the tab still open. Used for splitting a bill among guests.
+   * The tab itself only becomes fully PAID when all items are closed.
+   */
+  partialClose: protectedProcedure
+    .input(
+      z.object({
+        tabId: z.string(),
+        itemIds: z.array(z.string()).min(1),
+        paymentMethod: z.enum(["CASH", "CARD", "TRANSFER", "CREDIT"]).default("CASH"),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const tab = await ctx.db.tab.findFirst({
+        where: { id: input.tabId, tenantId: ctx.tenantId, status: "OPEN" },
+        include: { items: { include: { product: true } } },
+      });
+      if (!tab) throw new TRPCError({ code: "NOT_FOUND", message: "الحساب غير موجود أو مغلق" });
+
+      const itemsToClose = tab.items.filter(
+        (i) => input.itemIds.includes(i.id) && i.status !== "VOIDED",
+      );
+      if (itemsToClose.length === 0) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "لا توجد أصناف للإغلاق" });
+      }
+
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { id: ctx.tenantId },
+        select: { vatRate: true, currency: true, country: true },
+      });
+      const vatRate = tenant ? Number(tenant.vatRate) : 15;
+      const currency = tenant?.currency || "SAR";
+
+      const invoiceItems = itemsToClose.map((it, idx) => {
+        const qty = Number(it.quantity);
+        const unit = Number(it.unitPrice) + Number(it.modifierTotal);
+        const net = qty * unit;
+        const vat = net * (vatRate / 100);
+        return {
+          lineNumber: idx + 1,
+          description: it.product.nameAr + (it.notes ? ` (${it.notes})` : ""),
+          descriptionEn: it.product.nameEn,
+          itemCode: it.product.code,
+          unitType: "EA",
+          quantity: new Prisma.Decimal(qty),
+          unitPrice: new Prisma.Decimal(unit),
+          discount: new Prisma.Decimal(0),
+          discountRate: new Prisma.Decimal(0),
+          vatRate: new Prisma.Decimal(vatRate),
+          vatAmount: new Prisma.Decimal(vat),
+          vatCategory: "S",
+          withholdingRate: new Prisma.Decimal(0),
+          withholdingAmount: new Prisma.Decimal(0),
+          tableTaxRate: new Prisma.Decimal(0),
+          tableTaxAmount: new Prisma.Decimal(0),
+          netAmount: new Prisma.Decimal(net),
+          totalAmount: new Prisma.Decimal(net + vat),
+        };
+      });
+
+      const subtotal = invoiceItems.reduce((s, i) => s + Number(i.netAmount), 0);
+      const totalVat = invoiceItems.reduce((s, i) => s + Number(i.vatAmount), 0);
+      const grandTotal = subtotal + totalVat;
+
+      const invoiceNum = await nextCounter(ctx.db, ctx.tenantId, "INVOICE");
+
+      const invoice = await ctx.db.invoice.create({
+        data: {
+          invoiceNumber: formatInvoiceNumber(invoiceNum),
+          type: "SALES",
+          status: "READY",
+          issueDate: new Date(),
+          buyerName: tab.customerName || `Tab #${tab.tabNumber} (split)`,
+          buyerCountry: tenant?.country || "SA",
+          buyerType: "P",
+          currency,
+          exchangeRate: new Prisma.Decimal(1),
+          subtotal: new Prisma.Decimal(subtotal),
+          totalVat: new Prisma.Decimal(totalVat),
+          totalWithholding: new Prisma.Decimal(0),
+          totalTableTax: new Prisma.Decimal(0),
+          totalDiscount: new Prisma.Decimal(0),
+          grandTotal: new Prisma.Decimal(grandTotal),
+          notes: `Tab #${tab.tabNumber} — split bill`,
+          tenantId: ctx.tenantId,
+          createdById: ctx.user.id,
+          items: { create: invoiceItems },
+        },
+      });
+
+      // Mark closed items as SERVED (they're paid) and detach from active list
+      // by setting status to VOIDED (won't show in kds or tab totals) with a
+      // marker note. Cleaner: add a new "PAID" status — but VOIDED keeps the
+      // schema simple.
+      await ctx.db.tabItem.updateMany({
+        where: { id: { in: itemsToClose.map((i) => i.id) } },
+        data: { status: "VOIDED" },
+      });
+
+      // Recalculate tab totals — if everything is now voided/paid, close it.
+      const remaining = await ctx.db.tabItem.count({
+        where: { tabId: tab.id, status: { notIn: ["VOIDED"] } },
+      });
+      if (remaining === 0) {
+        await ctx.db.tab.update({
+          where: { id: tab.id },
+          data: {
+            status: "PAID",
+            closedAt: new Date(),
+            invoiceId: invoice.id, // last invoice wins
+          },
+        });
+      } else {
+        // Refresh totals from remaining non-voided items
+        const items = await ctx.db.tabItem.findMany({
+          where: { tabId: tab.id, status: { not: "VOIDED" } },
+        });
+        const sub = items.reduce((s, i) => s + Number(i.totalPrice), 0);
+        const vat = sub * (vatRate / 100);
+        await ctx.db.tab.update({
+          where: { id: tab.id },
+          data: {
+            subtotal: new Prisma.Decimal(sub),
+            vatAmount: new Prisma.Decimal(vat),
+            total: new Prisma.Decimal(sub + vat),
+          },
+        });
+      }
+
+      return { invoice, paymentMethod: input.paymentMethod, fullyClosed: remaining === 0 };
+    }),
 });
 
 // Helper: recalculate tab totals after item changes

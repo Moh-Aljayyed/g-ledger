@@ -29,6 +29,7 @@ const navGroups: NavGroup[] = [
     items: [
       { key: "pos", href: "/pos", icon: "🖥️" },
       { key: "posRestaurant", href: "/pos/restaurant", icon: "🍽️" },
+      { key: "kitchenDisplay", href: "/pos/kitchen-display", icon: "🍳" },
       { key: "restaurantSetup", href: "/restaurant", icon: "🍴" },
       { key: "customers", href: "/customers", icon: "👥" },
       { key: "crm", href: "/crm", icon: "🎯" },

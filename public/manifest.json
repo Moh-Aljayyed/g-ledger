@@ -1,16 +1,39 @@
 {
   "name": "G-Ledger — حساب الأستاذ",
   "short_name": "G-Ledger",
-  "description": "نظام محاسبي سحابي متكامل لكل القطاعات",
-  "start_url": "/ar",
+  "description": "نظام محاسبي سحابي متكامل لكل القطاعات — مع نقطة بيع المطاعم والتجزئة",
+  "start_url": "/ar/pos/restaurant",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#021544",
   "icons": [
     {
       "src": "/logo.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml"
+      "sizes": "192x192 512x512 any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "نقطة بيع — مطعم",
+      "short_name": "POS Restaurant",
+      "url": "/ar/pos/restaurant",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "شاشة المطبخ",
+      "short_name": "Kitchen",
+      "url": "/ar/pos/kitchen-display",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "نقطة بيع — تجزئة",
+      "short_name": "POS Retail",
+      "url": "/ar/pos",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
     }
   ],
   "lang": "ar",
