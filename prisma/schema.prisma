@@ -1366,6 +1366,24 @@ model Contract {
   @@index([tenantId, status])
 }
 
+// ============ TENANT-SCOPED ATOMIC COUNTERS ============
+// Used to generate sequential numbers (invoice number, stock movement
+// number, journal entry number, ...) without race conditions. The atomic
+// `upsert + increment` translates to Postgres
+// `INSERT ... ON CONFLICT DO UPDATE SET value = TenantCounter.value + 1`
+// which is safe under any concurrency level.
+
+model TenantCounter {
+  id        String   @id @default(cuid())
+  tenantId  String
+  type      String   // "INVOICE" | "STOCK_MOVEMENT" | "JOURNAL_ENTRY" | ...
+  value     Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, type])
+  @@index([tenantId])
+}
+
 // ============ RAQYY INTEGRATION ============
 // Ingested data from raqyy.com — see /api/v1/integrations/raqyy/*
 // Auth + tenant routing reuse the existing ApiKey model.

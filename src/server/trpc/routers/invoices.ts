@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../trpc";
 import { submitToETA, cancelETADocument } from "@/server/services/einvoice/eta.service";
 import { submitToZATCA, zatcaOnboarding } from "@/server/services/einvoice/zatca.service";
+import { nextCounter, formatInvoiceNumber } from "@/server/counter";
 
 const invoiceItemSchema = z.object({
   description: z.string().min(1),
@@ -93,16 +94,9 @@ export const invoicesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Generate invoice number
-      const lastInvoice = await ctx.db.invoice.findFirst({
-        where: { tenantId: ctx.tenantId },
-        orderBy: { createdAt: "desc" },
-      });
-
-      const nextNum = lastInvoice
-        ? parseInt(lastInvoice.invoiceNumber.replace(/\D/g, "")) + 1
-        : 1;
-      const invoiceNumber = `INV-${String(nextNum).padStart(6, "0")}`;
+      // Atomic per-tenant counter — race-safe under concurrent invoice creation
+      const nextNum = await nextCounter(ctx.db, ctx.tenantId, "INVOICE");
+      const invoiceNumber = formatInvoiceNumber(nextNum);
 
       // Calculate item totals
       const processedItems = input.items.map((item, idx) => {

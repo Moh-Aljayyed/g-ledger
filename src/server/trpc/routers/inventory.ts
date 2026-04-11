@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../trpc";
+import { nextCounter, formatStockMovementNumber } from "@/server/counter";
 
 export const inventoryRouter = router({
   // ============ PRODUCTS ============
@@ -284,15 +285,9 @@ export const inventoryRouter = router({
         }
       }
 
-      // Auto-generate movement number
-      const lastMovement = await ctx.db.stockMovement.findFirst({
-        where: { tenantId: ctx.tenantId },
-        orderBy: { movementNumber: "desc" },
-      });
-      const lastNum = lastMovement
-        ? parseInt(lastMovement.movementNumber.replace("SM-", ""), 10) || 0
-        : 0;
-      const movementNumber = `SM-${String(lastNum + 1).padStart(6, "0")}`;
+      // Atomic per-tenant counter — race-safe under concurrent stock movements
+      const movementNumberValue = await nextCounter(ctx.db, ctx.tenantId, "STOCK_MOVEMENT");
+      const movementNumber = formatStockMovementNumber(movementNumberValue);
 
       const totalCost = input.quantity * input.unitCost;
 
@@ -312,12 +307,8 @@ export const inventoryRouter = router({
         });
       }
 
-      // Get next journal entry number
-      const lastEntry = await ctx.db.journalEntry.findFirst({
-        where: { tenantId: ctx.tenantId },
-        orderBy: { entryNumber: "desc" },
-      });
-      const entryNumber = (lastEntry?.entryNumber ?? 0) + 1;
+      // Atomic per-tenant counter for journal entries
+      const entryNumber = await nextCounter(ctx.db, ctx.tenantId, "JOURNAL_ENTRY");
 
       const result = await ctx.db.$transaction(async (tx) => {
         // Update product stock

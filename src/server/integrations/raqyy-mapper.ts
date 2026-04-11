@@ -1,5 +1,6 @@
 import { db } from "@/server/db";
 import { Prisma } from "@prisma/client";
+import { nextCounter, formatInvoiceNumber, formatStockMovementNumber } from "@/server/counter";
 
 /**
  * Maps Raqyy webhook payloads into native G-Ledger records.
@@ -160,16 +161,9 @@ export async function mapRaqyySalesInvoice(ingestId: string): Promise<void> {
     const totalVat = processedItems.reduce((s, i) => s + Number(i.vatAmount), 0);
     const grandTotal = subtotal + totalVat;
 
-    // Generate invoice number
-    const lastInvoice = await db.invoice.findFirst({
-      where: { tenantId },
-      orderBy: { createdAt: "desc" },
-      select: { invoiceNumber: true },
-    });
-    const nextNum = lastInvoice
-      ? parseInt(lastInvoice.invoiceNumber.replace(/\D/g, ""), 10) + 1
-      : 1;
-    const invoiceNumber = `INV-${String(nextNum).padStart(6, "0")}`;
+    // Atomic per-tenant counter — race-safe under concurrent Raqyy webhooks
+    const nextNum = await nextCounter(db, tenantId, "INVOICE");
+    const invoiceNumber = formatInvoiceNumber(nextNum);
 
     const issueDate = payload.created_at ? new Date(payload.created_at) : new Date();
 
@@ -282,16 +276,9 @@ export async function mapRaqyyStockMovement(ingestId: string): Promise<void> {
       return;
     }
 
-    // Generate movement number
-    const lastMovement = await db.stockMovement.findFirst({
-      where: { tenantId },
-      orderBy: { movementNumber: "desc" },
-      select: { movementNumber: true },
-    });
-    const lastNum = lastMovement
-      ? parseInt(lastMovement.movementNumber.replace("SM-", ""), 10) || 0
-      : 0;
-    const movementNumber = `SM-${String(lastNum + 1).padStart(6, "0")}`;
+    // Atomic per-tenant counter — race-safe under concurrent Raqyy webhooks
+    const movementNum = await nextCounter(db, tenantId, "STOCK_MOVEMENT");
+    const movementNumber = formatStockMovementNumber(movementNum);
 
     const stockChange =
       movementType === "IN"
