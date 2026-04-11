@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { trpc } from "@/lib/trpc";
 
-type Tab = "floors" | "tables" | "stations" | "modifiers";
+type Tab = "floors" | "tables" | "stations" | "modifiers" | "qr";
 
 export default function RestaurantSetupPage() {
   const pathname = usePathname();
@@ -21,6 +22,7 @@ export default function RestaurantSetupPage() {
       tables: isAr ? "الطاولات" : "Tables",
       stations: isAr ? "محطات المطبخ" : "Kitchen Stations",
       modifiers: isAr ? "الإضافات" : "Modifiers",
+      qr: isAr ? "أكواد QR" : "QR Codes",
     },
   };
 
@@ -33,7 +35,7 @@ export default function RestaurantSetupPage() {
 
       {/* Tabs */}
       <div className="flex gap-2 mb-6 border-b border-border">
-        {(["floors", "tables", "stations", "modifiers"] as Tab[]).map((k) => (
+        {(["floors", "tables", "stations", "modifiers", "qr"] as Tab[]).map((k) => (
           <button
             key={k}
             onClick={() => setTab(k)}
@@ -52,6 +54,132 @@ export default function RestaurantSetupPage() {
       {tab === "tables" && <TablesPanel isAr={isAr} />}
       {tab === "stations" && <StationsPanel isAr={isAr} />}
       {tab === "modifiers" && <ModifiersPanel isAr={isAr} />}
+      {tab === "qr" && <QRCodesPanel isAr={isAr} />}
+    </div>
+  );
+}
+
+// ============ QR CODES ============
+function QRCodesPanel({ isAr }: { isAr: boolean }) {
+  const { data: session } = useSession();
+  const user = session?.user as any;
+  const slug = user?.slug;
+  const menuUrl =
+    typeof window !== "undefined" && slug
+      ? `${window.location.origin}/menu/${slug}`
+      : slug
+        ? `https://g-ledger.com/menu/${slug}`
+        : null;
+
+  if (!slug) {
+    return (
+      <div className="max-w-2xl bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <p className="text-sm text-amber-800">
+          {isAr
+            ? "⚠️ لا يوجد نطاق فرعي لمنشأتك — يرجى طلب إنشائه من الدعم الفني لتفعيل قائمة QR العامة."
+            : "⚠️ No subdomain configured for your company — contact support to enable the public QR menu."}
+        </p>
+      </div>
+    );
+  }
+
+  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=10&data=${encodeURIComponent(
+    menuUrl!,
+  )}`;
+
+  return (
+    <div className="max-w-3xl space-y-4">
+      <div className="bg-card rounded-xl border border-border p-5">
+        <h2 className="text-base font-semibold text-[#021544] mb-1">
+          {isAr ? "القائمة الرقمية العامة (QR Menu)" : "Public Digital Menu (QR Menu)"}
+        </h2>
+        <p className="text-xs text-muted-foreground mb-4">
+          {isAr
+            ? "اطبع كود QR وضعه على الطاولات — العميل يمسح الكود من جواله ويشاهد القائمة مباشرة"
+            : "Print the QR code and place it on your tables — customers scan it to view the menu on their phone"}
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+          {/* QR Preview */}
+          <div className="flex flex-col items-center">
+            <div className="bg-white p-4 rounded-2xl border-2 border-border shadow-md">
+              <img
+                src={qrImageUrl}
+                alt="QR Menu"
+                className="w-56 h-56"
+              />
+            </div>
+            <div className="flex gap-2 mt-4">
+              <a
+                href={qrImageUrl}
+                download="qr-menu.png"
+                className="px-4 py-2 bg-[#0070F2] text-white rounded-lg text-xs font-semibold"
+              >
+                📥 {isAr ? "تحميل QR" : "Download"}
+              </a>
+              <button
+                onClick={() => window.print()}
+                className="px-4 py-2 border border-border rounded-lg text-xs font-semibold"
+              >
+                🖨️ {isAr ? "طباعة" : "Print"}
+              </button>
+            </div>
+          </div>
+
+          {/* URL + instructions */}
+          <div>
+            <label className="block text-xs font-semibold text-[#021544] mb-1.5">
+              {isAr ? "رابط القائمة العامة" : "Public menu URL"}
+            </label>
+            <div className="flex gap-2 mb-4">
+              <input
+                type="text"
+                readOnly
+                value={menuUrl!}
+                dir="ltr"
+                className="flex-1 px-3 py-2 rounded-lg border border-input bg-background text-xs font-mono outline-none"
+                onFocus={(e) => e.target.select()}
+              />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(menuUrl!);
+                }}
+                className="px-3 py-2 bg-[#021544] text-white rounded-lg text-xs font-semibold"
+              >
+                {isAr ? "نسخ" : "Copy"}
+              </button>
+            </div>
+
+            <a
+              href={menuUrl!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-xs text-[#0070F2] font-semibold hover:underline mb-4"
+            >
+              🔗 {isAr ? "معاينة القائمة في تبويب جديد" : "Preview in new tab"}
+            </a>
+
+            <div className="p-3 rounded-lg bg-muted/40 border border-border/50">
+              <h3 className="text-xs font-bold text-[#021544] mb-2">
+                {isAr ? "كيفية الاستخدام" : "How to use"}
+              </h3>
+              <ol className="text-[11px] text-muted-foreground space-y-1 list-decimal list-inside">
+                <li>{isAr ? "اضغط 'تحميل QR' واحفظ الصورة" : "Click 'Download' to save the QR image"}</li>
+                <li>{isAr ? "اطبعها على ورقة لاصقة مقاس 10×10 سم" : "Print on 10x10cm sticker"}</li>
+                <li>{isAr ? "الصقها على كل طاولة في مكان ظاهر" : "Stick on each table in a visible spot"}</li>
+                <li>{isAr ? "العميل يفتح كاميرا جواله ويمسح الكود" : "Customer opens phone camera and scans"}</li>
+                <li>{isAr ? "تظهر له القائمة كاملة مع الأسعار" : "The full menu appears with prices"}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-xs text-green-800">
+        💡 {isAr
+          ? "القائمة الرقمية مجانية تماماً لكل المشتركين. الأسعار تتحدث تلقائياً من المخزون."
+          : "The digital menu is 100% free for all subscribers. Prices update automatically from inventory."}
+      </div>
     </div>
   );
 }

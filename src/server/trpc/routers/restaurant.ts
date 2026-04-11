@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { Prisma } from "@prisma/client";
-import { router, protectedProcedure } from "../trpc";
+import { router, protectedProcedure, publicProcedure } from "../trpc";
 import { nextCounter, formatInvoiceNumber } from "@/server/counter";
 
 /**
@@ -478,6 +478,56 @@ export const restaurantRouter = router({
         create: input,
         update: {},
       });
+    }),
+
+  // ============ PUBLIC QR MENU (no auth) ============
+  // Customers scan a QR code at their table, this loads the restaurant's
+  // public menu without requiring a login. Used in browse-only mode for
+  // now — first step toward customer self-ordering.
+
+  publicMenuByTenantSlug: publicProcedure
+    .input(z.object({ slug: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const tenant = await ctx.db.tenant.findUnique({
+        where: { slug: input.slug },
+        select: {
+          id: true,
+          name: true,
+          logoUrl: true,
+          currency: true,
+          locale: true,
+          documentColor: true,
+        },
+      });
+      if (!tenant) throw new TRPCError({ code: "NOT_FOUND", message: "Menu not found" });
+
+      const products = await ctx.db.product.findMany({
+        where: { tenantId: tenant.id, isActive: true },
+        select: {
+          id: true,
+          code: true,
+          nameAr: true,
+          nameEn: true,
+          description: true,
+          category: true,
+          sellingPrice: true,
+          vatRate: true,
+        },
+        orderBy: [{ category: "asc" }, { nameAr: "asc" }],
+      });
+
+      // Group by category
+      const byCategory: Record<string, typeof products> = {};
+      for (const p of products) {
+        const cat = p.category || "عام";
+        if (!byCategory[cat]) byCategory[cat] = [];
+        byCategory[cat].push(p);
+      }
+
+      return {
+        tenant,
+        categories: Object.entries(byCategory).map(([name, items]) => ({ name, items })),
+      };
     }),
 
   // ============ KITCHEN DISPLAY SYSTEM (KDS) ============
