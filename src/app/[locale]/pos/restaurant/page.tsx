@@ -401,6 +401,12 @@ function TabEditor({
       onClose();
     },
   });
+  const voidTab = trpc.restaurant.voidTab.useMutation({
+    onSuccess: () => {
+      alert(isAr ? "✓ تم إلغاء الحساب" : "✓ Tab voided");
+      onClose();
+    },
+  });
   const partialClose = trpc.restaurant.partialClose.useMutation({
     onSuccess: (res) => {
       setSplitSelection(new Set());
@@ -463,6 +469,22 @@ function TabEditor({
               className="px-4 py-2.5 bg-gray-100 text-[#021544] rounded-lg text-sm font-semibold hover:bg-gray-200 border border-border"
             >
               🖨️ {isAr ? "طباعة" : "Print"}
+            </button>
+            <button
+              onClick={() => {
+                const reason = prompt(
+                  isAr ? "سبب إلغاء الحساب:" : "Reason for voiding this tab:",
+                );
+                if (reason && reason.trim()) {
+                  if (confirm(isAr ? "تأكيد الإلغاء؟ لا يمكن التراجع." : "Confirm void? This cannot be undone.")) {
+                    voidTab.mutate({ tabId: tab.id, reason: reason.trim() });
+                  }
+                }
+              }}
+              disabled={voidTab.isPending}
+              className="px-4 py-2.5 bg-red-50 text-red-700 rounded-lg text-sm font-semibold hover:bg-red-100 border border-red-200 disabled:opacity-50"
+            >
+              ✕ {isAr ? "إلغاء" : "Void"}
             </button>
             <button
               onClick={() => {

@@ -530,6 +530,37 @@ export const restaurantRouter = router({
       };
     }),
 
+  /**
+   * Void (cancel) a whole tab without creating any invoice. Used when a
+   * customer walks out, an order is wrong, or the cashier opened a tab
+   * by mistake. Requires a reason for audit purposes.
+   */
+  voidTab: protectedProcedure
+    .input(z.object({ tabId: z.string(), reason: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const tab = await ctx.db.tab.findFirst({
+        where: { id: input.tabId, tenantId: ctx.tenantId, status: "OPEN" },
+      });
+      if (!tab) throw new TRPCError({ code: "NOT_FOUND", message: "الحساب غير موجود أو مغلق" });
+
+      await ctx.db.$transaction(async (tx) => {
+        await tx.tabItem.updateMany({
+          where: { tabId: tab.id },
+          data: { status: "VOIDED" },
+        });
+        await tx.tab.update({
+          where: { id: tab.id },
+          data: {
+            status: "CANCELLED",
+            closedAt: new Date(),
+            notes: `VOIDED: ${input.reason}`,
+          },
+        });
+      });
+
+      return { success: true, tabId: tab.id };
+    }),
+
   // ============ KITCHEN DISPLAY SYSTEM (KDS) ============
 
   /**

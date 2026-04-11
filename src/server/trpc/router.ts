@@ -32,6 +32,7 @@ import { auditRouter } from "./routers/audit";
 import { hrRouter } from "./routers/hr";
 import { raqyyRouter } from "./routers/raqyy";
 import { restaurantRouter } from "./routers/restaurant";
+import { loyaltyRouter } from "./routers/loyalty";
 
 export const appRouter = router({
   auth: authRouter,
@@ -67,6 +68,7 @@ export const appRouter = router({
   hr: hrRouter,
   raqyy: raqyyRouter,
   restaurant: restaurantRouter,
+  loyalty: loyaltyRouter,
 });
 
 export type AppRouter = typeof appRouter;

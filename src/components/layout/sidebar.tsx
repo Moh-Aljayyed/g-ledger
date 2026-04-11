@@ -31,6 +31,8 @@ const navGroups: NavGroup[] = [
       { key: "posRestaurant", href: "/pos/restaurant", icon: "🍽️" },
       { key: "kitchenDisplay", href: "/pos/kitchen-display", icon: "🍳" },
       { key: "restaurantSetup", href: "/restaurant", icon: "🍴" },
+      { key: "loyalty", href: "/loyalty", icon: "🎁" },
+      { key: "zReport", href: "/z-report", icon: "📊" },
       { key: "customers", href: "/customers", icon: "👥" },
       { key: "crm", href: "/crm", icon: "🎯" },
       { key: "invoices", href: "/invoices", icon: "🧾" },

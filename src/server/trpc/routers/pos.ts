@@ -668,6 +668,98 @@ export const posRouter = router({
     };
   }),
 
+  /**
+   * Comprehensive Z / X report — captures ALL sales (retail POS + restaurant
+   * POS + manual invoices) in a date range. Z-Report is the end-of-day
+   * closing report; X-Report is a mid-day snapshot. The endpoint is the
+   * same; the client decides whether to call it a "close" or a "snapshot".
+   */
+  zReport: protectedProcedure
+    .input(z.object({
+      from: z.date().optional(),
+      to: z.date().optional(),
+    }).optional())
+    .query(async ({ ctx, input }) => {
+      const from = input?.from ?? (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; })();
+      const to = input?.to ?? (() => { const d = new Date(from); d.setDate(d.getDate() + 1); return d; })();
+
+      const invoices = await ctx.db.invoice.findMany({
+        where: {
+          tenantId: ctx.tenantId,
+          type: "SALES",
+          issueDate: { gte: from, lt: to },
+          status: { in: ["READY", "SUBMITTED", "ACCEPTED"] },
+        },
+        include: { items: true, payments: true },
+      });
+
+      const count = invoices.length;
+      const grossSales = invoices.reduce((s, i) => s + Number(i.subtotal), 0);
+      const totalVat = invoices.reduce((s, i) => s + Number(i.totalVat), 0);
+      const totalDiscount = invoices.reduce((s, i) => s + Number(i.totalDiscount), 0);
+      const netSales = invoices.reduce((s, i) => s + Number(i.grandTotal), 0);
+      const avgTicket = count > 0 ? netSales / count : 0;
+
+      // Payment breakdown
+      let cashTotal = 0;
+      let cardTotal = 0;
+      let transferTotal = 0;
+      let creditTotal = 0;
+      for (const inv of invoices) {
+        if (inv.payments.length === 0) {
+          creditTotal += Number(inv.grandTotal);
+          continue;
+        }
+        for (const p of inv.payments) {
+          const amt = Number(p.amount);
+          if (p.method === "CASH") cashTotal += amt;
+          else if (p.method === "CREDIT_CARD") cardTotal += amt;
+          else if (p.method === "BANK_TRANSFER") transferTotal += amt;
+          else creditTotal += amt;
+        }
+      }
+
+      // Top products
+      const productMap = new Map<string, { name: string; qty: number; revenue: number }>();
+      for (const inv of invoices) {
+        for (const it of inv.items) {
+          const key = it.itemCode || it.description;
+          const existing = productMap.get(key) || { name: it.description, qty: 0, revenue: 0 };
+          existing.qty += Number(it.quantity);
+          existing.revenue += Number(it.totalAmount);
+          productMap.set(key, existing);
+        }
+      }
+      const topProducts = Array.from(productMap.values())
+        .sort((a, b) => b.revenue - a.revenue)
+        .slice(0, 10);
+
+      // Hourly distribution (0-23)
+      const hourly = Array.from({ length: 24 }, () => 0);
+      for (const inv of invoices) {
+        const h = new Date(inv.issueDate).getHours();
+        hourly[h] += Number(inv.grandTotal);
+      }
+
+      return {
+        period: { from, to },
+        count,
+        grossSales,
+        totalVat,
+        totalDiscount,
+        netSales,
+        avgTicket,
+        payments: {
+          cash: cashTotal,
+          card: cardTotal,
+          transfer: transferTotal,
+          credit: creditTotal,
+        },
+        topProducts,
+        hourly,
+      };
+    }),
+
   // ============ RECEIPT ============
 
   getReceipt: protectedProcedure
